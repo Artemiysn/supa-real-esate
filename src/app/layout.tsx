@@ -16,7 +16,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-      // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="flex flex-col h-screen">
           <nav className="min-h-[90px] flex justify-between pt-1 pb-1 pl-2 pr-2">
