@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Image from 'next/image';
-import { Button } from "@/components/ui/button";
+import SignIn from "@/components/SignIn/SignIn";
+import { getServerAuthSession } from "@/auth";
 
 export const metadata: Metadata = {
   title: "Find your apartment with ease!",
   description: "Rent, Buy apartments",
 };
 
-export default function RootLayout({
+export default async function  RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const session = await getServerAuthSession();
+
   return (
     <html lang="en">
       <body
@@ -26,9 +30,7 @@ export default function RootLayout({
               className="block"
               alt="Supa Real Esate Agency"
             />
-            <div className="flex align-middle items-center ">
-              <Button variant={'default'}>Sign Up</Button>
-            </div>
+            <SignIn user={session?.user} />
           </nav>
           {children}
         </div>

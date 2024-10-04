@@ -26,7 +26,7 @@ export default function Home() {
       <div className="flex flex-row w-full mt-8 justify-between">
         <div>
           <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">10+</h3>
-          <p>Years of expirience</p>
+          <p>Years of experience</p>
         </div>
         <div>
           <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">12+</h3>
