@@ -19,6 +19,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      {/* <body className="max-w-[900px] mx-auto"> */}
       <body>
         <div className="flex flex-col h-screen">
           <nav className="min-h-[90px] flex justify-between pt-1 pb-1 pl-2 pr-2">
