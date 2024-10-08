@@ -13,7 +13,7 @@ const Profile = async () => {
   if (!session) return <Unauthorized />
 
   return (
-    <div className="flex flex-row w-full">
+    <div className="flex w-full">
       <div id="profile-post" className="grow ml-8">
         <UpdateProfile user={session?.user}/>
         <MyList />
