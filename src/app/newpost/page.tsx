@@ -18,6 +18,9 @@ const NewPost = async () => {
   const session = await getServerAuthSession();
   if (!session) return <Unauthorized />;
 
+  // чтобы передать юзера используй bind
+  //addToCart.bind(product.id)
+
   return (
     <form className="flex w-full">
       <div className="grow flex flex-wrap content-start ml-4">
