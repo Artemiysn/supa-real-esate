@@ -34,7 +34,7 @@ const MainPageForm = () => {
         </TabsList>
       </Tabs>
       <form
-        // action={searchEstateAction}
+        // action={searchEstateAction} можно байндом добавить вкладку!
         className="flex flex-row w-full items-center space-x-2 mt-4"
       >
         <Input name="location" placeholder="Location" type="text"/>

@@ -1,7 +1,13 @@
 .inputBlock {
-    display: grid;
-    /* max-width: 24rem; */
-    align-items: center;
+    display: flex;
+    flex-direction: column;
     gap: 0.375rem;
     padding: 0 1rem 1rem 1rem;
+}
+.errorText {
+    margin-top: 0.25rem;
+    font-size: 0.875rem /* 14px */;
+    line-height: 1.25rem /* 20px */;
+    --tw-text-opacity: 1;
+    color: rgb(239 68 68 / var(--tw-text-opacity)) /* #ef4444 */;
 }
