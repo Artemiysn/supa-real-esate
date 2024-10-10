@@ -4,23 +4,24 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "@/auth";
+import { db } from "./modules/db";
 
 const NewPostSchema = z
   .object({
-    title: z.string().min(1, 'Please select title'),
+    title: z.string().min(1, 'Please select title').max(255),
     price: z.coerce
       .number()
       .gt(0, 'Please select price, price must be greater then 0')
       .int('Price must be an integer'),
-    address: z.string().min(3, 'Please provide address, minimum 3 symbols'),
-    description: z.string().min(1, 'Please provide description'),
+    address: z.string().min(3, 'Please provide address, minimum 3 symbols').max(255),
+    description: z.string().min(1, 'Please provide description').max(1000),
     type: z.enum(["rent", "sell"], {
       invalid_type_error: "Please select rent or sell"
     }),
     property: z.enum(["apartment", "house"], {
       invalid_type_error: "Please select apartment or house",
     }),
-    city: z.string().min(1, "Please select city"),
+    city: z.string().min(1, "Please select city").max(255),
     area: z.coerce
       .number()
       .gt(1, 'Please provide area, number must be positive')
@@ -76,9 +77,7 @@ export async function createNewPost(
 
   const user = sessionData?.user;
 
-  console.log(formData);
 
-  // Validate form using Zod
   const validatedFields = NewPostSchema.safeParse({
     title: formData.get("title"),
     price: formData.get("price"),
@@ -93,8 +92,6 @@ export async function createNewPost(
     year: formData.get("year"),
   });
 
-  // console.log(validatedFields);
-
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
@@ -102,9 +99,14 @@ export async function createNewPost(
     };
   }
 
-  console.log(validatedFields.data);
+  const dataToSend = {
+    data: {
+      userId: user.id,
+      ...validatedFields.data
+    }
+  }
 
-  // добавить в базу
+  const workSession = await db.posts.create(dataToSend);
 
 
   revalidatePath('/profile');

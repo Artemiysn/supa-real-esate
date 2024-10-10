@@ -32,7 +32,7 @@ const NewPost = () => {
         </h3>
         <div className={styles.inputBlock + ` basis-1/3`}>
           <Label htmlFor="title">Title</Label>
-          <Input type="text" id="title" name="title" />
+          <Input type="text" id="title" name="title" maxLength={255}/>
           <div id="title-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.title &&
               state?.errors.title.map((error: string) => (
@@ -44,7 +44,7 @@ const NewPost = () => {
         </div>
         <div className={styles.inputBlock + ` basis-1/3`}>
           <Label htmlFor="price">Price</Label>
-          <Input type="number" id="price" name="price" step={0.1} />
+          <Input type="number" id="price" name="price" step={1} min={0} />
           <div id="price-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.price &&
               state?.errors.price.map((error: string) => (
@@ -56,7 +56,7 @@ const NewPost = () => {
         </div>
         <div className={styles.inputBlock + ` basis-1/3`}>
           <Label htmlFor="address">Address</Label>
-          <Input type="text" id="address" name="address" />
+          <Input type="text" id="address" name="address" maxLength={255}/>
           <div id="address-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.address &&
               state?.errors.address.map((error: string) => (
@@ -74,6 +74,7 @@ const NewPost = () => {
             id="description"
             name="description"
             rows={8}
+            maxLength={1000}
           />
           <div id="description-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.description &&
@@ -126,7 +127,7 @@ const NewPost = () => {
         </div>
         <div className={styles.inputBlock + ` basis-1/3`}>
           <Label htmlFor="city">City</Label>
-          <Input type="text" id="city" name="city" />
+          <Input type="text" id="city" name="city" maxLength={255}/>
           <div id="city-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.city &&
               state?.errors.city.map((error: string) => (
@@ -138,7 +139,7 @@ const NewPost = () => {
         </div>
         <div className={styles.inputBlock + ` basis-1/3`}>
           <Label htmlFor="area">Total area</Label>
-          <Input type="number" min="0" id="area" name="area" step={1} />
+          <Input type="number" min={0} id="area" name="area" step={1} />
           <div id="area-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.area &&
               state?.errors.area.map((error: string) => (
@@ -150,7 +151,7 @@ const NewPost = () => {
         </div>
         <div className={styles.inputBlock + ` basis-1/3`}>
           <Label htmlFor="kitchen">Kitchen area</Label>
-          <Input type="number" min="0" id="kitchen" name="kitchen" step={1} />
+          <Input type="number" min={0} id="kitchen" name="kitchen" step={1} />
           <div id="kitchen-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.kitchen &&
               state?.errors.kitchen.map((error: string) => (
@@ -162,7 +163,7 @@ const NewPost = () => {
         </div>
         <div className={styles.inputBlock + ` basis-1/3`}>
           <Label htmlFor="floor">Floor</Label>
-          <Input type="number" min="0" id="floor" name="floor" step={1} />
+          <Input type="number" min={0} id="floor" name="floor" step={1} />
           <div id="floor-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.floor &&
               state?.errors.floor.map((error: string) => (
@@ -174,7 +175,7 @@ const NewPost = () => {
         </div>
         <div className={styles.inputBlock + ` basis-1/3`}>
           <Label htmlFor="year">Year of construction</Label>
-          <Input type="number" min="0" id="year" name="year" step={1} />
+          <Input type="number" min={0} id="year" name="year" step={1} max={3000}/>
           <div id="year-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.year &&
               state?.errors.year.map((error: string) => (

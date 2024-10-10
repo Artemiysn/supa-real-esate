@@ -37,10 +37,10 @@ const MainPageForm = () => {
         // action={searchEstateAction} можно байндом добавить вкладку!
         className="flex flex-row w-full items-center space-x-2 mt-4"
       >
-        <Input name="location" placeholder="Location" type="text"/>
-        <Input name="size" placeholder="m3" type="number" min="0" step={1}/>
-        <Input name="minPrice" placeholder="Min Price" type="number" min="0" step={1000}/>
-        <Input name="maxPrice" placeholder="Max Price" type="number" min="0" step={1000}/>
+        <Input name="city" placeholder="City" type="text"/>
+        <Input name="area" placeholder="m3" type="number" min="0" step={1}/>
+        <Input name="minPrice" placeholder="Min Price" type="number" min="0" step={1}/>
+        <Input name="maxPrice" placeholder="Max Price" type="number" min="0" step={1}/>
         <Button><SearchIcon size={16} /></Button>
       </form>
     </>
