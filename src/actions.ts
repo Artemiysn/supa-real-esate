@@ -77,7 +77,6 @@ export async function createNewPost(
 
   const user = sessionData?.user;
 
-
   const validatedFields = NewPostSchema.safeParse({
     title: formData.get("title"),
     price: formData.get("price"),
@@ -101,13 +100,12 @@ export async function createNewPost(
 
   const dataToSend = {
     data: {
-      userId: user.id,
+      userId: user?.id,
       ...validatedFields.data
     }
   }
 
   const workSession = await db.posts.create(dataToSend);
-
 
   revalidatePath('/profile');
   redirect('/profile');
