@@ -1,4 +1,4 @@
-import bg from "../../public/bg.jpeg";
+import bg from "@/../../public/bg.jpeg";
 import MainPageForm from "@/components/MainPageForm/MainPageForm";
 
 const bgStyle = {

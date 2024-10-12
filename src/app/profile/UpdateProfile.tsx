@@ -11,7 +11,7 @@ type SignInProps = {
 const UpdateProfile: React.FC<SignInProps> = ({ user }) => {
   return (
     <div className="p-5">
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-2">
         <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 ">
           User Information
         </h3>

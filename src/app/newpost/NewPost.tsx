@@ -175,7 +175,7 @@ const NewPost = () => {
         </div>
         <div className={styles.inputBlock + ` basis-1/3`}>
           <Label htmlFor="year">Year of construction</Label>
-          <Input type="number" min={0} id="year" name="year" step={1} max={3000}/>
+          <Input type="number" min={0} id="year" name="year" step={1} max={3000} />
           <div id="year-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.year &&
               state?.errors.year.map((error: string) => (

@@ -28,7 +28,7 @@ const NewPostSchema = z
       .int('Area size must be an integer'),
     kitchen: z.coerce
       .number()
-      .gt(1, 'Please provide kitchen area m2, number must be positive')
+      .gt(1, 'Please provide kitchen area in m2, number must be positive')
       .int('Kitchen Area size must be an integer'),
     floor: z.coerce
       .number()
@@ -105,7 +105,7 @@ export async function createNewPost(
     }
   }
 
-  const workSession = await db.posts.create(dataToSend);
+  const createPost = await db.posts.create(dataToSend);
 
   revalidatePath('/profile');
   redirect('/profile');
