@@ -5,9 +5,12 @@ import MyList from "./MyList";
 import Messages from "./Messages";
 import { Suspense } from "react";
 import CenterRotator from "@/components/CenterRotator";
-// страница только для авторизованных пользователей
 
-const Profile = async () => {
+interface ProfileProps {
+  searchParams: { [key: string]: string | undefined };
+}
+
+const Profile: React.FC<ProfileProps> = async ({ searchParams }) => {
 
   // with jwt set up this should be in middleware
   const session = await getServerAuthSession();
@@ -18,7 +21,7 @@ const Profile = async () => {
       <div id="profile-post" className="grow ml-8">
         <UpdateProfile user={session?.user}/>
         <Suspense fallback={<CenterRotator/>}>
-          <MyList userId={session?.user?.id}/>
+          <MyList userId={session?.user?.id} searchParams={searchParams}/>
         </Suspense>
       </div>
       <div id="profile-messages" className="w-[400px] mr-8">

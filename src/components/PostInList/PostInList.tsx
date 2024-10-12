@@ -1,9 +1,8 @@
 import { Posts } from "@prisma/client";
 import Image from "next/image";
 import fallback from "@/../../public/fallback.png";
-import { LandPlot, MapPin, CookingPot, CalendarDays, Star, Building, House } from "lucide-react";
+import { LandPlot, MapPin, CookingPot, Star, Building, House } from "lucide-react";
 import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
 import {
   Tooltip,
   TooltipContent,
@@ -60,9 +59,9 @@ const PostInList: React.FC<PostInListProps> = ({ post }) => {
             <div data-type="post-in-list-buttons" className="flex gap-2">
               <Tooltip delayDuration={300}>
                 <TooltipTrigger asChild>
-                  <Button size={"icon"} variant="outline">
-                    <Star size={12} />
-                  </Button>
+                  <Badge variant="outline">
+                    <Star size={16} className="cursor-pointer"/>
+                  </Badge>
                 </TooltipTrigger>
                 <TooltipContent>Add to favorites</TooltipContent>
               </Tooltip>

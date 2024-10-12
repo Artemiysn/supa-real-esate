@@ -1,17 +1,23 @@
 import PostInList from "@/components/PostInList/PostInList";
 import { Button } from "@/components/ui/button";
-import { fetchUserPosts } from "@/lib/data";
+import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
+import { fetchUserPostsWithPages } from "@/lib/data";
 
 import Link from "next/link";
 
 type MyListProps = {
   userId: string | undefined;
+  searchParams: { [key: string]: string | undefined };
 }
 
+const defaultPostsPerPage = '5';
 
-const MyList: React.FC<MyListProps> = async ({userId}) => {
+const MyList: React.FC<MyListProps> = async ({userId, searchParams}) => {
 
-  const posts = await fetchUserPosts(userId);
+  const currentPage = parseInt((searchParams.page as string) || '1');
+  const postsPerPage = parseInt((searchParams.pageSize as string) || defaultPostsPerPage);
+
+  const {posts, total} = await fetchUserPostsWithPages(userId, currentPage, postsPerPage);
 
   return (
     <div className="p-5">
@@ -21,8 +27,18 @@ const MyList: React.FC<MyListProps> = async ({userId}) => {
         </h3>
         <Link href="/newpost"><Button>Create New Post</Button></Link>
       </div>
-      <div id="post-list" className="min-h-[400px]">
+      <div id="post-list" className="min-h-[400px] mb-5">
         {posts.map(post => <PostInList post={post}/>)}
+      </div>
+      <div className='w-full'>
+        <PaginationWithLinks
+          page={currentPage}
+          pageSize={postsPerPage}
+          totalCount={total}
+          pageSizeSelectOptions={{
+            pageSizeOptions: [5, 10, 25, 50],
+          }}
+        />
       </div>
     </div>
   );
