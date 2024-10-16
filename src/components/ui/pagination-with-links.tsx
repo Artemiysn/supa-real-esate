@@ -66,6 +66,7 @@ export function PaginationWithLinks({
       const key = pageSizeSelectOptions?.pageSizeSearchParam || "pageSize";
       const newSearchParams = new URLSearchParams(searchParams || undefined);
       newSearchParams.set(key, String(newPageSize));
+      // здесь можно подумать как обновить компонент без перезагрузки всей страницы
       router.push(`${pathname}?${newSearchParams.toString()}`);
     },
     [searchParams, pathname],
@@ -181,9 +182,8 @@ function SelectRowsPerPage({
   pageSize: number;
 }) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 min-w-44">
       <span className="whitespace-nowrap text-sm">Rows per page</span>
-
       <Select value={String(pageSize)} onValueChange={(value) => setPageSize(Number(value))}>
         <SelectTrigger>
           <SelectValue placeholder="Select page size">{String(pageSize)}</SelectValue>
