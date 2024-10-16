@@ -1,11 +1,19 @@
 import { getServerAuthSession } from "@/auth";
 import Unauthorized from "@/components/Unauthorized/Unauthorized";
-import { getPostDetails } from "@/lib/data";
-import type { Posts as PostType } from "@prisma/client";
+import { getPostDetails, PostWithUsers } from "@/lib/data";
 import DetailsCarousel from "../DetailsCarousel";
-import { MapPin } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { MapPin, SendHorizontal, Star } from "lucide-react";
 import { displayDate } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
+import DetailsBlock from "../DetailsBlock";
+import Location from "../Location";
+import { Button } from "@/components/ui/button";
 
 type DetailsProps = {
   params: {
@@ -18,7 +26,7 @@ const Details: React.FC<DetailsProps> = async ({ params }) => {
   const session = await getServerAuthSession();
   if (!session) return <Unauthorized />;
 
-  const post: PostType = await getPostDetails(params.id);
+  const post: PostWithUsers = await getPostDetails(params.id);
 
   return (
     <div className="flex w-full">
@@ -39,18 +47,40 @@ const Details: React.FC<DetailsProps> = async ({ params }) => {
               </span>
             </p>
           </div>
-          <div className="h-[120px] ">
-            <span className="text-slate-400">{displayDate(post?.updatedAt)}</span>
+          <div className="flex gap-2 items-start pt-1">
+            <span >
+              {displayDate(post?.updatedAt)}
+            </span>
+            <TooltipProvider>
+              <Tooltip delayDuration={300}>
+                <TooltipTrigger asChild>
+                  <Badge variant="default" className="mt-[2px]">
+                    <Star size={16} className="cursor-pointer" />
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent>Add to favorites</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
-        <p>
-            {post?.description}
-        </p>
+        <p className="mb-4">{post?.description}</p>
       </div>
       <div
         id="general-and-map"
-        className="w-[400px] mr-8 bg-gray-50 min-h-[600px] h-full rounded-xl border bg-card text-card-foreground shadow p-4 "
-      ></div>
+        className="w-[400px] mr-8 px-4 pb-4"
+      >
+        <DetailsBlock post={post}/>
+        {/* <Location /> */}
+        <div className="flex w-full justify-between items-center pl-2">
+          <span className="text-slate-500 italic ">
+            Posted by: &nbsp; {post.user.name} 
+          </span>
+          <Button variant="outline" disabled={session?.user.id === post?.user?.id}>
+            <SendHorizontal className="mr-2 inline-block stroke-orange-300"/>
+            Send a message
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

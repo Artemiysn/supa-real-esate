@@ -1,5 +1,9 @@
 import { db } from "@/modules/db";
-import type { Posts } from "@prisma/client";
+import type { Posts, Prisma } from "@prisma/client";
+
+export type PostWithUsers = Prisma.PostsGetPayload<{
+  include: { user: true }
+}>
 
 export const fetchUserPosts = async (
   userId: string | undefined
@@ -48,9 +52,12 @@ export const fetchUserPostsWithPages = async (
   }
 };
 
-export const getPostDetails = async (postId: string): Promise<Posts> => {
+export const getPostDetails = async (postId: string): Promise<PostWithUsers> => {
   try {
     const post = await db.Posts.findUniqueOrThrow({
+      include: {
+        user: true,
+      },
       where: { id: postId },
     });
     return post;
