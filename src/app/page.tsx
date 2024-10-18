@@ -1,5 +1,10 @@
 import bg from "@/../../public/bg.jpeg";
-import MainPageForm from "@/components/MainPageForm/MainPageForm";
+import dynamic from "next/dynamic";
+
+// so that browser api like window can be safely used https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading
+const MainPageForm = dynamic(() => import('@/components/MainPageForm/MainPageForm'), {
+  ssr: false,
+})
 
 const bgStyle = {
   backgroundImage: `linear-gradient(to bottom, rgba(255,255,255,1) 0, rgba(255,255,255,0.95) 40%, rgba(255,255,255,0.7) 100%), url(${bg.src})`,

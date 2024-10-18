@@ -1,47 +1,71 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState, useActionState } from "react";
+import { useState, FormEvent } from "react";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import { SearchIcon } from "lucide-react";
-
+import { useRouter } from "next/navigation";
+import { PostType } from "@prisma/client";
+import { Button } from "../ui/button";
 
 const MainPageForm = () => {
 
-  const [tabValue, setTabValue] = useState<"rent" | "buy">("rent");
-  // второй аргумент - это начальное состояние формы
-  // const [data, searchEstateAction, isPending] = useActionState(
-  //   searchEstateFunc,
-  //   undefined
-  // );
+  const router = useRouter();
+  router.prefetch("/searchposts");
+  const [tabValue, setTabValue] = useState<PostType>("rent");
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const searchParams = new URLSearchParams();
+
+    for (const [key, value] of formData.entries()) {
+      searchParams.append(key, value as string);
+    }
+
+    searchParams.append("type", tabValue);
+
+    router.push(`/searchposts?${searchParams.toString()}`);
+  }
 
   return (
     <>
       <Tabs
         className="w-[400px] pt-4"
         value={tabValue}
-        // попробовать передать напрямую в форму
-        onValueChange={(v) => setTabValue(v as "rent" | "buy")}
+        onValueChange={(v) => setTabValue(v as PostType)}
       >
         <TabsList>
           <TabsTrigger className="h-10 rounded-md px-8" value="rent">
             Rent
           </TabsTrigger>
-          <TabsTrigger className="h-10 rounded-md px-8" value="buy">
-            Buy
+          <TabsTrigger className="h-10 rounded-md px-8" value="sell">
+            Sell
           </TabsTrigger>
         </TabsList>
       </Tabs>
       <form
-        // action={searchEstateAction} можно байндом добавить вкладку!
         className="flex flex-row w-full items-center space-x-2 mt-4"
+        onSubmit={onSubmit}
       >
-        <Input name="city" placeholder="City" type="text"/>
-        <Input name="area" placeholder="m3" type="number" min="0" step={1}/>
-        <Input name="minPrice" placeholder="Min Price" type="number" min="0" step={1}/>
-        <Input name="maxPrice" placeholder="Max Price" type="number" min="0" step={1}/>
-        <Button><SearchIcon size={16} /></Button>
+        <Input name="city" placeholder="City" type="text" />
+        <Input name="area" placeholder="m2" type="number" min="0" step={1} />
+        <Input
+          name="minPrice"
+          placeholder="Min Price"
+          type="number"
+          min="0"
+          step={1}
+        />
+        <Input
+          name="maxPrice"
+          placeholder="Max Price"
+          type="number"
+          min="0"
+          step={1}
+        />
+        <Button size={"default"}><SearchIcon size={16} /></Button>
       </form>
     </>
   );

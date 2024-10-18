@@ -6,7 +6,7 @@ import Messages from "./Messages";
 import { Suspense } from "react";
 import CenterRotator from "@/components/CenterRotator";
 
-interface ProfileProps {
+type ProfileProps = {
   searchParams: { [key: string]: string | undefined };
 }
 
@@ -20,6 +20,7 @@ const Profile: React.FC<ProfileProps> = async ({ searchParams }) => {
     <div className="flex w-full">
       <div id="profile-post" className="grow ml-8">
         <UpdateProfile user={session?.user}/>
+        {/* нужен ключ */}
         <Suspense fallback={<CenterRotator/>}>
           <MyList userId={session?.user?.id} searchParams={searchParams}/>
         </Suspense>

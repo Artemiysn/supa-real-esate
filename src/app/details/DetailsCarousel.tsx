@@ -5,10 +5,8 @@ import fb from "@/../public/fallback.png";
 
 import Image from "next/image";
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
-  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,

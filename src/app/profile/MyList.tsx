@@ -10,12 +10,12 @@ type MyListProps = {
   searchParams: { [key: string]: string | undefined };
 }
 
-const defaultPostsPerPage = '5';
+const defaultPostsPerPageProfile = '5';
 
 const MyList: React.FC<MyListProps> = async ({userId, searchParams}) => {
 
   const currentPage = parseInt((searchParams.page as string) || '1');
-  const postsPerPage = parseInt((searchParams.pageSize as string) || defaultPostsPerPage);
+  const postsPerPage = parseInt((searchParams.pageSize as string) || defaultPostsPerPageProfile);
 
   const {posts, total} = await fetchUserPostsWithPages(userId, currentPage, postsPerPage);
 
