@@ -4,8 +4,27 @@ import { isPositiveNumber } from "./utils";
 import { paramsForPostSearch } from "@/app/searchposts/page";
 
 export type PostWithUsers = Prisma.PostsGetPayload<{
-  include: { user: true }
-}>
+  include: { user: true };
+}>;
+
+export const getPostDetails = async (
+  postId: string | undefined
+): Promise<PostWithUsers> => {
+  // await new Promise(r => setTimeout(r, 2000));
+
+  try {
+    const post = await db.Posts.findUniqueOrThrow({
+      include: {
+        user: true,
+      },
+      where: { id: postId },
+    });
+    return post;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch post data.");
+  }
+};
 
 export const fetchUserPosts = async (
   userId: string | undefined
@@ -54,26 +73,18 @@ export const fetchUserPostsWithPages = async (
   }
 };
 
-export const getPostDetails = async (postId: string): Promise<PostWithUsers> => {
-  try {
-    const post = await db.Posts.findUniqueOrThrow({
-      include: {
-        user: true,
-      },
-      where: { id: postId },
-    });
-    return post;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch post data.");
-  }
-};
-
-export const fetchPostsByParams = async (params: paramsForPostSearch): Promise<Posts[]> => {
-
+export const fetchPostsByParams = async (
+  params: paramsForPostSearch,
+  page: number,
+  perPage: number
+): Promise<{ posts: Posts[]; total: number }> => {
   // добавить try catch и пагинацию
 
-  let where: any = {type: params?.type};
+  const start = (page - 1) * perPage;
+
+  let where: any;
+
+  if (params?.type) where = { type: params?.type };
 
   if (isPositiveNumber(params.area)) {
     where = {
@@ -81,7 +92,7 @@ export const fetchPostsByParams = async (params: paramsForPostSearch): Promise<P
       area: {
         gte: Number(params.area),
       },
-    }
+    };
   }
 
   if (isPositiveNumber(params.minPrice)) {
@@ -91,7 +102,7 @@ export const fetchPostsByParams = async (params: paramsForPostSearch): Promise<P
         ...where.price,
         gte: Number(params.minPrice),
       },
-    }
+    };
   }
   if (isPositiveNumber(params.maxPrice)) {
     where = {
@@ -100,7 +111,7 @@ export const fetchPostsByParams = async (params: paramsForPostSearch): Promise<P
         ...where.price,
         lte: Number(params.maxPrice),
       },
-    }
+    };
   }
   if (params?.city && params?.city?.length > 1) {
     where = {
@@ -108,16 +119,36 @@ export const fetchPostsByParams = async (params: paramsForPostSearch): Promise<P
       city: {
         search: params.city,
       },
-    }
+    };
   }
 
-  const posts = await db.Posts.findMany({
-    where: where,
-    orderBy: {
-      updatedAt: "desc",
-    }
-  });
+  if (params?.property) {
+    where = {
+      ...where,
+      property: params?.property,
+    };
+  }
+  try {
+    const [posts, count] = await db.$transaction([
+      db.Posts.findMany({
+        where: where,
+        orderBy: {
+          updatedAt: "desc",
+        },
+        skip: start,
+        take: perPage,
+      }),
+      db.Posts.count({
+        where: where,
+      }),
+    ]);
 
-  return posts
-
-}
+    return {
+      posts: posts,
+      total: count,
+    };
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch posts.");
+  }
+};

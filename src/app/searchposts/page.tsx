@@ -1,10 +1,8 @@
 import CenterRotator from "@/components/CenterRotator";
-import PostInList from "@/components/PostInList/PostInList";
-import { fetchPostsByParams } from "@/lib/data";
-import { PostType } from "@prisma/client";
-import { Suspense, useState } from "react";
-import { useFormState } from "react-dom";
+import { PostType, PropertyType } from "@prisma/client";
+import { Suspense } from "react";
 import PostList from "./PostList";
+import SearchPostsForm from "./SearchPostsForm";
 
 export type paramsForPostSearch = {
   type?: PostType | undefined;
@@ -12,19 +10,24 @@ export type paramsForPostSearch = {
   area?: number | undefined;
   minPrice?: number | undefined;
   maxPrice?: number | undefined;
+  property?: PropertyType | undefined;
 };
 
 type SearchPostsProps = {
   searchParams: { [key: string]: string | undefined };
 };
 
-const SearchPosts: React.FC<SearchPostsProps> = async ({ searchParams }) => {
-
+const SearchPosts: React.FC<SearchPostsProps> = ({ searchParams }) => {
   return (
-    // нужен key для suspense
-    <Suspense fallback={<CenterRotator />}>
-      <PostList searchParams={searchParams}/>
-    </Suspense>
+    <>
+      <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 text-gray-700 ml-8">
+        Search result for <b>{!Boolean(searchParams?.city) ? 'all' : searchParams?.city}</b>
+      </h3>
+      <SearchPostsForm searchParams={searchParams} />
+      <Suspense fallback={<CenterRotator />} key={searchParams.page}>
+        <PostList searchParams={searchParams} />
+      </Suspense>
+    </>
   );
 };
 

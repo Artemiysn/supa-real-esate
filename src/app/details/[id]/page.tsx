@@ -1,5 +1,4 @@
 import { getServerAuthSession } from "@/auth";
-import Unauthorized from "@/components/Unauthorized/Unauthorized";
 import { getPostDetails, PostWithUsers } from "@/lib/data";
 import DetailsCarousel from "../DetailsCarousel";
 import { MapPin, SendHorizontal, Star } from "lucide-react";
@@ -14,6 +13,8 @@ import { Badge } from "@/components/ui/badge";
 import DetailsBlock from "../DetailsBlock";
 import Location from "../Location";
 import { Button } from "@/components/ui/button";
+import CenterRotator from "@/components/CenterRotator";
+import { Suspense } from "react";
 
 type DetailsProps = {
   params: {
@@ -24,9 +25,22 @@ type DetailsProps = {
 const Details: React.FC<DetailsProps> = async ({ params }) => {
   // with jwt set up this should be in middleware
   const session = await getServerAuthSession();
-  if (!session) return <Unauthorized />;
 
-  const post: PostWithUsers = await getPostDetails(params.id);
+  return (
+    <Suspense fallback={<CenterRotator />} key={params.id}>
+      <DetailsComponent userId={session?.user?.id} postId={params.id} />
+    </Suspense>
+  );
+};
+
+export default Details;
+
+const DetailsComponent: React.FC<{
+  userId: string | undefined;
+  postId: string | undefined;
+}> = async ({ userId, postId }) => {
+  
+  const post: PostWithUsers = await getPostDetails(postId);
 
   return (
     <div className="flex w-full">
@@ -48,9 +62,7 @@ const Details: React.FC<DetailsProps> = async ({ params }) => {
             </p>
           </div>
           <div className="flex gap-2 items-start pt-1">
-            <span >
-              {displayDate(post?.updatedAt)}
-            </span>
+            <span>{displayDate(post?.updatedAt)}</span>
             <TooltipProvider>
               <Tooltip delayDuration={300}>
                 <TooltipTrigger asChild>
@@ -65,18 +77,15 @@ const Details: React.FC<DetailsProps> = async ({ params }) => {
         </div>
         <p className="mb-4">{post?.description}</p>
       </div>
-      <div
-        id="general-and-map"
-        className="w-[400px] mr-8 px-4 pb-4"
-      >
-        <DetailsBlock post={post}/>
+      <div id="general-and-map" className="w-[400px] mr-8 px-4 pb-4">
+        <DetailsBlock post={post} />
         {/* <Location /> */}
         <div className="flex w-full justify-between items-center pl-2">
           <span className="text-slate-500 italic ">
-            Posted by: &nbsp; {post.user.name} 
+            Posted by: &nbsp; {post.user.name}
           </span>
-          <Button variant="outline" disabled={session?.user.id === post?.user?.id}>
-            <SendHorizontal className="mr-2 inline-block stroke-orange-300"/>
+          <Button variant="outline" disabled={userId === post?.user?.id}>
+            <SendHorizontal className="mr-2 inline-block stroke-orange-300" />
             Send a message
           </Button>
         </div>
@@ -84,5 +93,3 @@ const Details: React.FC<DetailsProps> = async ({ params }) => {
     </div>
   );
 };
-
-export default Details;

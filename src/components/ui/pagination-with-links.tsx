@@ -25,18 +25,6 @@ export interface PaginationWithLinksProps {
   pageSearchParam?: string;
 }
 
-/**
- * Navigate with Nextjs links (need to update your own `pagination.tsx` to use Nextjs Link)
- * 
- * @example
- * ```
- * <PaginationWithLinks
-    page={1}
-    pageSize={20}
-    totalCount={500}
-  />
- * ```
- */
 export function PaginationWithLinks({
   pageSizeSelectOptions,
   pageSize,
@@ -44,6 +32,7 @@ export function PaginationWithLinks({
   page,
   pageSearchParam,
 }: PaginationWithLinksProps) {
+  
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -183,7 +172,7 @@ function SelectRowsPerPage({
 }) {
   return (
     <div className="flex items-center gap-4 min-w-44">
-      <span className="whitespace-nowrap text-sm">Rows per page</span>
+      <span className="whitespace-nowrap text-sm">Posts per page</span>
       <Select value={String(pageSize)} onValueChange={(value) => setPageSize(Number(value))}>
         <SelectTrigger>
           <SelectValue placeholder="Select page size">{String(pageSize)}</SelectValue>

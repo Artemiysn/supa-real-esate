@@ -49,8 +49,8 @@ const MainPageForm = () => {
         className="flex flex-row w-full items-center space-x-2 mt-4"
         onSubmit={onSubmit}
       >
-        <Input name="city" placeholder="City" type="text" />
-        <Input name="area" placeholder="m2" type="number" min="0" step={1} />
+        <Input name="city" placeholder="City" type="text" maxLength={200}/>
+        <Input name="area" placeholder="m2" type="number" min="0" step={1} max={2000}/>
         <Input
           name="minPrice"
           placeholder="Min Price"
@@ -65,7 +65,7 @@ const MainPageForm = () => {
           min="0"
           step={1}
         />
-        <Button size={"default"}><SearchIcon size={16} /></Button>
+        <Button size={"default"} type="submit"><SearchIcon size={16} /></Button>
       </form>
     </>
   );

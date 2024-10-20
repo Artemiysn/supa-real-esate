@@ -8,28 +8,29 @@ import CenterRotator from "@/components/CenterRotator";
 
 type ProfileProps = {
   searchParams: { [key: string]: string | undefined };
-}
+};
 
 const Profile: React.FC<ProfileProps> = async ({ searchParams }) => {
-
   // with jwt set up this should be in middleware
   const session = await getServerAuthSession();
-  if (!session) return <Unauthorized />
+  if (!session) return <Unauthorized />;
 
   return (
     <div className="flex w-full">
       <div id="profile-post" className="grow ml-8">
-        <UpdateProfile user={session?.user}/>
+        <UpdateProfile user={session?.user} />
         {/* нужен ключ */}
-        <Suspense fallback={<CenterRotator/>}>
-          <MyList userId={session?.user?.id} searchParams={searchParams}/>
+        <Suspense fallback={<CenterRotator />} key={searchParams?.page}>
+          <MyList userId={session?.user?.id} searchParams={searchParams} />
         </Suspense>
       </div>
       <div id="profile-messages" className="w-[400px] mr-8">
-        <Messages />
+        <Suspense fallback={<CenterRotator />} key={searchParams?.page} >
+          <Messages />
+        </Suspense>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

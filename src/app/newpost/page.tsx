@@ -1,12 +1,17 @@
-'use client';
-
-import { SessionProvider } from "next-auth/react"
 import  NewPost from "./NewPost"
+import { Suspense } from "react";
+import CenterRotator from "@/components/CenterRotator";
+import { getServerAuthSession } from "@/auth";
+import Unauthorized from "@/components/Unauthorized/Unauthorized";
  
-export default function page() {
+export default async function page() {
+
+  const session = await getServerAuthSession();
+  if (!session) return <Unauthorized />;
+
   return (
-    <SessionProvider>
+    <Suspense fallback={<CenterRotator/>} >
       <NewPost />
-    </SessionProvider>
+    </Suspense>
   )
 }
