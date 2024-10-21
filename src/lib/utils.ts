@@ -9,6 +9,3 @@ export function displayDate(date: Date): string {
   return date.toISOString().substring(0, 10)
 }
 
-export function isPositiveNumber(value: number | string | undefined): boolean {
-  return Number(value) > 0;
-}

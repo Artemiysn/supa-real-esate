@@ -2,7 +2,7 @@ import bg from "@/../../public/bg.jpeg";
 import dynamic from "next/dynamic";
 
 // so that browser api like window can be safely used https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading
-const MainPageForm = dynamic(() => import('@/components/MainPageForm/MainPageForm'), {
+const MainPageForm = dynamic(() => import('@/app/MainPageForm'), {
   ssr: false,
 })
 

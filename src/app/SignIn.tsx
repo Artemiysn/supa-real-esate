@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,7 +11,6 @@ type SignInProps = {
 };
 
 const SignIn: React.FC<SignInProps> = ({ user }) => {
-
   const handleSign = async () => {
     if (user) await signOut({ callbackUrl: "/" });
     else await signIn("google");
@@ -23,10 +22,16 @@ const SignIn: React.FC<SignInProps> = ({ user }) => {
         <>
           <Avatar className="mx-2">
             {/* no-refferer fixes google img deisplay */}
-            <AvatarImage src={user?.image as string} alt="user" referrerPolicy="no-referrer"/>
+            <AvatarImage
+              src={user?.image as string}
+              alt="user"
+              referrerPolicy="no-referrer"
+            />
             <AvatarFallback>{user?.name}</AvatarFallback>
           </Avatar>
-          <Link href="/profile" className="mx-2"><Button variant={"secondary"}>Profile</Button></Link>
+          <Link href="/profile" className="mx-2">
+            <Button variant={"secondary"}>Profile</Button>
+          </Link>
         </>
       )}
       <Button variant={"default"} onClick={handleSign}>

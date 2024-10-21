@@ -6,10 +6,9 @@ import { TailSpin } from "react-loader-spinner";
 type SubmitButtonProps = {
   size: "default" | "sm" | "lg" | "icon" | null | undefined;
   content: ReactNode;
-}
+};
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({size, content}) => {
-
+const SubmitButton: React.FC<SubmitButtonProps> = ({ size, content }) => {
   const { pending } = useFormStatus();
 
   return (

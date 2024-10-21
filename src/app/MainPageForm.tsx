@@ -2,20 +2,18 @@
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, FormEvent } from "react";
-import { Input } from "../ui/input";
+import { Input } from "../components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PostType } from "@prisma/client";
-import { Button } from "../ui/button";
+import { Button } from "../components/ui/button";
 
 const MainPageForm = () => {
-
   const router = useRouter();
   router.prefetch("/searchposts");
   const [tabValue, setTabValue] = useState<PostType>("rent");
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
-    
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const searchParams = new URLSearchParams();
@@ -49,8 +47,15 @@ const MainPageForm = () => {
         className="flex flex-row w-full items-center space-x-2 mt-4"
         onSubmit={onSubmit}
       >
-        <Input name="city" placeholder="City" type="text" maxLength={200}/>
-        <Input name="area" placeholder="m2" type="number" min="0" step={1} max={2000}/>
+        <Input name="city" placeholder="City" type="text" maxLength={200} />
+        <Input
+          name="area"
+          placeholder="m2"
+          type="number"
+          min="0"
+          step={1}
+          max={2000}
+        />
         <Input
           name="minPrice"
           placeholder="Min Price"
@@ -65,7 +70,9 @@ const MainPageForm = () => {
           min="0"
           step={1}
         />
-        <Button size={"default"} type="submit"><SearchIcon size={16} /></Button>
+        <Button size={"default"} type="submit">
+          <SearchIcon size={16} />
+        </Button>
       </form>
     </>
   );

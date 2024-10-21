@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Image from "next/image";
-import SignIn from "@/components/SignIn/SignIn";
+import SignIn from "@/app/SignIn";
 import { getServerAuthSession } from "@/auth";
 import Link from "next/link";
 

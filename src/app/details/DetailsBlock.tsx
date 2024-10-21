@@ -1,5 +1,13 @@
 import { Posts as PostType } from "@prisma/client";
-import { ArrowsUpFromLine, BadgeDollarSign, Building2, CookingPot, Hammer, House, Scaling } from "lucide-react";
+import {
+  ArrowsUpFromLine,
+  BadgeDollarSign,
+  Building2,
+  CookingPot,
+  Hammer,
+  House,
+  Scaling,
+} from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 type DetailsBlockProps = {
@@ -50,7 +58,7 @@ const DetailsBlock: React.FC<DetailsBlockProps> = ({ post }) => {
           </TableRow>
           <TableRow>
             <TableCell>
-              <Scaling 
+              <Scaling
                 size={24}
                 className="stroke-orange-300 mr-2 inline-block"
               />
@@ -62,7 +70,7 @@ const DetailsBlock: React.FC<DetailsBlockProps> = ({ post }) => {
           </TableRow>
           <TableRow>
             <TableCell>
-              <CookingPot 
+              <CookingPot
                 size={24}
                 className="stroke-orange-300 mr-2 inline-block"
               />
@@ -74,7 +82,7 @@ const DetailsBlock: React.FC<DetailsBlockProps> = ({ post }) => {
           </TableRow>
           <TableRow>
             <TableCell>
-              <ArrowsUpFromLine 
+              <ArrowsUpFromLine
                 size={24}
                 className="stroke-orange-300 mr-2 inline-block"
               />
@@ -86,7 +94,7 @@ const DetailsBlock: React.FC<DetailsBlockProps> = ({ post }) => {
           </TableRow>
           <TableRow>
             <TableCell>
-              <Hammer 
+              <Hammer
                 size={24}
                 className="stroke-orange-300 mr-2 inline-block"
               />

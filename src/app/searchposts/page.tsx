@@ -21,7 +21,8 @@ const SearchPosts: React.FC<SearchPostsProps> = ({ searchParams }) => {
   return (
     <>
       <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 text-gray-700 ml-8">
-        Search result for <b>{!Boolean(searchParams?.city) ? 'all' : searchParams?.city}</b>
+        Search result for{" "}
+        <b>{!Boolean(searchParams?.city) ? "all" : searchParams?.city}</b>
       </h3>
       <SearchPostsForm searchParams={searchParams} />
       <Suspense fallback={<CenterRotator />} key={searchParams.page}>

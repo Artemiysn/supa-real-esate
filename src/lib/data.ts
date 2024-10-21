@@ -1,6 +1,5 @@
 import { db } from "@/modules/db";
 import type { Posts, Prisma } from "@prisma/client";
-import { isPositiveNumber } from "./utils";
 import { paramsForPostSearch } from "@/app/searchposts/page";
 
 export type PostWithUsers = Prisma.PostsGetPayload<{
@@ -49,6 +48,7 @@ export const fetchUserPostsWithPages = async (
 
   const start = (page - 1) * perPage;
   try {
+    // prisma orm limitation
     const [posts, count] = await db.$transaction([
       db.Posts.findMany({
         where: { userId: userId },
@@ -78,7 +78,6 @@ export const fetchPostsByParams = async (
   page: number,
   perPage: number
 ): Promise<{ posts: Posts[]; total: number }> => {
-  // добавить try catch и пагинацию
 
   const start = (page - 1) * perPage;
 
@@ -86,7 +85,7 @@ export const fetchPostsByParams = async (
 
   if (params?.type) where = { type: params?.type };
 
-  if (isPositiveNumber(params.area)) {
+  if (Number(params.area) > 0) {
     where = {
       ...where,
       area: {
@@ -95,7 +94,7 @@ export const fetchPostsByParams = async (
     };
   }
 
-  if (isPositiveNumber(params.minPrice)) {
+  if (Number(params.minPrice) > 0) {
     where = {
       ...where,
       price: {
@@ -104,7 +103,7 @@ export const fetchPostsByParams = async (
       },
     };
   }
-  if (isPositiveNumber(params.maxPrice)) {
+  if (Number(params.maxPrice) > 0) {
     where = {
       ...where,
       price: {
@@ -129,6 +128,7 @@ export const fetchPostsByParams = async (
     };
   }
   try {
+    // prisma orm limitation
     const [posts, count] = await db.$transaction([
       db.Posts.findMany({
         where: where,

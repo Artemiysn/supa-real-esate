@@ -10,7 +10,6 @@ type PostListProps = {
 const defaultPostsPerPageProfile = "5";
 
 const PostList: React.FC<PostListProps> = async ({ searchParams }) => {
-
   const currentPage = parseInt((searchParams.page as string) || "1");
   const postsPerPage = parseInt(
     (searchParams.pageSize as string) || defaultPostsPerPageProfile

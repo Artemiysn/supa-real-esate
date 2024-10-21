@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -17,7 +17,6 @@ import SubmitButton from "../../components/SubmitButton";
 const initialState: NewPostState = { message: null, errors: {} };
 
 const NewPost = async () => {
-
   const [state, formAction] = useFormState(createNewPost, initialState);
 
   return (
@@ -28,7 +27,7 @@ const NewPost = async () => {
         </h3>
         <div className={"inputBlock" + ` basis-1/3`}>
           <Label htmlFor="title">Title</Label>
-          <Input type="text" id="title" name="title" maxLength={255}/>
+          <Input type="text" id="title" name="title" maxLength={255} />
           <div id="title-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.title &&
               state?.errors.title.map((error: string) => (
@@ -52,7 +51,7 @@ const NewPost = async () => {
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
           <Label htmlFor="address">Address</Label>
-          <Input type="text" id="address" name="address" maxLength={255}/>
+          <Input type="text" id="address" name="address" maxLength={255} />
           <div id="address-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.address &&
               state?.errors.address.map((error: string) => (
@@ -123,7 +122,7 @@ const NewPost = async () => {
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
           <Label htmlFor="city">City</Label>
-          <Input type="text" id="city" name="city" maxLength={255}/>
+          <Input type="text" id="city" name="city" maxLength={255} />
           <div id="city-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.city &&
               state?.errors.city.map((error: string) => (
@@ -171,7 +170,14 @@ const NewPost = async () => {
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
           <Label htmlFor="year">Year of construction</Label>
-          <Input type="number" min={0} id="year" name="year" step={1} max={3000} />
+          <Input
+            type="number"
+            min={0}
+            id="year"
+            name="year"
+            step={1}
+            max={3000}
+          />
           <div id="year-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.year &&
               state?.errors.year.map((error: string) => (
@@ -182,7 +188,7 @@ const NewPost = async () => {
           </div>
         </div>
         <div className={"inputBlock" + ` basis-1/3  mt-5`}>
-          <SubmitButton size={'default'} content={"Add"}/>
+          <SubmitButton size={"default"} content={"Add"} />
         </div>
       </div>
       <div

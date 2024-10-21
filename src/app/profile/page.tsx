@@ -19,13 +19,12 @@ const Profile: React.FC<ProfileProps> = async ({ searchParams }) => {
     <div className="flex w-full">
       <div id="profile-post" className="grow ml-8">
         <UpdateProfile user={session?.user} />
-        {/* нужен ключ */}
         <Suspense fallback={<CenterRotator />} key={searchParams?.page}>
           <MyList userId={session?.user?.id} searchParams={searchParams} />
         </Suspense>
       </div>
       <div id="profile-messages" className="w-[400px] mr-8">
-        <Suspense fallback={<CenterRotator />} key={searchParams?.page} >
+        <Suspense fallback={<CenterRotator />} key={searchParams?.page}>
           <Messages />
         </Suspense>
       </div>

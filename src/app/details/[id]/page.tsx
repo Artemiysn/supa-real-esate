@@ -39,7 +39,6 @@ const DetailsComponent: React.FC<{
   userId: string | undefined;
   postId: string | undefined;
 }> = async ({ userId, postId }) => {
-  
   const post: PostWithUsers = await getPostDetails(postId);
 
   return (
