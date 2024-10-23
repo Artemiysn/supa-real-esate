@@ -39,7 +39,8 @@ const DetailsComponent: React.FC<{
   userId: string | undefined;
   postId: string | undefined;
 }> = async ({ userId, postId }) => {
-  const post: PostWithUsers = await getPostDetails(postId);
+  
+  const post: PostWithUsers = await getPostDetails(postId, userId);
 
   return (
     <div className="flex w-full">

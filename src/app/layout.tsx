@@ -4,6 +4,7 @@ import Image from "next/image";
 import SignIn from "@/app/SignIn";
 import { getServerAuthSession } from "@/auth";
 import Link from "next/link";
+import { NextBgStaticCss } from "next-bg-image";
 
 export const metadata: Metadata = {
   title: "Find your apartment with ease!",
@@ -21,6 +22,7 @@ export default async function RootLayout({
     <html lang="en">
       {/* <body className="max-w-[900px] mx-auto"> */}
       <body>
+        <NextBgStaticCss />
         <div className="flex flex-col h-screen">
           <nav className="min-h-[90px] flex justify-between pt-1 pb-1 pl-2 pr-2">
             <Link href="/" className="flex items-center">

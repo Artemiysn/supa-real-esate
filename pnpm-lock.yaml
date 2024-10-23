@@ -56,6 +56,9 @@ importers:
       next-auth:
         specifier: ^4.24.8
         version: 4.24.8(@auth/core@0.35.3)(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next-bg-image:
+        specifier: ^0.3.0
+        version: 0.3.0(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: ^18
         version: 18.3.1
@@ -1813,6 +1816,13 @@ packages:
         optional: true
       nodemailer:
         optional: true
+
+  next-bg-image@0.3.0:
+    resolution: {integrity: sha512-FLNvfE3cFNDz6ZO3dgivs8ZagNiyQgFkDBgeAD/+qJsDFGHmTp77Yd3h7VdHDV+7nYD8HVhke6vrXF8kPY2/Ew==}
+    peerDependencies:
+      next: '>=13.0.0'
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
 
   next@14.2.13:
     resolution: {integrity: sha512-BseY9YNw8QJSwLYD7hlZzl6QVDoSFHL/URN5K64kVEVpCsSOWeyjbIGK+dZUaRViHTaMQX8aqmnn0PHBbGZezg==}
@@ -4264,6 +4274,12 @@ snapshots:
       uuid: 8.3.2
     optionalDependencies:
       '@auth/core': 0.35.3
+
+  next-bg-image@0.3.0(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      next: 14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:

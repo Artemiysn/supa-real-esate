@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
@@ -52,14 +52,16 @@ model VerificationToken {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String          @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?         @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   Posts         Posts[]
+  FavouredPosts FavouredPosts[]
+
   @@index([name])
 }
 
@@ -74,23 +76,35 @@ enum PropertyType {
 }
 
 model Posts {
-  id          BigInt   @id @default(autoincrement())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String   @db.VarChar(255)
-  price       Int
-  address     String   @db.VarChar(255)
-  description String   @db.VarChar(1000)
-  type        PostType
-  property PropertyType
-  city String   @db.VarChar(255)
-  area Int
-  kitchen Int
-  floor Int
-  year Int
+  id            BigInt          @id @default(autoincrement())
+  userId        String
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  title         String          @db.VarChar(255)
+  price         Int
+  address       String          @db.VarChar(255)
+  description   String          @db.VarChar(1000)
+  type          PostType
+  property      PropertyType
+  city          String          @db.VarChar(255)
+  area          Int
+  kitchen       Int
+  floor         Int
+  year          Int
+  FavouredPosts FavouredPosts[]
+
   @@index([city])
   @@index([area])
   @@index([price])
+}
+
+model FavouredPosts {
+  id     String @id @default(cuid())
+  userId String
+  postId BigInt
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  post   Posts  @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userId])
 }

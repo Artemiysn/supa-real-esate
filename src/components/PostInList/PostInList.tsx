@@ -1,11 +1,9 @@
-import { Posts } from "@prisma/client";
 import Image from "next/image";
 import fallback from "@/../../public/fallback.png";
 import {
   LandPlot,
   MapPin,
   CookingPot,
-  Star,
   Building,
   House,
 } from "lucide-react";
@@ -17,12 +15,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Link from "next/link";
+import { PostWithUsers } from "@/lib/data";
+import AddToFavourites from "./AddToFavourites";
 
 type PostInListProps = {
-  post: Posts;
+  post: PostWithUsers;
+  userId: string | undefined;
 };
 
-const PostInList: React.FC<PostInListProps> = ({ post }) => {
+const PostInList: React.FC<PostInListProps> = ({ post, userId }) => {
   return (
     <TooltipProvider>
       <div className="flex h-[200px] w-full mb-4 rounded-xl border bg-card text-card-foreground shadow p-2">
@@ -44,7 +45,9 @@ const PostInList: React.FC<PostInListProps> = ({ post }) => {
                 </h4>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="top" sideOffset={-3} >Details</TooltipContent>
+            <TooltipContent side="top" sideOffset={-3}>
+              Details
+            </TooltipContent>
           </Tooltip>
           <address className="text-slate-400 size text-sm mb-4">
             <MapPin size={12} className="inline align-baseline mr-1" />
@@ -85,14 +88,7 @@ const PostInList: React.FC<PostInListProps> = ({ post }) => {
               </Tooltip>
             </div>
             <div data-type="post-in-list-buttons" className="flex gap-2">
-              <Tooltip delayDuration={300}>
-                <TooltipTrigger asChild>
-                  <Badge variant="outline">
-                    <Star size={16} className="cursor-pointer" />
-                  </Badge>
-                </TooltipTrigger>
-                <TooltipContent>Add to favorites</TooltipContent>
-              </Tooltip>
+                <AddToFavourites post={post} userId={userId} />
             </div>
           </div>
         </div>

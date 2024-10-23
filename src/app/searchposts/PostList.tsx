@@ -5,11 +5,12 @@ import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
 
 type PostListProps = {
   searchParams: { [key: string]: string | undefined };
+  userId: string | undefined;
 };
 
 const defaultPostsPerPageProfile = "5";
 
-const PostList: React.FC<PostListProps> = async ({ searchParams }) => {
+const PostList: React.FC<PostListProps> = async ({ searchParams, userId }) => {
   const currentPage = parseInt((searchParams.page as string) || "1");
   const postsPerPage = parseInt(
     (searchParams.pageSize as string) || defaultPostsPerPageProfile
@@ -18,7 +19,8 @@ const PostList: React.FC<PostListProps> = async ({ searchParams }) => {
   const { posts, total } = await fetchPostsByParams(
     searchParams as paramsForPostSearch,
     currentPage,
-    postsPerPage
+    postsPerPage,
+    userId
   );
 
   return (
@@ -26,7 +28,7 @@ const PostList: React.FC<PostListProps> = async ({ searchParams }) => {
       <div id="post-list" className="grow ml-8 pr-8 mb-4">
         <div id="post-list" className="min-h-[400px] mb-5">
           {posts.map((post) => (
-            <PostInList post={post} />
+            <PostInList post={post} userId={userId}/>
           ))}
         </div>
         <PaginationWithLinks

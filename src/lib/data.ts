@@ -1,13 +1,16 @@
 import { db } from "@/modules/db";
 import type { Posts, Prisma } from "@prisma/client";
 import { paramsForPostSearch } from "@/app/searchposts/page";
+import { usePathname } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export type PostWithUsers = Prisma.PostsGetPayload<{
-  include: { user: true };
+  include: { user: true; FavouredPosts: true };
 }>;
 
 export const getPostDetails = async (
-  postId: string | undefined
+  postId: string | undefined,
+  userId: string | undefined
 ): Promise<PostWithUsers> => {
   // await new Promise(r => setTimeout(r, 2000));
 
@@ -15,6 +18,11 @@ export const getPostDetails = async (
     const post = await db.Posts.findUniqueOrThrow({
       include: {
         user: true,
+        FavouredPosts: {
+          where: {
+            userId: userId,
+          },
+        },
       },
       where: { id: postId },
     });
@@ -27,11 +35,19 @@ export const getPostDetails = async (
 
 export const fetchUserPosts = async (
   userId: string | undefined
-): Promise<Posts[]> => {
+): Promise<PostWithUsers[]> => {
   if (typeof userId === "undefined") return [];
   try {
     return db.Posts.findMany({
       where: { userId: userId },
+      include: {
+        user: true,
+        FavouredPosts: {
+          where: {
+            userId: userId,
+          },
+        },
+      },
     });
   } catch (error) {
     console.error("Database Error:", error);
@@ -43,7 +59,7 @@ export const fetchUserPostsWithPages = async (
   userId: string | undefined,
   page: number,
   perPage: number
-): Promise<{ posts: Posts[]; total: number }> => {
+): Promise<{ posts: PostWithUsers[]; total: number }> => {
   if (typeof userId === "undefined") return { posts: [], total: 0 };
 
   const start = (page - 1) * perPage;
@@ -56,6 +72,14 @@ export const fetchUserPostsWithPages = async (
         take: perPage,
         orderBy: {
           updatedAt: "desc",
+        },
+        include: {
+          user: true,
+          FavouredPosts: {
+            where: {
+              userId: userId,
+            },
+          },
         },
       }),
       db.Posts.count({
@@ -76,9 +100,9 @@ export const fetchUserPostsWithPages = async (
 export const fetchPostsByParams = async (
   params: paramsForPostSearch,
   page: number,
-  perPage: number
-): Promise<{ posts: Posts[]; total: number }> => {
-
+  perPage: number,
+  userId: string | undefined
+): Promise<{ posts: PostWithUsers[]; total: number }> => {
   const start = (page - 1) * perPage;
 
   let where: any;
@@ -137,6 +161,14 @@ export const fetchPostsByParams = async (
         },
         skip: start,
         take: perPage,
+        include: {
+          user: true,
+          FavouredPosts: {
+            where: {
+              userId: userId,
+            },
+          },
+        },
       }),
       db.Posts.count({
         where: where,
@@ -150,5 +182,33 @@ export const fetchPostsByParams = async (
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch posts.");
+  }
+};
+
+export const manageFav = async (
+  post: PostWithUsers,
+  userId: string | undefined
+) => {
+  if (!userId) return null;
+  const method = post?.FavouredPosts?.length ? "DELETE" : "POST";
+  const body = post?.FavouredPosts?.length
+    ? JSON.stringify({
+        favouredPostId: post.FavouredPosts[0].id,
+      })
+    : JSON.stringify({
+        userId: userId,
+        postId: String(post.id),
+      });
+  try {
+    const response = await fetch("/api/fav/", {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: body,
+    });
+    return response;
+  } catch (e) {
+    console.log(e);
   }
 };
