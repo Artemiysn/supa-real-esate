@@ -3,18 +3,13 @@ import { getPostDetails, PostWithUsers } from "@/lib/data";
 import DetailsCarousel from "../DetailsCarousel";
 import { MapPin, SendHorizontal, Star } from "lucide-react";
 import { displayDate } from "@/lib/utils";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Badge } from "@/components/ui/badge";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import DetailsBlock from "../DetailsBlock";
 import Location from "../Location";
 import { Button } from "@/components/ui/button";
 import CenterRotator from "@/components/CenterRotator";
 import { Suspense } from "react";
+import AddToFavourites from "@/components/PostInList/AddToFavourites";
 
 type DetailsProps = {
   params: {
@@ -39,7 +34,6 @@ const DetailsComponent: React.FC<{
   userId: string | undefined;
   postId: string | undefined;
 }> = async ({ userId, postId }) => {
-  
   const post: PostWithUsers = await getPostDetails(postId, userId);
 
   return (
@@ -64,14 +58,7 @@ const DetailsComponent: React.FC<{
           <div className="flex gap-2 items-start pt-1">
             <span>{displayDate(post?.updatedAt)}</span>
             <TooltipProvider>
-              <Tooltip delayDuration={300}>
-                <TooltipTrigger asChild>
-                  <Badge variant="default" className="mt-[2px]">
-                    <Star size={16} className="cursor-pointer" />
-                  </Badge>
-                </TooltipTrigger>
-                <TooltipContent>Add to favorites</TooltipContent>
-              </Tooltip>
+              <AddToFavourites post={post} userId={userId} />
             </TooltipProvider>
           </div>
         </div>

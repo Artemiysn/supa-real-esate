@@ -34,7 +34,7 @@ const MyList: React.FC<MyListProps> = async ({ userId, searchParams }) => {
       </div>
       <div id="post-list" className="min-h-[400px] mb-5">
         {posts.map((post) => (
-          <PostInList post={post} userId={userId} />
+          <PostInList post={post} userId={userId} key={post.id}/>
         ))}
       </div>
       <PaginationWithLinks

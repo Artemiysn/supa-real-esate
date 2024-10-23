@@ -1,6 +1,5 @@
 "use client";
 
-import { Star } from "lucide-react";
 import { Badge } from "../ui/badge";
 import {
   Tooltip,
@@ -8,7 +7,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { manageFav, PostWithUsers } from "@/lib/data";
-import React from "react";
+import React, { useState } from "react";
+import { StarIcon, StarFilledIcon } from "@radix-ui/react-icons";
 
 type AddToFavouritesProps = {
   post: PostWithUsers;
@@ -16,27 +16,34 @@ type AddToFavouritesProps = {
 };
 
 const AddToFavourites: React.FC<AddToFavouritesProps> = ({ post, userId }) => {
+  const [isFavoured, setIsFavoured] = useState(
+    Boolean(post?.FavouredPosts?.length)
+  );
 
-  const badgeVariant = (() => {
-    if (!userId) return "secondary";
-    return post?.FavouredPosts?.length ? "default" : "outline";
-  })();
+  const badgeVariant = userId ? "outline" : "secondary";
 
   const tooltipText = (() => {
     if (!userId) return "Sign in to add to favourites";
-    return post?.FavouredPosts?.length
-      ? "Remove from favourites"
-      : "Add to favorites";
+    return isFavoured ? "Remove from favourites" : "Add to favorites";
   })();
+
+  const icon = isFavoured ? (
+    <StarFilledIcon fontSize={"2rem"} />
+  ) : (
+    <StarIcon fontSize={"2rem"} />
+  );
 
   return (
     <Tooltip delayDuration={300}>
-      <TooltipTrigger >
+      <TooltipTrigger>
         <Badge
           variant={badgeVariant}
-          onClick={() => manageFav(post, userId)}
+          onClick={async () => {
+            const result = await manageFav(post, userId);
+            if (result) setIsFavoured((prev) => !prev);
+          }}
         >
-          <Star size={16} className="cursor-pointer" />
+          {icon}
         </Badge>
       </TooltipTrigger>
       <TooltipContent>{tooltipText}</TooltipContent>

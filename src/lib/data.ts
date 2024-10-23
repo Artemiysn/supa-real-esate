@@ -1,8 +1,6 @@
 import { db } from "@/modules/db";
-import type { Posts, Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import { paramsForPostSearch } from "@/app/searchposts/page";
-import { usePathname } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 export type PostWithUsers = Prisma.PostsGetPayload<{
   include: { user: true; FavouredPosts: true };
@@ -12,8 +10,6 @@ export const getPostDetails = async (
   postId: string | undefined,
   userId: string | undefined
 ): Promise<PostWithUsers> => {
-  // await new Promise(r => setTimeout(r, 2000));
-
   try {
     const post = await db.Posts.findUniqueOrThrow({
       include: {
@@ -151,6 +147,15 @@ export const fetchPostsByParams = async (
       property: params?.property,
     };
   }
+
+  let favouredPosts = userId
+    ? {
+        where: {
+          userId: userId,
+        },
+      }
+    : false;
+
   try {
     // prisma orm limitation
     const [posts, count] = await db.$transaction([
@@ -163,11 +168,7 @@ export const fetchPostsByParams = async (
         take: perPage,
         include: {
           user: true,
-          FavouredPosts: {
-            where: {
-              userId: userId,
-            },
-          },
+          FavouredPosts: favouredPosts,
         },
       }),
       db.Posts.count({
@@ -189,7 +190,7 @@ export const manageFav = async (
   post: PostWithUsers,
   userId: string | undefined
 ) => {
-  if (!userId) return null;
+  if (!userId) return false;
   const method = post?.FavouredPosts?.length ? "DELETE" : "POST";
   const body = post?.FavouredPosts?.length
     ? JSON.stringify({
@@ -210,5 +211,6 @@ export const manageFav = async (
     return response;
   } catch (e) {
     console.log(e);
+    return false;
   }
 };
