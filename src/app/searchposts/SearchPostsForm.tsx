@@ -94,6 +94,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
           name="minPrice"
           step={1}
           min={0}
+          max={9999999}
           defaultValue={searchParams?.minPrice}
         />
         <div id="min-price-error" aria-live="polite" aria-atomic="true">
@@ -113,6 +114,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
           name="maxPrice"
           step={1}
           min={0}
+          max={9999999}
           defaultValue={searchParams?.maxPrice}
         />
         <div id="max-price-error" aria-live="polite" aria-atomic="true">
@@ -132,6 +134,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
           id="area"
           name="area"
           step={1}
+          max={9999999}
           defaultValue={searchParams?.area}
         />
         <div id="area-error" aria-live="polite" aria-atomic="true">

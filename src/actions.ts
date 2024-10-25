@@ -128,11 +128,13 @@ const SearchPostSchema = z.object({
   minPrice: z.coerce
     .number()
     .gt(0, "Please select price, price must be greater then 0")
+    .max(9999999, "Please select lower price min price")
     .int("Price must be an integer")
     .optional().or(z.literal('')),
   maxPrice: z.coerce
     .number()
     .gt(0, "Please select price, price must be greater then 0")
+    .max(9999999, "Please select lower price max price")
     .int("Price must be an integer")
     .optional().or(z.literal('')),
   type: z
@@ -149,6 +151,7 @@ const SearchPostSchema = z.object({
   area: z.coerce
     .number()
     .gt(0, "Please provide area, number must be positive")
+    .max(2000, "Please select lower area size")
     .int("Area size must be an integer")
     .optional().or(z.literal('')),
 });

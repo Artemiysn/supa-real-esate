@@ -5,15 +5,26 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "@auth/core/types";
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
+import { useState } from "react";
+import { TailSpin } from "react-loader-spinner";
 
 type SignInProps = {
   user: User | undefined;
 };
 
 const SignIn: React.FC<SignInProps> = ({ user }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSign = async () => {
-    if (user) await signOut({ callbackUrl: "/" });
-    else await signIn("google");
+    if (user) {
+      setIsLoading(true);
+      await signOut({ callbackUrl: "/" });
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+      await signIn("google");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -34,8 +45,14 @@ const SignIn: React.FC<SignInProps> = ({ user }) => {
           </Link>
         </>
       )}
-      <Button variant={"default"} onClick={handleSign}>
-        {user ? "Sign Out" : "Sign In"}
+      <Button variant={"default"} onClick={handleSign} disabled={isLoading} className="min-w-[90px]">
+        {isLoading ? (
+          <TailSpin width={20} height={20} />
+        ) : user ? (
+          "Sign Out"
+        ) : (
+          "Sign In"
+        )}
       </Button>
     </div>
   );

@@ -2,6 +2,7 @@ import PostInList from "@/components/PostInList/PostInList";
 import { fetchPostsByParams } from "@/lib/data";
 import { paramsForPostSearch } from "./page";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
+import NotFound from "@/components/NotFound";
 
 type PostListProps = {
   searchParams: { [key: string]: string | undefined };
@@ -24,26 +25,34 @@ const PostList: React.FC<PostListProps> = async ({ searchParams, userId }) => {
   );
 
   return (
-    <div className="flex w-full">
-      <div id="post-list" className="grow ml-8 pr-8 mb-4">
-        <div id="post-list" className="min-h-[400px] mb-5">
-          {posts.map((post) => (
-            <PostInList post={post} userId={userId} key={post.id}/>
-          ))}
+    <>
+      {!total ? (
+        <NotFound text={"Looks like nothing was found..."} />
+      ) : (
+        <div className="flex w-full">
+          <div id="post-list" className="grow ml-8 pr-8 mb-4">
+            <div id="post-list" className="min-h-[400px] mb-5">
+              {posts.map((post) => (
+                <PostInList post={post} userId={userId} key={post.id} />
+              ))}
+            </div>
+            <PaginationWithLinks
+              page={currentPage}
+              pageSize={postsPerPage}
+              totalCount={total}
+              pageSizeSelectOptions={{
+                pageSizeOptions: [5, 10, 25, 50],
+              }}
+            />
+          </div>
+          <div id="map-block" className="w-[400px] mr-8 px-4 pb-4">
+            <h4 className="scroll-m-20 text-xl font-bold pb-2 pl-2">
+              Location
+            </h4>
+          </div>
         </div>
-        <PaginationWithLinks
-          page={currentPage}
-          pageSize={postsPerPage}
-          totalCount={total}
-          pageSizeSelectOptions={{
-            pageSizeOptions: [5, 10, 25, 50],
-          }}
-        />
-      </div>
-      <div id="map-block" className="w-[400px] mr-8 px-4 pb-4">
-        <h4 className="scroll-m-20 text-xl font-bold pb-2 pl-2">Location</h4>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

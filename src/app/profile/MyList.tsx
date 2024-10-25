@@ -1,3 +1,4 @@
+import NotFound from "@/components/NotFound";
 import PostInList from "@/components/PostInList/PostInList";
 import { Button } from "@/components/ui/button";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
@@ -25,27 +26,35 @@ const MyList: React.FC<MyListProps> = async ({ userId, searchParams }) => {
   );
 
   return (
-    <div className="p-5 mb-4">
-      <div className="flex justify-between mb-2">
-        <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 ">My List</h3>
-        <Link href="/newpost" rel="preload">
-          <Button>Create New Post</Button>
-        </Link>
-      </div>
-      <div id="post-list" className="min-h-[400px] mb-5">
-        {posts.map((post) => (
-          <PostInList post={post} userId={userId} key={post.id}/>
-        ))}
-      </div>
-      <PaginationWithLinks
-        page={currentPage}
-        pageSize={postsPerPage}
-        totalCount={total}
-        pageSizeSelectOptions={{
-          pageSizeOptions: [5, 10, 25, 50],
-        }}
-      />
-    </div>
+    <>
+      {!total ? (
+        <NotFound text={"Looks like you don't have posts yet..."} />
+      ) : (
+        <div className="p-5 mb-4">
+          <div className="flex justify-between mb-2">
+            <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 ">
+              My List
+            </h3>
+            <Link href="/newpost" rel="preload">
+              <Button>Create New Post</Button>
+            </Link>
+          </div>
+          <div id="post-list" className="min-h-[200px] mb-5">
+            {posts.map((post) => (
+              <PostInList post={post} userId={userId} key={post.id} />
+            ))}
+          </div>
+          <PaginationWithLinks
+            page={currentPage}
+            pageSize={postsPerPage}
+            totalCount={total}
+            pageSizeSelectOptions={{
+              pageSizeOptions: [5, 10, 25, 50],
+            }}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

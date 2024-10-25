@@ -62,6 +62,7 @@ const MainPageForm = () => {
           type="number"
           min="0"
           step={1}
+          max={9999999}
         />
         <Input
           name="maxPrice"
@@ -69,6 +70,7 @@ const MainPageForm = () => {
           type="number"
           min="0"
           step={1}
+          max={9999999}
         />
         <Button size={"default"} type="submit">
           <SearchIcon size={16} />
