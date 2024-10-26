@@ -7,6 +7,7 @@ import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { TailSpin } from "react-loader-spinner";
+import { FcGoogle } from "react-icons/fc";
 
 type SignInProps = {
   user: User | undefined;
@@ -51,8 +52,7 @@ const SignIn: React.FC<SignInProps> = ({ user }) => {
         ) : user ? (
           "Sign Out"
         ) : (
-          "Sign In"
-        )}
+          <><span className="pb-[3px]">Sign in with</span> <FcGoogle size={18} className="ml-2"/> </>)}
       </Button>
     </div>
   );

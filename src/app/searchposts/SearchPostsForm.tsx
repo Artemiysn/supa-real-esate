@@ -146,7 +146,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
             ))}
         </div>
       </div>
-      <div className="relative">
+      <div className="relative min-w-14">
         <Button size={"default"} type="submit" className="absolute top-[7px]">
           <SearchIcon size={16} />
         </Button>

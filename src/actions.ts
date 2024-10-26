@@ -12,6 +12,7 @@ const NewPostSchema = z
     price: z.coerce
       .number()
       .gt(0, "Please select price, price must be greater then 0")
+      .max(9999999, "Please select lower price ")
       .int("Price must be an integer"),
     address: z
       .string()
@@ -28,18 +29,22 @@ const NewPostSchema = z
     area: z.coerce
       .number()
       .gt(1, "Please provide area, number must be positive")
+      .max(3000, "Please select lower area")
       .int("Area size must be an integer"),
     kitchen: z.coerce
       .number()
       .gt(1, "Please provide kitchen area in m2, number must be positive")
+      .max(3000, "Please select lower area")
       .int("Kitchen Area size must be an integer"),
     floor: z.coerce
       .number()
       .gt(1, "Please provide floor number, number must be positive")
+      .max(3000, "Please select lower area")
       .int("floor must be an integer"),
     year: z.coerce
       .number()
       .gt(1, "Please provide year, number must be positive")
+      .max(3000, "Please select real year")
       .int("year must be an integer"),
   })
   .required();
