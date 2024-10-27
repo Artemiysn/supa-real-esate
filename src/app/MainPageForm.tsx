@@ -27,6 +27,8 @@ const MainPageForm = () => {
     router.push(`/searchposts?${searchParams.toString()}`);
   }
 
+  // in next 15 this exact functionality is made with next js form component. This is next 14 bloated variant
+
   return (
     <>
       <Tabs

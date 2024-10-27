@@ -1,4 +1,4 @@
-import bg from "@/../../public/bg.jpeg";
+import bg from "@/../../public/bg.jpg";
 import dynamic from "next/dynamic";
 import NextBgImage from "next-bg-image";
 
@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <NextBgImage
       src={[
-        "linear-gradient(to bottom, rgba(255,255,255,1) 0, rgba(255,255,255,0.95) 40%, rgba(255,255,255,0.7) 100%)",
+        "linear-gradient(to bottom, rgba(255,255,255,1) 0, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0.65) 100%)",
         bg,
       ]}
       height={bg.height}

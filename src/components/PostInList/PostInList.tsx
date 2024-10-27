@@ -1,5 +1,5 @@
 import Image from "next/image";
-import fallback from "@/../../public/fallback.png";
+import { getImgSrcByPostId } from "@/lib/generatedImages";
 import {
   LandPlot,
   MapPin,
@@ -17,6 +17,7 @@ import {
 import Link from "next/link";
 import { PostWithUsers } from "@/lib/data";
 import AddToFavourites from "./AddToFavourites";
+import { displayDate } from "@/lib/utils";
 
 type PostInListProps = {
   post: PostWithUsers;
@@ -24,19 +25,23 @@ type PostInListProps = {
 };
 
 const PostInList: React.FC<PostInListProps> = ({ post, userId }) => {
+
+  const imgSrc = getImgSrcByPostId(post.id);
+
   return (
     <TooltipProvider>
       <div className="flex h-[200px] w-full mb-4 rounded-xl border bg-card text-card-foreground shadow p-2">
         <Link key={post.id} href={`/details/${post.id}`} className="mr-2">
           <Image
-            src={fallback.src}
+            src={imgSrc}
             alt="fallback"
+            className="rounded h-full w-full"
             width={300}
             height={200}
-            className="rounded h-full w-full"
           />
         </Link>
         <div className="flex flex-col items-start grow">
+          <div className="flex justify-between items-start w-full">
           <Tooltip delayDuration={300}>
             <TooltipTrigger asChild>
               <Link key={post.id} href={`/details/${post.id}`}>
@@ -49,7 +54,9 @@ const PostInList: React.FC<PostInListProps> = ({ post, userId }) => {
               Details
             </TooltipContent>
           </Tooltip>
-          <address className="text-slate-400 size text-sm mb-4">
+          <p className="text-slate-400 pt-[2px]">{displayDate(post?.updatedAt)}</p>
+          </div>
+          <address className="text-slate-400 text-sm mb-4">
             <MapPin size={12} className="inline align-baseline mr-1" />
             <span className="align-baseline">{post?.address}</span>
           </address>

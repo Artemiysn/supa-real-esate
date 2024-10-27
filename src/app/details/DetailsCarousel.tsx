@@ -1,8 +1,5 @@
 "use client";
 
-import bg from "@/../public/bg.jpeg";
-import fb from "@/../public/fallback.png";
-
 import Image from "next/image";
 import { useState } from "react";
 import {
@@ -13,43 +10,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import ImageViewer from "react-simple-image-viewer";
-
-// если элементов нет, первым элементом впихни
-// bg.src!
-const imgArray = [
-  {
-    src: bg.src,
-    alt: "bg",
-  },
-  {
-    src: fb.src,
-    alt: "fb",
-  },
-  {
-    src: bg.src,
-    alt: "bg",
-  },
-  {
-    src: fb.src,
-    alt: "fb",
-  },
-  {
-    src: bg.src,
-    alt: "bg",
-  },
-  {
-    src: fb.src,
-    alt: "fb",
-  },
-  {
-    src: bg.src,
-    alt: "bg",
-  },
-  {
-    src: fb.src,
-    alt: "fb",
-  },
-];
+import imgArray from "@/lib/generatedImages";
 
 const DetailsCarousel = () => {
   const [topImgIndex, setTopImgIndex] = useState(0);
@@ -63,7 +24,7 @@ const DetailsCarousel = () => {
           alt={imgArray[topImgIndex].alt}
           width={300}
           height={200}
-          className="rounded h-auto w-auto block cursor-pointer"
+          className="rounded h-auto w-auto block cursor-pointer max-h-full max-w-full"
           onClick={() => setIsViewerOpen(true)}
         />
       </div>
