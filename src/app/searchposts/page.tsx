@@ -3,7 +3,7 @@ import { PostType, PropertyType } from "@prisma/client";
 import { Suspense } from "react";
 import PostList from "./PostList";
 import SearchPostsForm from "./SearchPostsForm";
-import { getServerAuthSession } from "@/auth";
+import { getServerAuthSession } from "@/modules/auth";
 
 export type paramsForPostSearch = {
   type?: PostType | undefined;

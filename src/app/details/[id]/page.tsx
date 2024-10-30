@@ -1,4 +1,4 @@
-import { getServerAuthSession } from "@/auth";
+import { getServerAuthSession } from "@/modules/auth";
 import { getPostDetails, PostWithUsers } from "@/lib/data";
 import DetailsCarousel from "../DetailsCarousel";
 import { MapPin, SendHorizontal, Star } from "lucide-react";

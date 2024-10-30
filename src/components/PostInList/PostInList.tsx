@@ -64,7 +64,6 @@ const PostInList: React.FC<PostInListProps> = ({ post, userId }) => {
           <div className="flex grow items-end justify-between w-full">
             <div data-type="post-in-list-badges" className="flex gap-2">
               <Badge variant="outline">
-                {/* <LandPlot size={16} className="pr-1" /> {post?.area} */}
                 {post?.property === "apartment" ? (
                   <>
                     <Building size={16} className="pr-1" />

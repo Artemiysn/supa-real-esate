@@ -1,4 +1,4 @@
-import { getServerAuthSession } from "@/auth";
+import { getServerAuthSession } from "@/modules/auth";
 import { db } from "@/modules/db";
 import { NextRequest, NextResponse } from "next/server";
 

@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { createNewPost, NewPostState } from "@/actions";
+import { createNewPost, NewPostState } from "@/actions/actions";
 import { useFormState } from "react-dom";
 import SubmitButton from "../../components/SubmitButton";
 import { CloudUpload } from "lucide-react";

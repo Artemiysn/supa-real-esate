@@ -1,4 +1,4 @@
-import { getServerAuthSession } from "@/auth";
+import { getServerAuthSession } from "@/modules/auth";
 import Unauthorized from "@/components/Unauthorized/Unauthorized";
 import UpdateProfile from "./UpdateProfile";
 import MyList from "./MyList";

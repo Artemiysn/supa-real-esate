@@ -3,8 +3,8 @@
 import { z } from "zod";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
-import { getServerAuthSession } from "@/auth";
-import { db } from "./modules/db";
+import { getServerAuthSession } from "@/modules/auth";
+import { db } from "../modules/db";
 
 const NewPostSchema = z
   .object({
@@ -78,8 +78,6 @@ export async function createNewPost(
       message: "No user data!",
     };
   }
-
-  // await new Promise(r => setTimeout(r, 2000));
 
   const user = sessionData?.user;
 

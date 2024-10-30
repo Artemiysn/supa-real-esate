@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Image from "next/image";
 import SignIn from "@/app/SignIn";
-import { getServerAuthSession } from "@/auth";
+import { getServerAuthSession } from "@/modules/auth";
 import Link from "next/link";
 import { NextBgStaticCss } from "next-bg-image";
 

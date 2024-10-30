@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
-import { searchPosts, searchPostState } from "@/actions";
+import { searchPosts, searchPostState } from "@/actions/actions";
 import { useFormState } from "react-dom";
 
 type SearchPostsProps = {
