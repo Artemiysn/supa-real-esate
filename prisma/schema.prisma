@@ -93,6 +93,8 @@ model Posts {
   floor         Int
   year          Int
   FavouredPosts FavouredPosts[]
+  lat           Decimal?        @db.Decimal(11, 8)
+  lon           Decimal?        @db.Decimal(11, 8)
 
   @@index([city])
   @@index([area])

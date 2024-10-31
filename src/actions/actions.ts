@@ -46,6 +46,16 @@ const NewPostSchema = z
       .gt(1, "Please provide year, number must be positive")
       .max(3000, "Please select real year")
       .int("year must be an integer"),
+    lat: z.coerce
+      .number()
+      .gt(0, "Latitude must be greater then 0")
+      .max(999, "Please select lower price min price")
+      .optional().or(z.literal('')),
+    lon: z.coerce
+      .number()
+      .gt(0, "Longitude must be greater then 0")
+      .max(999, "Please select lower price min price")
+      .optional().or(z.literal('')),
   })
   .required();
 
@@ -62,6 +72,8 @@ export type NewPostState = {
     kitchen?: string[];
     floor?: string[];
     year?: string[];
+    lat?: string[];
+    lon?: string[];
   };
   message?: string | null;
 };

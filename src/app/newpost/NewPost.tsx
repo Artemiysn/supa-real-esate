@@ -32,7 +32,7 @@ const NewPost = () => {
           Add New Post
         </h3>
         <div className={"inputBlock" + ` basis-1/3`}>
-          <Label htmlFor="title">Title</Label>
+          <Label htmlFor="title">Title <span className="text-red-500">*</span></Label>
           <Input type="text" id="title" name="title" maxLength={255} />
           <div id="title-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.title &&
@@ -44,7 +44,7 @@ const NewPost = () => {
           </div>
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
-          <Label htmlFor="price">Price</Label>
+          <Label htmlFor="price">Price <span className="text-red-500">*</span></Label>
           <Input type="number" id="price" name="price" step={1} min={0} />
           <div id="price-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.price &&
@@ -56,7 +56,7 @@ const NewPost = () => {
           </div>
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
-          <Label htmlFor="address">Address</Label>
+          <Label htmlFor="address">Address <span className="text-red-500">*</span></Label>
           <Input type="text" id="address" name="address" maxLength={255} />
           <div id="address-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.address &&
@@ -68,7 +68,7 @@ const NewPost = () => {
           </div>
         </div>
         <div id="new-post-inputs" className={"inputBlock" + ` basis-full`}>
-          <Label htmlFor="description">Description</Label>
+          <Label htmlFor="description">Description <span className="text-red-500">*</span></Label>
           <Textarea
             className="w-full"
             placeholder="Text description"
@@ -87,7 +87,7 @@ const NewPost = () => {
           </div>
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
-          <Label htmlFor="type">Type</Label>
+          <Label htmlFor="type">Type <span className="text-red-500">*</span></Label>
           <Select defaultValue="rent" name="type">
             <SelectTrigger className="w-full">
               <SelectValue />
@@ -107,7 +107,7 @@ const NewPost = () => {
           </div>
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
-          <Label htmlFor="property">Property</Label>
+          <Label htmlFor="property">Property <span className="text-red-500">*</span></Label>
           <Select defaultValue="apartment" name="property">
             <SelectTrigger className="w-full">
               <SelectValue />
@@ -127,7 +127,7 @@ const NewPost = () => {
           </div>
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
-          <Label htmlFor="city">City</Label>
+          <Label htmlFor="city">City <span className="text-red-500">*</span></Label>
           <Input type="text" id="city" name="city" maxLength={255} />
           <div id="city-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.city &&
@@ -139,8 +139,8 @@ const NewPost = () => {
           </div>
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
-          <Label htmlFor="area">Total area</Label>
-          <Input type="number" min={0} id="area" name="area" step={1} />
+          <Label htmlFor="area">Total area <span className="text-red-500">*</span></Label>
+          <Input type="number" min={0} id="area" name="area" step={1} max={10000}/>
           <div id="area-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.area &&
               state?.errors.area.map((error: string) => (
@@ -151,8 +151,8 @@ const NewPost = () => {
           </div>
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
-          <Label htmlFor="kitchen">Kitchen area</Label>
-          <Input type="number" min={0} id="kitchen" name="kitchen" step={1} />
+          <Label htmlFor="kitchen">Kitchen area <span className="text-red-500">*</span></Label>
+          <Input type="number" min={0} id="kitchen" name="kitchen" step={1} max={3000}/>
           <div id="kitchen-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.kitchen &&
               state?.errors.kitchen.map((error: string) => (
@@ -163,8 +163,8 @@ const NewPost = () => {
           </div>
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
-          <Label htmlFor="floor">Floor</Label>
-          <Input type="number" min={0} id="floor" name="floor" step={1} />
+          <Label htmlFor="floor">Floor <span className="text-red-500">*</span></Label>
+          <Input type="number" min={0} id="floor" name="floor" step={1} max={2000}/>
           <div id="floor-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.floor &&
               state?.errors.floor.map((error: string) => (
@@ -175,7 +175,7 @@ const NewPost = () => {
           </div>
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
-          <Label htmlFor="year">Year of construction</Label>
+          <Label htmlFor="year">Year of construction <span className="text-red-500">*</span></Label>
           <Input
             type="number"
             min={0}
@@ -187,6 +187,30 @@ const NewPost = () => {
           <div id="year-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.year &&
               state?.errors.year.map((error: string) => (
+                <p className="errorText" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        <div className={"inputBlock" + ` basis-1/3`}>
+          <Label htmlFor="lat">Latitude</Label>
+          <Input type="number" min={0} id="lat" name="lat" max={999}/>
+          <div id="lat-error" aria-live="polite" aria-atomic="true">
+            {state?.errors?.lat &&
+              state?.errors.lat.map((error: string) => (
+                <p className="errorText" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        <div className={"inputBlock" + ` basis-1/3`}>
+          <Label htmlFor="lon">Lontitude</Label>
+          <Input type="number" min={0} id="lon" name="lon" max={999}/>
+          <div id="lon-error" aria-live="polite" aria-atomic="true">
+            {state?.errors?.lon &&
+              state?.errors.lon.map((error: string) => (
                 <p className="errorText" key={error}>
                   {error}
                 </p>

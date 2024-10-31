@@ -2,8 +2,8 @@ For local development
 ===========
 
 1. pnpm i
-2. docker compose up
-3. create .env with following content (generate google credentials)
+2. docker compose up (for db currently)
+3. create .env with following content (generate google credentials in google studio website)
 
 ```
 NODE_ENV="development"
@@ -20,4 +20,8 @@ Prisma commands
 
 pnpx prisma migrate dev - creating migration
 
-pnpx prisma db push - to update db from updated schema
+pnpx prisma db push - to update db from updated schema (withoutn migration)
+
+pnpx prisma db seed - run seed.js
+
+pnpx prisma studio - run web client for db management
