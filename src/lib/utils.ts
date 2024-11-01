@@ -8,4 +8,3 @@ export function cn(...inputs: ClassValue[]) {
 export function displayDate(date: Date): string {
   return date.toISOString().substring(0, 10)
 }
-

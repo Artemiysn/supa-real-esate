@@ -11,8 +11,15 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
-import { searchPosts, searchPostState } from "@/actions/actions";
+import {
+  searchPosts,
+  searchPostState,
+} from "@/actions/actions";
 import { useFormState } from "react-dom";
+import { useState } from "react";
+import CitiesComboBox, {
+  ComboBoxValue,
+} from "@/components/CitiesComboBox/CitiesComboBox";
 
 type SearchPostsProps = {
   searchParams: { [key: string]: string | undefined };
@@ -21,7 +28,19 @@ type SearchPostsProps = {
 const initialState: searchPostState = { message: null, errors: {} };
 
 const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
-  const [state, formAction] = useFormState(searchPosts, initialState);
+
+  const cityVal = {
+    value: searchParams?.city ?? "",
+    label: searchParams?.city ?? "",
+  };
+
+  const [selectedCity, setSelectedCity] = useState<ComboBoxValue | null>(
+    cityVal
+  );
+  const [state, formAction] = useFormState(
+    searchPosts.bind(null, selectedCity?.value),
+    initialState
+  );
 
   return (
     <form
@@ -30,12 +49,9 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
     >
       <div id="city-input-block" className="searchInputBlock w-52">
         <Label htmlFor="city">City</Label>
-        <Input
-          name="city"
-          placeholder="City"
-          type="text"
-          defaultValue={searchParams?.city}
-          maxLength={255}
+        <CitiesComboBox
+          selectedCity={selectedCity}
+          setSelectedCity={setSelectedCity}
         />
         <div id="city-error" aria-live="polite" aria-atomic="true">
           {state?.errors?.city &&

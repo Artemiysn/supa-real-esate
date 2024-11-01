@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <NextBgImage
       src={[
-        "linear-gradient(to bottom, rgba(255,255,255,1) 0, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0.65) 100%)",
+        "linear-gradient(to bottom, rgba(255,255,255,1) 0, rgba(255,255,255,0.95) 40%, rgba(255,255,255,0.7) 100%)",
         bg,
       ]}
       height={bg.height}
@@ -29,7 +29,7 @@ export default function Home() {
           Find your apartment with ease
         </h2>
         <article className="leading-7 mt-2 mb-8">
-          Carefully selected SEO-wise commentary
+          Carefully selected SEO-wise commentary. This text is available for robots
         </article>
         <MainPageForm />
         <div className="flex flex-row w-full mt-8 justify-between">

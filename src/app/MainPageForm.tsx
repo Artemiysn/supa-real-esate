@@ -7,11 +7,15 @@ import { SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PostType } from "@prisma/client";
 import { Button } from "../components/ui/button";
+import CitiesComboBox, {
+  ComboBoxValue,
+} from "@/components/CitiesComboBox/CitiesComboBox";
 
 const MainPageForm = () => {
   const router = useRouter();
   router.prefetch("/searchposts");
-  const [tabValue, setTabValue] = useState<PostType>("rent");
+  const [tabValue, setTabValue] = useState<PostType>("sell");
+  const [selectedCity, setSelectedCity] = useState<ComboBoxValue | null>(null);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,6 +27,7 @@ const MainPageForm = () => {
     }
 
     searchParams.append("type", tabValue);
+    searchParams.append("city", selectedCity?.value ?? "");
 
     router.push(`/searchposts?${searchParams.toString()}`);
   }
@@ -37,11 +42,11 @@ const MainPageForm = () => {
         onValueChange={(v) => setTabValue(v as PostType)}
       >
         <TabsList>
-          <TabsTrigger className="h-10 rounded-md px-8" value="rent">
-            Rent
-          </TabsTrigger>
           <TabsTrigger className="h-10 rounded-md px-8" value="sell">
             Sell
+          </TabsTrigger>
+          <TabsTrigger className="h-10 rounded-md px-8" value="rent">
+            Rent
           </TabsTrigger>
         </TabsList>
       </Tabs>
@@ -49,7 +54,10 @@ const MainPageForm = () => {
         className="flex flex-row w-full items-center space-x-2 mt-4"
         onSubmit={onSubmit}
       >
-        <Input name="city" placeholder="City" type="text" maxLength={200} />
+        <CitiesComboBox
+          selectedCity={selectedCity}
+          setSelectedCity={setSelectedCity}
+        />
         <Input
           name="area"
           placeholder="m2"

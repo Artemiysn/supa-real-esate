@@ -195,7 +195,7 @@ const NewPost = () => {
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
           <Label htmlFor="lat">Latitude</Label>
-          <Input type="number" min={0} id="lat" name="lat" max={999}/>
+          <Input type="number" step="0.00000001" id="lat" name="lat" />
           <div id="lat-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.lat &&
               state?.errors.lat.map((error: string) => (
@@ -207,7 +207,7 @@ const NewPost = () => {
         </div>
         <div className={"inputBlock" + ` basis-1/3`}>
           <Label htmlFor="lon">Lontitude</Label>
-          <Input type="number" min={0} id="lon" name="lon" max={999}/>
+          <Input type="number" step="0.00000001" id="lon" name="lon" />
           <div id="lon-error" aria-live="polite" aria-atomic="true">
             {state?.errors?.lon &&
               state?.errors.lon.map((error: string) => (

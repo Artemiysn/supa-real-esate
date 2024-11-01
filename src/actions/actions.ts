@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from "zod";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "@/modules/auth";
 import { db } from "../modules/db";
@@ -39,7 +39,7 @@ const NewPostSchema = z
     floor: z.coerce
       .number()
       .gt(1, "Please provide floor number, number must be positive")
-      .max(3000, "Please select lower area")
+      .max(3000, "Please select lower floor")
       .int("floor must be an integer"),
     year: z.coerce
       .number()
@@ -48,13 +48,13 @@ const NewPostSchema = z
       .int("year must be an integer"),
     lat: z.coerce
       .number()
-      .gt(0, "Latitude must be greater then 0")
-      .max(999, "Please select lower price min price")
+      .min(-200, "Please select correct latitude")
+      .max(200, "Please select correct latitude")
       .optional().or(z.literal('')),
     lon: z.coerce
       .number()
-      .gt(0, "Longitude must be greater then 0")
-      .max(999, "Please select lower price min price")
+      .min(-200, "Please select correct lontitude")
+      .max(200, "Please select correct lontitude")
       .optional().or(z.literal('')),
   })
   .required();
@@ -93,6 +93,9 @@ export async function createNewPost(
 
   const user = sessionData?.user;
 
+  const lat = formData.get("lat") === '' ? null : formData.get("lat");
+  const lon = formData.get("lon") === '' ? null : formData.get("lon");
+
   const validatedFields = NewPostSchema.safeParse({
     title: formData.get("title"),
     price: formData.get("price"),
@@ -100,11 +103,13 @@ export async function createNewPost(
     description: formData.get("description"),
     type: formData.get("type"),
     property: formData.get("property"),
-    city: formData.get("city"),
+    city: String(formData.get("city")).toLowerCase(),
     area: formData.get("area"),
     kitchen: formData.get("kitchen"),
     floor: formData.get("floor"),
     year: formData.get("year"),
+    lat: lat,
+    lon: lon
   });
 
   if (!validatedFields.success) {
@@ -172,15 +177,16 @@ const SearchPostSchema = z.object({
 });
 
 export async function searchPosts(
+  city: string | undefined,
   prevState: searchPostState,
-  formData: FormData
+  formData: FormData,
 ) {
   const validatedFields = SearchPostSchema.safeParse({
     minPrice: formData.get("minPrice"),
     maxPrice: formData.get("maxPrice"),
     type: formData.get("type"),
     property: formData.get("property"),
-    city: formData.get("city"),
+    city: city,
     area: formData.get("area"),
   });
 
@@ -201,3 +207,26 @@ export async function searchPosts(
 
   redirect(`/searchposts?${searchParams.toString()}`);
 }
+
+export const fetchUniqueCities = async (): Promise<{value: string, label: string}[]> => {
+  try {
+    const uniqueCities: {city: string}[] = await db.posts.findMany({
+      select: {
+        city: true,
+      },
+      distinct: ["city"],
+    });
+
+    const returnArr = uniqueCities.map(obj => {
+      return {
+        value: obj.city,
+        label: obj.city
+      }
+    })
+
+    return returnArr;
+  } catch (e) {
+    console.error("Database Error:", e);
+    throw new Error("Failed to fetch unique cities.");
+  }
+};
