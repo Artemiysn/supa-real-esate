@@ -27,7 +27,7 @@ export default async function RootLayout({
           <nav className="min-h-[90px] flex justify-between pt-1 pb-1 pl-2 pr-2">
             <Link href="/" className="flex items-center">
               <Image
-                src="/logo.jpeg"
+                src="/logo.png"
                 height={80}
                 width={80}
                 className="mr-2"

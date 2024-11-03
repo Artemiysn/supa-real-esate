@@ -3,6 +3,13 @@ import { fetchPostsByParams } from "@/lib/data";
 import { paramsForPostSearch } from "./page";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
 import NotFound from "@/components/NotFound";
+import dynamic from "next/dynamic";
+import CenterRotator from "@/components/CenterRotator";
+
+const MapWithIcons = dynamic(() => import("@/components/MapWithIcons/MapWithIcons"), {
+  loading: () => <CenterRotator />,
+  ssr: false,
+});
 
 type PostListProps = {
   searchParams: { [key: string]: string | undefined };
@@ -45,10 +52,11 @@ const PostList: React.FC<PostListProps> = async ({ searchParams, userId }) => {
               }}
             />
           </div>
-          <div id="map-block" className="w-[400px] mr-8 px-4 pb-4">
-            <h4 className="scroll-m-20 text-xl font-bold pb-2 pl-2">
+          <div id="map-block" className="min-w-[400px] mr-8 px-4 pb-4">
+            <h4 className="scroll-m-20 text-xl font-bold pb-4 ">
               Location
             </h4>
+            <MapWithIcons posts={posts} />
           </div>
         </div>
       )}

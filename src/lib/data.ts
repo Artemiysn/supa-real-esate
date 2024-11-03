@@ -1,6 +1,7 @@
 import { db } from "@/modules/db";
 import type { Prisma } from "@prisma/client";
 import { paramsForPostSearch } from "@/app/searchposts/page";
+import {jsonStringifyFixed} from "./utils";
 
 export type PostWithUsers = Prisma.PostsGetPayload<{
   include: { user: true; FavouredPosts: true };
@@ -22,7 +23,8 @@ export const getPostDetails = async (
       },
       where: { id: postId },
     });
-    return post;
+    const returnData = JSON.parse(jsonStringifyFixed(post));
+    return returnData;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch post data.");

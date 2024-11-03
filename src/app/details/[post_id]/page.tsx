@@ -2,28 +2,32 @@ import { getServerAuthSession } from "@/modules/auth";
 import { getPostDetails, PostWithUsers } from "@/lib/data";
 import DetailsCarousel from "../DetailsCarousel";
 import { MapPin, SendHorizontal, Star } from "lucide-react";
-import { displayDate } from "@/lib/utils";
+import { displayDate, isGPSCoordinate } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import DetailsBlock from "../DetailsBlock";
-import Location from "../Location";
 import { Button } from "@/components/ui/button";
 import CenterRotator from "@/components/CenterRotator";
 import { Suspense } from "react";
 import AddToFavourites from "@/components/PostInList/AddToFavourites";
+import dynamic from "next/dynamic";
+
+const MapWithIcons = dynamic(() => import("@/components/MapWithIcons/MapWithIcons"), {
+  loading: () => <CenterRotator />,
+  ssr: false,
+});
 
 type DetailsProps = {
   params: {
-    id: string;
+    post_id: string;
   };
 };
 
 const Details: React.FC<DetailsProps> = async ({ params }) => {
   // with jwt set up this should be in middleware
   const session = await getServerAuthSession();
-
   return (
-    <Suspense fallback={<CenterRotator />} key={params.id}>
-      <DetailsComponent userId={session?.user?.id} postId={params.id} />
+    <Suspense fallback={<CenterRotator />} key={params.post_id}>
+      <DetailsComponent userId={session?.user?.id} post_id={params.post_id} />
     </Suspense>
   );
 };
@@ -32,9 +36,9 @@ export default Details;
 
 const DetailsComponent: React.FC<{
   userId: string | undefined;
-  postId: string | undefined;
-}> = async ({ userId, postId }) => {
-  const post: PostWithUsers = await getPostDetails(postId, userId);
+  post_id: string | undefined;
+}> = async ({ userId, post_id }) => {
+  const post: PostWithUsers = await getPostDetails(post_id, userId);
 
   return (
     <div className="flex w-full">
@@ -62,12 +66,8 @@ const DetailsComponent: React.FC<{
             </TooltipProvider>
           </div>
         </div>
-        <p className="mb-4">{post?.description}</p>
-      </div>
-      <div id="general-and-map" className="w-[400px] mr-8 px-4 pb-4">
-        <DetailsBlock post={post} />
-        {/* <Location /> */}
-        <div className="flex w-full justify-between items-center pl-2">
+        <p className="mb-8">{post?.description}</p>
+        <div className="flex w-full justify-between items-center">
           <span className="text-slate-500 italic ">
             Posted by: &nbsp; {post.user.name}
           </span>
@@ -76,6 +76,17 @@ const DetailsComponent: React.FC<{
             Send a message
           </Button>
         </div>
+      </div>
+      <div id="general-and-map" className="min-w-[400px] mr-8 px-4 pb-4">
+        <DetailsBlock post={post} />
+        {isGPSCoordinate(post.lat, post.lon) && (
+          <>
+            <h4 className="scroll-m-20 text-xl font-bold py-2 mb-4">
+              Location
+            </h4>
+            <MapWithIcons posts={[post]} />
+          </>
+        )}
       </div>
     </div>
   );

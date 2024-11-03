@@ -17,7 +17,7 @@ type DetailsBlockProps = {
 const DetailsBlock: React.FC<DetailsBlockProps> = ({ post }) => {
   return (
     <div className="mb-4">
-      <h4 className="scroll-m-20 text-xl font-bold pb-2 pl-2">Details</h4>
+      <h4 className="scroll-m-20 text-xl font-bold pb-2 ">Details</h4>
       <Table className="max-w-[400px]">
         <TableBody>
           <TableRow>
