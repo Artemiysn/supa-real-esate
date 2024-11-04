@@ -16,7 +16,7 @@ import {
   searchPostState,
 } from "@/actions/actions";
 import { useFormState } from "react-dom";
-import { useState } from "react";
+import { memo, useState } from "react";
 import CitiesComboBox, {
   ComboBoxValue,
 } from "@/components/CitiesComboBox/CitiesComboBox";
@@ -26,6 +26,8 @@ type SearchPostsProps = {
 };
 
 const initialState: searchPostState = { message: null, errors: {} };
+
+const MemoizedComboBox = memo(CitiesComboBox);
 
 const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
 
@@ -49,7 +51,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
     >
       <div id="city-input-block" className="searchInputBlock w-52">
         <Label htmlFor="city">City</Label>
-        <CitiesComboBox
+        <MemoizedComboBox
           selectedCity={selectedCity}
           setSelectedCity={setSelectedCity}
         />

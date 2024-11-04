@@ -61,6 +61,8 @@ model User {
   sessions      Session[]
   Posts         Posts[]
   FavouredPosts FavouredPosts[]
+  SentMessages Messages[] @relation("SentMessages")
+  ReceivedMessages Messages[] @relation("ReceivedMessages")
 
   @@index([name])
 }
@@ -109,4 +111,20 @@ model FavouredPosts {
   post   Posts  @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([userId])
+}
+
+model Messages {
+  id String @id @default(cuid())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  authorId String 
+  author     User    @relation("SentMessages", fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  receiverId String
+  receiver     User    @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  content String @db.Text
+  watched Boolean @default(false)
+  hidden Boolean @default(false)
+
+   @@index([receiverId])
+   @@index([updatedAt])
 }

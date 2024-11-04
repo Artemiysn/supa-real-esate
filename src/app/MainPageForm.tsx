@@ -1,7 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, memo } from "react";
 import { Input } from "../components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -10,6 +10,8 @@ import { Button } from "../components/ui/button";
 import CitiesComboBox, {
   ComboBoxValue,
 } from "@/components/CitiesComboBox/CitiesComboBox";
+
+const MemoizedComboBox = memo(CitiesComboBox);
 
 const MainPageForm = () => {
   const router = useRouter();
@@ -54,7 +56,7 @@ const MainPageForm = () => {
         className="flex flex-row w-full items-center space-x-2 mt-4"
         onSubmit={onSubmit}
       >
-        <CitiesComboBox
+        <MemoizedComboBox
           selectedCity={selectedCity}
           setSelectedCity={setSelectedCity}
         />
