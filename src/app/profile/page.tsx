@@ -2,7 +2,7 @@ import { getServerAuthSession } from "@/modules/auth";
 import Unauthorized from "@/components/Unauthorized/Unauthorized";
 import UpdateProfile from "./UpdateProfile";
 import MyList from "./MyList";
-import Messages from "./Messages";
+import MessagesList from "./MessagesList";
 import { Suspense } from "react";
 import CenterRotator from "@/components/CenterRotator";
 
@@ -25,7 +25,7 @@ const Profile: React.FC<ProfileProps> = async ({ searchParams }) => {
       </div>
       <div id="profile-messages" className="w-[400px] mr-8">
         <Suspense fallback={<CenterRotator />} key={searchParams?.page}>
-          <Messages />
+          <MessagesList />
         </Suspense>
       </div>
     </div>

@@ -21,6 +21,8 @@ import CitiesComboBox, {
   ComboBoxValue,
 } from "@/components/CitiesComboBox/CitiesComboBox";
 
+import styles from './searchPostsForm.module.css';
+
 type SearchPostsProps = {
   searchParams: { [key: string]: string | undefined };
 };
@@ -49,7 +51,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
       className="flex flex-row w-auto flex-wrap content-start my-4 items-baseline ml-8 "
       action={formAction}
     >
-      <div id="city-input-block" className="searchInputBlock w-52">
+      <div id="city-input-block" className={`${styles.searchInputBlock} w-52`}>
         <Label htmlFor="city">City</Label>
         <MemoizedComboBox
           selectedCity={selectedCity}
@@ -64,7 +66,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
             ))}
         </div>
       </div>
-      <div id="type-select-block" className="searchInputBlock w-24">
+      <div id="type-select-block" className={`${styles.searchInputBlock} w-24`}>
         <Label htmlFor="type">Type</Label>
         <Select name="type" defaultValue={searchParams?.type}>
           <SelectTrigger className="w-full">
@@ -84,7 +86,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
             ))}
         </div>
       </div>
-      <div className="searchInputBlock w-36">
+      <div className={`${styles.searchInputBlock} w-36`}>
         <Label htmlFor="property">Property</Label>
         <Select defaultValue={undefined} name="property">
           <SelectTrigger className="w-full">
@@ -104,7 +106,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
             ))}
         </div>
       </div>
-      <div className="searchInputBlock w-36">
+      <div className={`${styles.searchInputBlock} w-36`}>
         <Label htmlFor="minPrice">Min Price</Label>
         <Input
           type="number"
@@ -124,7 +126,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
             ))}
         </div>
       </div>
-      <div className="searchInputBlock w-36">
+      <div className={`${styles.searchInputBlock} w-36`}>
         <Label htmlFor="maxPrice">Max Price</Label>
         <Input
           type="number"
@@ -144,7 +146,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
             ))}
         </div>
       </div>
-      <div className="searchInputBlock w-36">
+      <div className={`${styles.searchInputBlock} w-36`}>
         <Label htmlFor="area">Total area</Label>
         <Input
           type="number"

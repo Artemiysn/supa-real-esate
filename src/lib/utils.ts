@@ -10,6 +10,15 @@ export function displayDate(date: string | Date): string {
   return dateObj.toISOString().substring(0, 10);
 }
 
+export function displayDateAndTime(date: string | Date): string {
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  const dateString = dateObj.toISOString().substring(0, 10);
+  const hours = dateObj.getHours().toString().padStart(2, '0');
+  const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+  const formattedTime = `${hours}:${minutes}`;
+  return dateString + ' ' +  formattedTime;
+}
+
 export function isGPSCoordinate(lat: any, lon: any) {
 
   if (

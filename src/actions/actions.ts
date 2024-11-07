@@ -1,10 +1,11 @@
-'use server';
+"use server";
 
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "@/modules/auth";
 import { db } from "../modules/db";
+import { Prisma, User } from "@prisma/client";
 
 const NewPostSchema = z
   .object({
@@ -50,12 +51,14 @@ const NewPostSchema = z
       .number()
       .min(-200, "Please select correct latitude")
       .max(200, "Please select correct latitude")
-      .optional().or(z.literal('')),
+      .optional()
+      .or(z.literal("")),
     lon: z.coerce
       .number()
       .min(-200, "Please select correct lontitude")
       .max(200, "Please select correct lontitude")
-      .optional().or(z.literal('')),
+      .optional()
+      .or(z.literal("")),
   })
   .required();
 
@@ -93,8 +96,8 @@ export async function createNewPost(
 
   const user = sessionData?.user;
 
-  const lat = formData.get("lat") === '' ? null : formData.get("lat");
-  const lon = formData.get("lon") === '' ? null : formData.get("lon");
+  const lat = formData.get("lat") === "" ? null : formData.get("lat");
+  const lon = formData.get("lon") === "" ? null : formData.get("lon");
 
   const validatedFields = NewPostSchema.safeParse({
     title: formData.get("title"),
@@ -109,7 +112,7 @@ export async function createNewPost(
     floor: formData.get("floor"),
     year: formData.get("year"),
     lat: lat,
-    lon: lon
+    lon: lon,
   });
 
   if (!validatedFields.success) {
@@ -150,36 +153,46 @@ const SearchPostSchema = z.object({
     .gt(0, "Please select price, price must be greater then 0")
     .max(9999999, "Please select lower price min price")
     .int("Price must be an integer")
-    .optional().or(z.literal('')),
+    .optional()
+    .or(z.literal("")),
   maxPrice: z.coerce
     .number()
     .gt(0, "Please select price, price must be greater then 0")
     .max(9999999, "Please select lower price max price")
     .int("Price must be an integer")
-    .optional().or(z.literal('')),
+    .optional()
+    .or(z.literal("")),
   type: z
     .enum(["rent", "sell"], {
       invalid_type_error: "Please select rent or sell",
     })
-    .optional().or(z.literal('')),
+    .optional()
+    .or(z.literal("")),
   property: z
     .enum(["apartment", "house"], {
       invalid_type_error: "Please select apartment or house",
     })
-    .optional().or(z.literal('')),
-  city: z.string().min(1, "Please select city").max(255).optional().or(z.literal('')),
+    .optional()
+    .or(z.literal("")),
+  city: z
+    .string()
+    .min(1, "Please select city")
+    .max(255)
+    .optional()
+    .or(z.literal("")),
   area: z.coerce
     .number()
     .gt(0, "Please provide area, number must be positive")
     .max(2000, "Please select lower area size")
     .int("Area size must be an integer")
-    .optional().or(z.literal('')),
+    .optional()
+    .or(z.literal("")),
 });
 
 export async function searchPosts(
   city: string | undefined,
   prevState: searchPostState,
-  formData: FormData,
+  formData: FormData
 ) {
   const validatedFields = SearchPostSchema.safeParse({
     minPrice: formData.get("minPrice"),
@@ -208,25 +221,119 @@ export async function searchPosts(
   redirect(`/searchposts?${searchParams.toString()}`);
 }
 
-export const fetchUniqueCities = async (): Promise<{value: string, label: string}[]> => {
+export const fetchUniqueCities = async (): Promise<
+  { value: string; label: string }[]
+> => {
   try {
-    const uniqueCities: {city: string}[] = await db.posts.findMany({
+    const uniqueCities: { city: string }[] = await db.posts.findMany({
       select: {
         city: true,
       },
       distinct: ["city"],
     });
 
-    const returnArr = uniqueCities.map(obj => {
+    const returnArr = uniqueCities.map((obj) => {
       return {
         value: obj.city,
-        label: obj.city
-      }
-    })
+        label: obj.city,
+      };
+    });
 
     return returnArr;
   } catch (e) {
     console.error("Database Error:", e);
     throw new Error("Failed to fetch unique cities.");
+  }
+};
+
+export type MessageWithUser = Prisma.MessagesGetPayload<{
+  include: { author: true };
+}>;
+
+export const addMessage = async (
+  authorId: string,
+  receiverId: string,
+  content: string
+) => {
+  try {
+    const result = await db.messages.create({
+      data: {
+        authorId: authorId,
+        content: content,
+        receiverId: receiverId,
+      },
+    });
+    return result;
+  } catch (e) {
+    console.error("Database Error:", e);
+    throw new Error("Failed to add new message");
+  }
+};
+
+export const fetchAllMessages = async (
+  userId: string
+): Promise<MessageWithUser[]> => {
+  try {
+    const messages = await db.messages.findMany({
+      where: { receiverId: userId },
+      include: {
+        author: true,
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+    return messages;
+  } catch (e) {
+    console.error("Database Error:", e);
+    throw new Error("Failed to fetch posts.");
+  }
+};
+
+export const countAllMessages = async (userId: string): Promise<number> => {
+  try {
+    const count = await db.messages.count({
+      where: { receiverId: userId },
+    });
+    return count;
+  } catch (e) {
+    console.error("Database Error:", e);
+    throw new Error("Failed to count messages.");
+  }
+};
+
+export const fetchNewerMessages = async (
+  userId: string,
+  date: Date
+): Promise<MessageWithUser[]> => {
+  try {
+    const messages = await db.messages.findMany({
+      where: {
+        receiverId: userId,
+        createdAt: {
+          gt: date,
+        },
+      },
+      include: {
+        author: true,
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+    return messages;
+  } catch (e) {
+    console.error("Database Error:", e);
+    throw new Error("Failed to fetch posts.");
+  }
+};
+
+export const getFirstUser = (): Promise<User> => {
+  try {
+    const user = db.user.findFirst({});
+    return user;
+  } catch (e) {
+    console.error("Database Error:", e);
+    throw new Error("Failed to get first user");
   }
 };
