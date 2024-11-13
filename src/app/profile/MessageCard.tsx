@@ -8,9 +8,9 @@ type MessageCardProps = {
 
 const MessageCard: React.FC<MessageCardProps> = ({ message }) => {
   return (
-    <div className="w-full flex items-stretch rounded-xl border bg-card text-card-foreground shadow relative mb-4">
-      <div className="w-[60px] grid border-r border-orange-100 border-solid">
-        <div className="place-self-center ">
+    <div className="w-full flex items-stretch rounded-xl border bg-card text-card-foreground shadow relative mb-4 cursor-pointer hover:bg-gray-100">
+      <div className="w-[100px] min-w-[90px] grid">
+        <div className="place-self-center flex flex-col items-center text-center">
           <Avatar className="mb-2">
             {/* no-refferer fixes google img deisplay */}
             <AvatarImage
@@ -24,18 +24,18 @@ const MessageCard: React.FC<MessageCardProps> = ({ message }) => {
         </div>
       </div>
       <div className="grow p-2 w-full">
-        <div className="h-[120px] text-ellipsis overflow-hidden whitespace-nowrap">
+        <div className="h-[120px] text-ellipsis overflow-hidden mb-8px">
           {message.content}
         </div>
-        <p className="text-slate-400 pt-1">
+        <p className="text-slate-400 pt-2 max-w-[80%] border-t border-orange-200">
           {displayDateAndTime(message?.updatedAt)}
         </p>
       </div>
-      {!message.watched ? (
-        <span className="text-xs absolute top-0 left-2 bg-white rainbow-text bg-opacity-50 rounded-md p-0.5">
+      {!message.watched && (
+        <span className="text-xs absolute top-1 left-2 bg-white rainbow-text bg-opacity-50 rounded-md p-0.5">
           New!
         </span>
-      ) : null}
+      )}
     </div>
   );
 };

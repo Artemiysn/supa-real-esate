@@ -10,11 +10,15 @@ import CenterRotator from "@/components/CenterRotator";
 import { Suspense } from "react";
 import AddToFavourites from "@/components/PostInList/AddToFavourites";
 import dynamic from "next/dynamic";
+import SendMessageDialog from "@/components/SendMessageDialog/SendMessageDialog";
 
-const MapWithIcons = dynamic(() => import("@/components/MapWithIcons/MapWithIcons"), {
-  loading: () => <CenterRotator />,
-  ssr: false,
-});
+const MapWithIcons = dynamic(
+  () => import("@/components/MapWithIcons/MapWithIcons"),
+  {
+    loading: () => <CenterRotator />,
+    ssr: false,
+  }
+);
 
 type DetailsProps = {
   params: {
@@ -71,10 +75,17 @@ const DetailsComponent: React.FC<{
           <span className="text-slate-500 italic ">
             Posted by: &nbsp; {post.user.name}
           </span>
-          <Button variant="outline" disabled={userId === post?.user?.id}>
-            <SendHorizontal className="mr-2 inline-block stroke-orange-300" />
-            Send a message
-          </Button>
+          <SendMessageDialog
+            buttonEl={
+              <Button variant="outline" disabled={userId === post?.user?.id}>
+                <SendHorizontal className="mr-2 inline-block stroke-orange-300" />
+                Send a message
+              </Button>
+            }
+            recepient={post.user}
+            userId={userId}
+            postTitle={post.title}
+          />
         </div>
       </div>
       <div id="general-and-map" className="min-w-[400px] mr-8 px-4 pb-4">

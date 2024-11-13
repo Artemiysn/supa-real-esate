@@ -250,20 +250,48 @@ export type MessageWithUser = Prisma.MessagesGetPayload<{
   include: { author: true };
 }>;
 
+export type addMessageState = {
+  errors?: {
+    response?: string;
+  };
+  message?: string | null;
+};
+
+const AddMessageSchema = z.object({
+  response: z.string().min(1, "Please add response message").max(1000, "max length of message is 1000 chars"),
+  userId: z.string().cuid("Invalid user id"),
+  recepientId: z.string().cuid("Invalid user id")
+});
+
 export const addMessage = async (
-  authorId: string,
-  receiverId: string,
-  content: string
+  userId: string | undefined,
+  recepientId: string,
+  prevState: NewPostState,
+  formData: FormData,
 ) => {
+
+  const validatedFields = AddMessageSchema.safeParse({
+    response: formData.get("response"),
+    userId: userId,
+    recepientId: recepientId,
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed.",
+    };
+  }
+
   try {
     const result = await db.messages.create({
       data: {
-        authorId: authorId,
-        content: content,
-        receiverId: receiverId,
+        authorId: validatedFields.data.userId,
+        content: validatedFields.data.response,
+        receiverId: validatedFields.data.recepientId,
       },
     });
-    return result;
+    return result
   } catch (e) {
     console.error("Database Error:", e);
     throw new Error("Failed to add new message");
@@ -275,7 +303,7 @@ export const fetchAllMessages = async (
 ): Promise<MessageWithUser[]> => {
   try {
     const messages = await db.messages.findMany({
-      where: { receiverId: userId },
+      where: { receiverId: userId, hidden: false },
       include: {
         author: true,
       },
@@ -313,6 +341,7 @@ export const fetchNewerMessages = async (
         createdAt: {
           gt: date,
         },
+        hidden: false,
       },
       include: {
         author: true,

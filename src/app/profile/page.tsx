@@ -25,7 +25,7 @@ const Profile: React.FC<ProfileProps> = async ({ searchParams }) => {
       </div>
       <div id="profile-messages" className="w-[400px] mr-8">
         <Suspense fallback={<CenterRotator />} key={searchParams?.page}>
-          <MessagesList />
+          <MessagesList userId={session?.user?.id}/>
         </Suspense>
       </div>
     </div>
