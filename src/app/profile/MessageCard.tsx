@@ -8,9 +8,9 @@ type MessageCardProps = {
 
 const MessageCard: React.FC<MessageCardProps> = ({ message }) => {
   return (
-    <div className="w-full flex items-stretch rounded-xl border bg-card text-card-foreground shadow relative mb-4 cursor-pointer hover:bg-gray-100">
+    <div className="w-full min-w-[400px] flex items-stretch rounded-xl border bg-card text-card-foreground shadow relative mb-4 cursor-pointer hover:bg-gray-100">
       <div className="w-[100px] min-w-[90px] grid">
-        <div className="place-self-center flex flex-col items-center text-center">
+        <div className="place-self-center flex flex-col items-center">
           <Avatar className="mb-2">
             {/* no-refferer fixes google img deisplay */}
             <AvatarImage
@@ -24,10 +24,10 @@ const MessageCard: React.FC<MessageCardProps> = ({ message }) => {
         </div>
       </div>
       <div className="grow p-2 w-full">
-        <div className="h-[120px] text-ellipsis overflow-hidden mb-8px">
+        <div className="h-[120px] text-left text-ellipsis overflow-hidden mb-8px">
           {message.content}
         </div>
-        <p className="text-slate-400 pt-2 max-w-[80%] border-t border-orange-200">
+        <p className="text-slate-400 pt-2 max-w-[80%] border-t border-orange-200 text-left">
           {displayDateAndTime(message?.updatedAt)}
         </p>
       </div>

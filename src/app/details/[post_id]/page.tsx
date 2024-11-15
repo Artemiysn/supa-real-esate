@@ -77,10 +77,10 @@ const DetailsComponent: React.FC<{
           </span>
           <SendMessageDialog
             buttonEl={
-              <Button variant="outline" disabled={userId === post?.user?.id}>
+              <div className="p-2 rounded-md border cursor:pointer">
                 <SendHorizontal className="mr-2 inline-block stroke-orange-300" />
                 Send a message
-              </Button>
+              </div>
             }
             recepient={post.user}
             userId={userId}

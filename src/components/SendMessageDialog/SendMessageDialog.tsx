@@ -21,12 +21,14 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { User } from "@prisma/client";
 import { useFormState } from "react-dom";
-import { addMessage, addMessageState } from "@/actions/actions";
+import { addMessage, addMessageState, deleteMessage } from "@/actions/actions";
 import { Textarea } from "../ui/textarea";
 import SubmitButton from "../SubmitButton";
+import { MessagesContext } from "@/app/contexts/MessagesContext";
+import { TailSpin } from "react-loader-spinner";
 
 type SendMessageDialogProps = {
   buttonEl: ReactNode;
@@ -34,6 +36,7 @@ type SendMessageDialogProps = {
   userId: string | undefined;
   postTitle?: string | null;
   messageText?: string | null;
+  messageId?: string | null;
 };
 
 const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
@@ -42,6 +45,7 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
   userId,
   postTitle = null,
   messageText = null,
+  messageId = null,
 }) => {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -52,13 +56,15 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
         <DialogTrigger>{buttonEl}</DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle className="mx-6 mb-2">Send Message to {recepient.name}</DialogTitle>
+            <DialogTitle className="mx-6 mb-2">
+              Send Message to {recepient.name}
+            </DialogTitle>
             <DialogDescription>
               {messageText && (
-                <p className="rounded-xl border bg-card text-card-foreground shadow bg-slate-100 text-gray-600 relative my-2 mx-6 p-6">
+                <span className=" block rounded-xl border bg-card text-card-foreground shadow bg-slate-100 text-gray-600 relative my-2 mx-6 p-6">
                   <span className="absolute top-1 left-2 text-2xl">❞</span>
                   {messageText}
-                </p>
+                </span>
               )}
             </DialogDescription>
           </DialogHeader>
@@ -66,8 +72,9 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
             recepientId={recepient.id}
             userId={userId}
             postTitle={postTitle}
-            callBackFunc={()=>setOpen(false)}
+            callBackFunc={() => setOpen(false)}
             messageText={messageText}
+            messageId={messageId}
           />
         </DialogContent>
       </Dialog>
@@ -76,28 +83,31 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger >{buttonEl}</DrawerTrigger>
+      <DrawerTrigger>{buttonEl}</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle className="mx-6">Send Message to {recepient.name}</DrawerTitle>
+          <DrawerTitle className="mx-6">
+            Send Message to {recepient.name}
+          </DrawerTitle>
           <DrawerDescription>
-          {messageText && (
-                <p className="rounded-xl border bg-card text-card-foreground shadow bg-slate-100 text-gray-600 relative my-2 mx-6 p-6">
-                  <span className="absolute top-1 left-2 text-2xl">❞</span>
-                  {messageText}
-                </p>
-              )}
+            {messageText && (
+              <span className=" block rounded-xl border bg-card text-card-foreground shadow bg-slate-100 text-gray-600 relative my-2 mx-6 p-6">
+                <span className="absolute top-1 left-2 text-2xl">❞</span>
+                {messageText}
+              </span>
+            )}
           </DrawerDescription>
         </DrawerHeader>
         <SendMessageForm
           recepientId={recepient.id}
           userId={userId}
           postTitle={postTitle}
-          callBackFunc={()=>setOpen(false)}
+          callBackFunc={() => setOpen(false)}
           messageText={messageText}
+          messageId={messageId}
         />
         <DrawerFooter className="pt-2">
-          <DrawerClose >
+          <DrawerClose>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
         </DrawerFooter>
@@ -116,6 +126,7 @@ type SendMessageFormProps = {
   callBackFunc: () => any;
   postTitle?: string | null;
   messageText?: string | null;
+  messageId?: string | null;
 };
 
 const SendMessageForm: React.FC<SendMessageFormProps> = ({
@@ -123,32 +134,43 @@ const SendMessageForm: React.FC<SendMessageFormProps> = ({
   userId,
   callBackFunc,
   postTitle = null,
-  messageText = null
+  messageText = null,
+  messageId = null,
 }) => {
-  
+  const { deleteMessageById } = useContext(MessagesContext);
+
   const [state, formAction, isPending] = useFormState(
     addMessage.bind(null, userId, recepientId),
     initialState
   );
 
-  useEffect(()=> {
+  const [messageDeleting, setMessageDeleting] = useState(false);
+
+  useEffect(() => {
     if (state?.id) callBackFunc && callBackFunc();
-  }, [state])
+  }, [state]);
+
+  const deleteMessageHandler = useCallback(async (e: any) => {
+    e.preventDefault();
+    if (typeof messageId !== "string") return null;
+    setMessageDeleting(true);
+    const deletedMsg = await deleteMessage(messageId);
+    if (deletedMsg.id) await deleteMessageById(deletedMsg.id);
+    setMessageDeleting(false);
+    callBackFunc && callBackFunc();
+  }, []);
 
   return (
     <form action={formAction} className="w-full p-2">
       <div id="add-response-input" className={"inputBlock" + ` basis-full`}>
-        <Label htmlFor="response" className="mb-4">
-        {messageText ? 'Your response:' : "Message text"}
-          <i className="text-gray-700 font-semibold">
-            {postTitle ? `as response for ${postTitle}` : ""}
-          </i>
-        </Label>
+        {messageText && (
+          <Label htmlFor="response" className="mb-4">
+            Your response:
+          </Label>
+        )}
         <Textarea
           className="w-full"
-          placeholder={
-            postTitle ? `regarding your ${postTitle}...` : ""
-          }
+          placeholder={postTitle ? `regarding your ${postTitle}...` : ""}
           id="response"
           name="response"
           rows={6}
@@ -157,15 +179,35 @@ const SendMessageForm: React.FC<SendMessageFormProps> = ({
         <div id="response-error" aria-live="polite" aria-atomic="true">
           {state?.errors?.response &&
             state?.errors.response.map((error: string) => (
-              <p className="errorText" key={error}>
+              <span className="errorText" key={error}>
                 {error}
-              </p>
+              </span>
             ))}
         </div>
       </div>
       <div className={"inputBlock" + ` basis-full`}>
-        <SubmitButton size={"default"} content={"Send response"} />
+        <SubmitButton
+          size={"default"}
+          content={"Send"}
+          disabled={messageDeleting}
+        />
       </div>
+      {messageId && (
+        <div className={"inputBlock" + ` basis-full`}>
+          <Button
+            size={"default"}
+            variant="destructive"
+            onClick={deleteMessageHandler}
+            disabled={messageDeleting}
+          >
+            {messageDeleting ? (
+              <TailSpin width={20} height={20} color="white" />
+            ) : (
+              "Delete message and close"
+            )}
+          </Button>
+        </div>
+      )}
     </form>
   );
 };

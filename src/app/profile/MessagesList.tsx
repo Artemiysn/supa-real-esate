@@ -24,6 +24,7 @@ const MessagesList = ({ userId }: { userId: string | undefined }) => {
             recepient={m.author}
             userId={userId}
             messageText={m.content}
+            messageId={m.id}
             postTitle={null}
             key={m.id}
           />

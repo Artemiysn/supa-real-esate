@@ -135,4 +135,34 @@
   background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: gradientAnimation 5s infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.animated-rainbow-text {
+  background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  animation: gradientAnimation 0.5s infinite;
+  animation-timing-function: ease-in-out;
+}
+
+/* thanks-gemini */
+@keyframes gradientAnimation {
+  0% {
+    background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  }
+  20% {
+    background-image: linear-gradient(to right, orange, yellow, green, blue, indigo, violet, red);
+  }
+  40% {
+    background-image: linear-gradient(to right, yellow, green, blue, indigo, violet, red, orange);
+  }
+  60% {
+    background-image: linear-gradient(to right, green, blue, indigo, violet, red, orange, yellow);
+  }
+  80% {
+    background-image: linear-gradient(to right, blue, indigo, violet, red, orange, yellow, green);
+  }
+  100% {
+    background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  }
 }

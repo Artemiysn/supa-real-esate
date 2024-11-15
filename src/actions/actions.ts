@@ -266,12 +266,14 @@ const AddMessageSchema = z.object({
 export const addMessage = async (
   userId: string | undefined,
   recepientId: string,
-  prevState: NewPostState,
-  formData: FormData,
+  prevState: addMessageState,
+  message: FormData | string,
 ) => {
 
+  const response = (typeof message === 'string') ? message : message.get("response");
+
   const validatedFields = AddMessageSchema.safeParse({
-    response: formData.get("response"),
+    response: response,
     userId: userId,
     recepientId: recepientId,
   });
@@ -298,6 +300,20 @@ export const addMessage = async (
   }
 };
 
+export const deleteMessage = async (messageId: string ) => {
+  try {
+    const deletedMessage = await db.messages.delete({
+      where: {
+        id: messageId,
+      },
+    });
+    return deletedMessage;
+  } catch (error) {
+    console.error(`Database Error: ${error}`);
+    throw new Error("Failed to delete message.");
+  } 
+}
+
 export const fetchAllMessages = async (
   userId: string
 ): Promise<MessageWithUser[]> => {
@@ -315,7 +331,7 @@ export const fetchAllMessages = async (
   } catch (e) {
     console.error("Database Error:", e);
     throw new Error("Failed to fetch posts.");
-  }
+  } 
 };
 
 export const countAllMessages = async (userId: string): Promise<number> => {

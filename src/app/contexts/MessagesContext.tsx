@@ -6,16 +6,21 @@ import {
   fetchNewerMessages,
   MessageWithUser,
 } from "@/actions/actions";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 type MessagesContextType = {
   messages: MessageWithUser[];
   messagesLoading: boolean;
+  refetchMessages: any;
+  deleteMessageById: any;
 };
 
 export const MessagesContext = createContext<MessagesContextType>({
   messages: [],
   messagesLoading: false,
+  refetchMessages: undefined,
+  deleteMessageById: undefined,
 });
 
 const dateNow = new Date();
@@ -29,25 +34,35 @@ export const MessagesProvider = ({
 }) => {
   const [messages, setMessages] = useState<MessageWithUser[]>([]);
   const [messagesLoading, setMessagesLoading] = useState(false);
+  const { toast } = useToast();
+
+  const refetchMessages = useCallback(async () => {
+    if (!userId) return null;
+    const msgs = await fetchAllMessages(userId);
+    setMessages(msgs);
+  }, []);
+
+  const deleteMessageById = useCallback((messageId: string) => {
+    setMessages((prev) => prev.filter((m) => m.id !== messageId));
+  }, []);
 
   useEffect(() => {
     if (userId) {
       const firstFetch = async () => {
         setMessagesLoading(true);
         let messages = await fetchAllMessages(userId);
-        console.log(messages);
         if (!messages.length) {
-          // если сообщений нет найти первого пользователя и добавить сообщение от него, а после добавить сообщение в стейт
           const firstUser = await getFirstUser();
           if (!firstUser) return null;
           const createFirstMsg = await addMessage(
             firstUser.id,
             userId,
+            {},
             "This is a test message from the very first user of the database"
           );
+          // one time only refetch for test pruposes
           messages = await fetchAllMessages(userId);
         }
-        // добавить сообщения в стейет
         setMessages((prev) => messages);
         setMessagesLoading(false);
       };
@@ -69,9 +84,11 @@ export const MessagesProvider = ({
         );
 
         if (newMessages?.length) {
-          // показать поп ап, что пришло новое сообщение
-          // доделать, чтобы был красивый поп ап, если юзер не на странице профиля
-          alert("you have new message!");
+          toast({
+            variant: "default",
+            description: `You have ${newMessages.length} new messages. Latest from ${newMessages[0]?.author?.name}`,
+            duration: 15000,
+          });
           setMessages((prev) => newMessages.concat(prev));
         }
       }, 5000);
@@ -82,7 +99,9 @@ export const MessagesProvider = ({
   }, [messages, userId]);
 
   return (
-    <MessagesContext.Provider value={{ messages, messagesLoading }}>
+    <MessagesContext.Provider
+      value={{ messages, messagesLoading, refetchMessages, deleteMessageById }}
+    >
       {children}
     </MessagesContext.Provider>
   );
