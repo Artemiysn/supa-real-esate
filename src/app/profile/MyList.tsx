@@ -27,33 +27,33 @@ const MyList: React.FC<MyListProps> = async ({ userId, searchParams }) => {
 
   return (
     <>
-      {!total ? (
-        <NotFound text={"Looks like you don't have posts yet..."} />
-      ) : (
-        <div className="p-5 mb-4">
-          <div className="flex justify-between mb-2">
-            <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 ">
-              My List
-            </h3>
-            <Link href="/newpost" rel="preload">
-              <Button>Create New Post</Button>
-            </Link>
-          </div>
-          <div id="post-list" className="min-h-[200px] mb-5">
-            {posts.map((post) => (
-              <PostCard post={post} userId={userId} key={post.id} />
-            ))}
-          </div>
-          <PaginationWithLinks
-            page={currentPage}
-            pageSize={postsPerPage}
-            totalCount={total}
-            pageSizeSelectOptions={{
-              pageSizeOptions: [5, 10, 25, 50],
-            }}
-          />
+      <div className="p-5 mb-4">
+        <div className="flex justify-between mb-2">
+          <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 ">My List</h3>
+          <Link href="/newpost" rel="preload">
+            <Button>Create New Post</Button>
+          </Link>
         </div>
-      )}
+        {!total ? (
+          <NotFound text={"Looks like you don't have posts yet..."} />
+        ) : (
+          <>
+            <div id="post-list" className="min-h-[200px] mb-5">
+              {posts.map((post) => (
+                <PostCard post={post} userId={userId} key={post.id} />
+              ))}
+            </div>
+            <PaginationWithLinks
+              page={currentPage}
+              pageSize={postsPerPage}
+              totalCount={total}
+              pageSizeSelectOptions={{
+                pageSizeOptions: [5, 10, 25, 50],
+              }}
+            />
+          </>
+        )}
+      </div>
     </>
   );
 };

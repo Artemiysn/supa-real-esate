@@ -47,18 +47,16 @@ const NewPostSchema = z
       .gt(1, "Please provide year, number must be positive")
       .max(3000, "Please select real year")
       .int("year must be an integer"),
-    lat: z.coerce
-      .number()
-      .min(-200, "Please select correct latitude")
-      .max(200, "Please select correct latitude")
-      .optional()
-      .or(z.literal("")),
-    lon: z.coerce
-      .number()
-      .min(-200, "Please select correct lontitude")
-      .max(200, "Please select correct lontitude")
-      .optional()
-      .or(z.literal("")),
+    lat: z.union([z.number()
+      .min(-90, "Please select correct lontitude")
+      .max(90, "Please select correct lontitude"),
+      z.string().length(0)
+    ]).optional().transform(e => e === "" ? null : e),
+    lon: z.union([z.number()
+      .min(-180, "Please select correct lontitude")
+      .max(180, "Please select correct lontitude"),
+      z.string().length(0)
+    ]).optional().transform(e => e === "" ? null : e)
   })
   .required();
 
@@ -96,9 +94,6 @@ export async function createNewPost(
 
   const user = sessionData?.user;
 
-  const lat = formData.get("lat") === "" ? null : formData.get("lat");
-  const lon = formData.get("lon") === "" ? null : formData.get("lon");
-
   const validatedFields = NewPostSchema.safeParse({
     title: formData.get("title"),
     price: formData.get("price"),
@@ -111,8 +106,8 @@ export async function createNewPost(
     kitchen: formData.get("kitchen"),
     floor: formData.get("floor"),
     year: formData.get("year"),
-    lat: lat,
-    lon: lon,
+    lat: formData.get("lat"),
+    lon: formData.get("lat"),
   });
 
   if (!validatedFields.success) {
