@@ -6,7 +6,7 @@ import { getServerAuthSession } from "@/modules/auth";
 import Link from "next/link";
 import { NextBgStaticCss } from "next-bg-image";
 import { MessagesProvider } from "./contexts/MessagesContext";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Find your apartment with ease!",

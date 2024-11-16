@@ -1,6 +1,6 @@
 "use client";
 
-import { addMessage, countAllMessages, getFirstUser } from "@/actions/actions";
+import { addMessage,  getFirstUser } from "@/actions/actions";
 import {
   fetchAllMessages,
   fetchNewerMessages,
@@ -52,6 +52,7 @@ export const MessagesProvider = ({
         setMessagesLoading(true);
         let messages = await fetchAllMessages(userId);
         if (!messages.length) {
+          // for test purposes only
           const firstUser = await getFirstUser();
           if (!firstUser) return null;
           const createFirstMsg = await addMessage(
@@ -77,7 +78,7 @@ export const MessagesProvider = ({
         const lastMsgDateObj = messages.length
           ? new Date(messages[0].createdAt)
           : dateNow;
-
+        // can be a prepared statement with raw sql! 
         const newMessages: MessageWithUser[] = await fetchNewerMessages(
           userId,
           lastMsgDateObj
@@ -85,9 +86,10 @@ export const MessagesProvider = ({
 
         if (newMessages?.length) {
           toast({
-            variant: "default",
+            variant: "black",
             description: `You have ${newMessages.length} new messages. Latest from ${newMessages[0]?.author?.name}`,
             duration: 15000,
+            
           });
           setMessages((prev) => newMessages.concat(prev));
         }

@@ -1,16 +1,21 @@
 import { getServerAuthSession } from "@/modules/auth";
 import { getPostDetails, PostWithUsers } from "@/lib/data";
 import DetailsCarousel from "../DetailsCarousel";
-import { MapPin, SendHorizontal, Star } from "lucide-react";
+import { MapPin, SendHorizontal } from "lucide-react";
 import { displayDate, isGPSCoordinate } from "@/lib/utils";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import DetailsBlock from "../DetailsBlock";
-import { Button } from "@/components/ui/button";
 import CenterRotator from "@/components/CenterRotator";
 import { Suspense } from "react";
-import AddToFavourites from "@/components/PostInList/AddToFavourites";
+import AddToFavourites from "@/components/PostCard/AddToFavourites";
 import dynamic from "next/dynamic";
 import SendMessageDialog from "@/components/SendMessageDialog/SendMessageDialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
 
 const MapWithIcons = dynamic(
   () => import("@/components/MapWithIcons/MapWithIcons"),
@@ -75,17 +80,31 @@ const DetailsComponent: React.FC<{
           <span className="text-slate-500 italic ">
             Posted by: &nbsp; {post.user.name}
           </span>
-          <SendMessageDialog
-            buttonEl={
-              <div className="p-2 rounded-md border cursor:pointer">
-                <SendHorizontal className="mr-2 inline-block stroke-orange-300" />
-                Send a message
-              </div>
-            }
-            recepient={post.user}
-            userId={userId}
-            postTitle={post.title}
-          />
+          {userId ? (
+            <SendMessageDialog
+              buttonEl={
+                <div className="p-2 rounded-md border cursor:pointer">
+                  <SendHorizontal className="mr-2 inline-block stroke-orange-300" />
+                  Send a message
+                </div>
+              }
+              recepient={post.user}
+              userId={userId}
+              postTitle={post.title}
+            />
+          ) : (
+            <TooltipProvider>
+              <Tooltip delayDuration={300}>
+                <TooltipTrigger>
+                  <div className="p-2 rounded-md border bg-gray-100 cursor:pointer">
+                    <SendHorizontal className="mr-2 inline-block stroke-orange-300" />
+                    Send a message
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>Sign in to send message</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
         </div>
       </div>
       <div id="general-and-map" className="min-w-[400px] mr-8 px-4 pb-4">

@@ -46,13 +46,22 @@ const SignIn: React.FC<SignInProps> = ({ user }) => {
           </Link>
         </>
       )}
-      <Button variant={"default"} onClick={handleSign} disabled={isLoading} className="min-w-[90px]">
+      <Button
+        variant={"default"}
+        onClick={handleSign}
+        disabled={isLoading}
+        className="min-w-[90px]"
+      >
         {isLoading ? (
           <TailSpin width={20} height={20} />
         ) : user ? (
           "Sign Out"
         ) : (
-          <><span className="pb-[3px]">Sign in with</span> <FcGoogle size={18} className="ml-2"/> </>)}
+          <>
+            <span className="pb-[3px]">Sign in with</span>{" "}
+            <FcGoogle size={18} className="ml-2" />{" "}
+          </>
+        )}
       </Button>
     </div>
   );

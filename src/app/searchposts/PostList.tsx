@@ -1,4 +1,4 @@
-import PostInList from "@/components/PostInList/PostInList";
+import PostCard from "@/components/PostCard/PostCard";
 import { fetchPostsByParams } from "@/lib/data";
 import { paramsForPostSearch } from "./page";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
@@ -40,7 +40,7 @@ const PostList: React.FC<PostListProps> = async ({ searchParams, userId }) => {
           <div id="post-list" className="grow ml-8 pr-8 mb-4">
             <div id="post-list" className="min-h-[400px] mb-5">
               {posts.map((post) => (
-                <PostInList post={post} userId={userId} key={post.id} />
+                <PostCard post={post} userId={userId} key={post.id} />
               ))}
             </div>
             <PaginationWithLinks

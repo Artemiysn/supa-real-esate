@@ -6,6 +6,7 @@ import {
   CookingPot,
   Building,
   House,
+  SendHorizontal,
 } from "lucide-react";
 import { Badge } from "../ui/badge";
 import {
@@ -18,14 +19,14 @@ import Link from "next/link";
 import { PostWithUsers } from "@/lib/data";
 import AddToFavourites from "./AddToFavourites";
 import { displayDate } from "@/lib/utils";
+import SendMessageDialog from "../SendMessageDialog/SendMessageDialog";
 
-type PostInListProps = {
+type PostCardProps = {
   post: PostWithUsers;
   userId: string | undefined;
 };
 
-const PostInList: React.FC<PostInListProps> = ({ post, userId }) => {
-
+const PostCard: React.FC<PostCardProps> = ({ post, userId }) => {
   const imgSrc = getImgSrcByPostId(post.id);
 
   return (
@@ -42,19 +43,23 @@ const PostInList: React.FC<PostInListProps> = ({ post, userId }) => {
         </Link>
         <div className="flex flex-col items-start grow">
           <div className="flex justify-between items-start w-full">
-          <Tooltip delayDuration={300}>
-            <TooltipTrigger asChild>
-              <Link key={post.id} href={`/details/${post.id}`}>
-                <h4 className="scroll-m-20 text-xl font-bold mb-2">
-                  {post?.title}
-                </h4>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="top" sideOffset={-3}>
-              Details
-            </TooltipContent>
-          </Tooltip>
-          <p className="text-slate-400 pt-[2px]">{displayDate(post?.updatedAt)}</p>
+            <Tooltip delayDuration={300}>
+              <TooltipTrigger asChild>
+                <Link key={post.id} href={`/details/${post.id}`}>
+                  <h4 className="scroll-m-20 text-xl font-bold mb-2">
+                    {post?.title}
+                  </h4>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="top" sideOffset={-3}>
+                Details
+              </TooltipContent>
+            </Tooltip>
+            <div>
+              <p className="text-slate-400 pt-[2px]">
+                {displayDate(post?.updatedAt)}
+              </p>
+            </div>
           </div>
           <address className="text-slate-400 text-sm mb-4">
             <MapPin size={12} className="inline align-baseline mr-1" />
@@ -94,7 +99,28 @@ const PostInList: React.FC<PostInListProps> = ({ post, userId }) => {
               </Tooltip>
             </div>
             <div data-type="post-in-list-buttons" className="flex gap-2">
-                <AddToFavourites post={post} userId={userId} />
+              <AddToFavourites post={post} userId={userId} />
+              {userId ? (
+                <SendMessageDialog
+                  buttonEl={
+                    <Badge variant="outline">
+                      <SendHorizontal size={16} className="pr-1" />
+                    </Badge>
+                  }
+                  recepient={post.user}
+                  userId={userId}
+                  postTitle={post.title}
+                />
+              ) : (
+                <Tooltip delayDuration={300}>
+                  <TooltipTrigger>
+                    <Badge variant="secondary" >
+                      <SendHorizontal size={16} className="pr-1" />
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent>Sign in to send message</TooltipContent>
+                </Tooltip>
+              )}
             </div>
           </div>
         </div>
@@ -103,4 +129,4 @@ const PostInList: React.FC<PostInListProps> = ({ post, userId }) => {
   );
 };
 
-export default PostInList;
+export default PostCard;

@@ -29,16 +29,15 @@ type CitiesComboBoxProps = {
 
 const CitiesComboBox: React.FC<CitiesComboBoxProps> = ({
   selectedCity,
-  setSelectedCity
+  setSelectedCity,
 }) => {
-
   const [citiesLoading, setCitiesLoading] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  
+
   const [uniqueCities, setUniqueCities] = useState<
     { value: string; label: string }[]
   >([]);
-  
+
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
@@ -56,14 +55,12 @@ const CitiesComboBox: React.FC<CitiesComboBoxProps> = ({
 
     const refetchData = async () => {
       const cities = await fetchUniqueCities();
-      setUniqueCities(prev=>cities);
-    }
+      setUniqueCities((prev) => cities);
+    };
 
     const intervalId = setInterval(refetchData, 5 * 60 * 1000); // every 5 minutes refetch cities list
     return () => clearInterval(intervalId);
-
   }, []);
-  
 
   if (isDesktop) {
     return (
@@ -75,7 +72,12 @@ const CitiesComboBox: React.FC<CitiesComboBoxProps> = ({
             disabled={citiesLoading}
           >
             {citiesLoading ? (
-             <><TailSpin width={20} height={20} color="black" /><span className="inline-block ml-2">Loading cities...</span> </>
+              <>
+                <TailSpin width={20} height={20} color="black" />
+                <span className="inline-block ml-2">
+                  Loading cities...
+                </span>{" "}
+              </>
             ) : selectedCity ? (
               <span className="capitalize">{selectedCity.label}</span>
             ) : (
@@ -98,7 +100,11 @@ const CitiesComboBox: React.FC<CitiesComboBoxProps> = ({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="outline" className="w-[200px] justify-start">
-          {selectedCity ? <>{<span className="capitalize">{selectedCity.label}</span>}</> : <>Select city</>}
+          {selectedCity ? (
+            <>{<span className="capitalize">{selectedCity.label}</span>}</>
+          ) : (
+            <>Select city</>
+          )}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
