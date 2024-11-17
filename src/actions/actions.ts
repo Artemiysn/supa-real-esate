@@ -47,16 +47,26 @@ const NewPostSchema = z
       .gt(1, "Please provide year, number must be positive")
       .max(3000, "Please select real year")
       .int("year must be an integer"),
-    lat: z.union([z.number()
-      .min(-90, "Please select correct lontitude")
-      .max(90, "Please select correct lontitude"),
-      z.string().length(0)
-    ]).optional().transform(e => e === "" ? null : e),
-    lon: z.union([z.number()
-      .min(-180, "Please select correct lontitude")
-      .max(180, "Please select correct lontitude"),
-      z.string().length(0)
-    ]).optional().transform(e => e === "" ? null : e)
+    lat: z
+      .union([
+        z
+          .number()
+          .min(-90, "Please select correct lontitude")
+          .max(90, "Please select correct lontitude"),
+        z.string().length(0),
+      ])
+      .optional()
+      .transform((e) => (e === "" ? null : e)),
+    lon: z
+      .union([
+        z
+          .number()
+          .min(-180, "Please select correct lontitude")
+          .max(180, "Please select correct lontitude"),
+        z.string().length(0),
+      ])
+      .optional()
+      .transform((e) => (e === "" ? null : e)),
   })
   .required();
 
@@ -253,19 +263,22 @@ export type addMessageState = {
 };
 
 const AddMessageSchema = z.object({
-  response: z.string().min(1, "Please add response message").max(1000, "max length of message is 1000 chars"),
+  response: z
+    .string()
+    .min(1, "Please add response message")
+    .max(1000, "max length of message is 1000 chars"),
   userId: z.string().cuid("Invalid user id"),
-  recepientId: z.string().cuid("Invalid user id")
+  recepientId: z.string().cuid("Invalid user id"),
 });
 
 export const addMessage = async (
   userId: string | undefined,
   recepientId: string,
   prevState: addMessageState,
-  message: FormData | string,
+  message: FormData | string
 ) => {
-
-  const response = (typeof message === 'string') ? message : message.get("response");
+  const response =
+    typeof message === "string" ? message : message.get("response");
 
   const validatedFields = AddMessageSchema.safeParse({
     response: response,
@@ -288,14 +301,14 @@ export const addMessage = async (
         receiverId: validatedFields.data.recepientId,
       },
     });
-    return result
+    return result;
   } catch (e) {
     console.error("Database Error:", e);
     throw new Error("Failed to add new message");
   }
 };
 
-export const deleteMessage = async (messageId: string ) => {
+export const deleteMessage = async (messageId: string) => {
   try {
     const deletedMessage = await db.messages.delete({
       where: {
@@ -306,8 +319,8 @@ export const deleteMessage = async (messageId: string ) => {
   } catch (error) {
     console.error(`Database Error: ${error}`);
     throw new Error("Failed to delete message.");
-  } 
-}
+  }
+};
 
 export const fetchAllMessages = async (
   userId: string
@@ -326,7 +339,7 @@ export const fetchAllMessages = async (
   } catch (e) {
     console.error("Database Error:", e);
     throw new Error("Failed to fetch posts.");
-  } 
+  }
 };
 
 export const countAllMessages = async (userId: string): Promise<number> => {
@@ -375,5 +388,58 @@ export const getFirstUser = (): Promise<User> => {
   } catch (e) {
     console.error("Database Error:", e);
     throw new Error("Failed to get first user");
+  }
+};
+
+const userSchema = z.object({
+  name: z
+    .string()
+    .min(2, "Minimum displayed name is two symbols")
+    .max(100, "Max displayed name is 100 symbols"),
+  email: z.string().email({ message: "Valid email is required" }),
+  userId: z.string().cuid("Invalid user id"),
+});
+
+export type userState = {
+  errors?: {
+    name?: string;
+    email?: string;
+  };
+  message?: string | null;
+};
+
+export const updateUser = async (
+  userId: string | undefined,
+  prevState: userState,
+  formData: FormData
+) => {
+  const validatedFields = userSchema.safeParse({
+    name: formData.get("name"),
+    userId: userId,
+    email: formData.get("email"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed.",
+    };
+  }
+
+  try {
+    const updatedUser = await db.user.update({
+      where: {
+        id: userId, // Replace userId with the actual user ID
+      },
+      data: {
+        name: validatedFields.data.name,
+        email: validatedFields.data.email,
+      },
+    });
+    revalidatePath("/profile");
+    return updatedUser;
+  } catch (e) {
+    console.error("Database Error:", e);
+    throw new Error("Failed to update user");
   }
 };

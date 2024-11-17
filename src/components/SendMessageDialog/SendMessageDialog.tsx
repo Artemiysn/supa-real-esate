@@ -147,6 +147,7 @@ const SendMessageForm: React.FC<SendMessageFormProps> = ({
   const [messageDeleting, setMessageDeleting] = useState(false);
 
   useEffect(() => {
+        // close modal only when eveything is ok
     if (state?.id) callBackFunc && callBackFunc();
   }, [state]);
 

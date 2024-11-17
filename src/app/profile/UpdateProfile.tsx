@@ -1,11 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { User } from "@auth/core/types";
 import React from "react";
+import { UpdateProfileDialog } from "./UpdateProfileDialog";
+import { User } from "@auth/core/types";
 
 type SignInProps = {
-  user: User | undefined;
+  user: User;
 };
 
 const UpdateProfile: React.FC<SignInProps> = ({ user }) => {
@@ -15,7 +16,7 @@ const UpdateProfile: React.FC<SignInProps> = ({ user }) => {
         <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 ">
           User Information
         </h3>
-        <Button>Update Profile</Button>
+        <UpdateProfileDialog user={user}/>
       </div>
       <Table className="max-w-[400px]">
         <TableBody>
