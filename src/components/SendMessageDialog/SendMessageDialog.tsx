@@ -139,7 +139,7 @@ const SendMessageForm: React.FC<SendMessageFormProps> = ({
 }) => {
   const { deleteMessageById } = useContext(MessagesContext);
 
-  const [state, formAction, isPending] = useFormState(
+  const [state, formAction] = useFormState(
     addMessage.bind(null, userId, recepientId),
     initialState
   );

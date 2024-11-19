@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/carousel";
 import ImageViewer from "react-simple-image-viewer";
 import imgArray from "@/lib/generatedImages";
+import fallback from "@/../public/fallback.png";
 
 const DetailsCarousel = () => {
   const [topImgIndex, setTopImgIndex] = useState(0);
@@ -26,6 +27,8 @@ const DetailsCarousel = () => {
           height={200}
           className="rounded h-auto w-auto block cursor-pointer max-h-full max-w-full"
           onClick={() => setIsViewerOpen(true)}
+          placeholder="blur"
+          blurDataURL={fallback.src}
         />
       </div>
       {imgArray.length > 1 && (
@@ -48,6 +51,8 @@ const DetailsCarousel = () => {
                   height={50}
                   className="rounded h-auto w-auto block cursor-pointer"
                   onClick={() => setTopImgIndex(index)}
+                  placeholder="blur"
+                  blurDataURL={fallback.src}
                 />
               </CarouselItem>
             ))}

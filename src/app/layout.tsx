@@ -35,6 +35,7 @@ export default async function RootLayout({
                   width={80}
                   className="mr-2"
                   alt="Supa Real Esate Agency"
+                  priority={false}
                 />
                 <h4 className="scroll-m-20 text-xl font-bold pb-2">
                   Supa Real Estate

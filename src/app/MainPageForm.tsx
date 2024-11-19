@@ -1,7 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState, FormEvent, memo } from "react";
+import { useState, FormEvent, memo, useCallback } from "react";
 import { Input } from "../components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ const MainPageForm = () => {
   const [tabValue, setTabValue] = useState<PostType>("sell");
   const [selectedCity, setSelectedCity] = useState<ComboBoxValue | null>(null);
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  const onSubmit =  useCallback( (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const searchParams = new URLSearchParams();
@@ -32,7 +32,7 @@ const MainPageForm = () => {
     searchParams.append("city", selectedCity?.value ?? "");
 
     router.push(`/searchposts?${searchParams.toString()}`);
-  }
+  }, [])
 
   // in next 15 this exact functionality is made with next js form component. This is next 14 bloated variant
 

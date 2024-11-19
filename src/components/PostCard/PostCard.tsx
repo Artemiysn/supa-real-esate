@@ -20,6 +20,7 @@ import { PostWithUsers } from "@/lib/data";
 import AddToFavourites from "./AddToFavourites";
 import { displayDate } from "@/lib/utils";
 import SendMessageDialog from "../SendMessageDialog/SendMessageDialog";
+import fallback from "@/../public/fallback.png";
 
 type PostCardProps = {
   post: PostWithUsers;
@@ -41,6 +42,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, userId, callBackOnDelete }) =
             width={300}
             height={200}
             priority={false}
+            placeholder="blur"
+            blurDataURL={fallback.src}
           />
         </Link>
         <div className="flex flex-col items-start grow">

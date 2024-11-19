@@ -15,7 +15,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Badge } from "@/components/ui/badge";
 
 const MapWithIcons = dynamic(
   () => import("@/components/MapWithIcons/MapWithIcons"),
