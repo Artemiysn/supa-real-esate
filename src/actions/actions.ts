@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { getServerAuthSession } from "@/modules/auth";
 import { db } from "../modules/db";
 import { Prisma, User } from "@prisma/client";
+import { PostWithUsers } from "@/lib/data";
 
 const NewPostSchema = z
   .object({
@@ -441,5 +442,82 @@ export const updateUser = async (
   } catch (e) {
     console.error("Database Error:", e);
     throw new Error("Failed to update user");
+  }
+};
+
+export const fetchUserPostsWithPages = async (
+  userId: string | undefined,
+  page: number,
+  perPage: number
+): Promise<{ posts: PostWithUsers[]; total: number }> => {
+  if (typeof userId === "undefined") return { posts: [], total: 0 };
+
+  const start = (page - 1) * perPage;
+  try {
+    // prisma orm limitation
+    const [posts, count] = await db.$transaction([
+      db.Posts.findMany({
+        where: { userId: userId },
+        skip: start,
+        take: perPage,
+        orderBy: {
+          updatedAt: "desc",
+        },
+        include: {
+          user: true,
+          FavouredPosts: {
+            where: {
+              userId: userId,
+            },
+          },
+        },
+      }),
+      db.Posts.count({
+        where: { userId: userId },
+      }),
+    ]);
+
+    return {
+      posts: posts,
+      total: count,
+    };
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user posts.");
+  }
+};
+
+export const getFavouredPosts = async (): Promise<PostWithUsers[]> => {
+  const sessionData = await getServerAuthSession();
+
+  if (!sessionData) return [];
+
+  const userId = sessionData.user.id;
+
+  try {
+    const favoured = await db.FavouredPosts.findMany({
+      where: { userId: userId },
+      include: {
+        post: true,
+      },
+    });
+
+    // @ts-ignore
+    return favoured.map((f) => {
+      return {
+        ...f.post,
+        FavouredPosts: [
+          {
+            id: f.id,
+            userId: f.userId,
+            postId: f.postId,
+          },
+        ],
+      };
+    });
+
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user posts.");
   }
 };

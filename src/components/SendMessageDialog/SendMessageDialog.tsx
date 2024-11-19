@@ -57,7 +57,7 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="mx-6 mb-2">
-              Send Message to {recepient.name}
+              Send Message to {recepient?.name}
             </DialogTitle>
             <DialogDescription>
               {messageText && (
@@ -69,7 +69,7 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
             </DialogDescription>
           </DialogHeader>
           <SendMessageForm
-            recepientId={recepient.id}
+            recepientId={recepient?.id}
             userId={userId}
             postTitle={postTitle}
             callBackFunc={() => setOpen(false)}
@@ -87,7 +87,7 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle className="mx-6">
-            Send Message to {recepient.name}
+            Send Message to {recepient?.name}
           </DrawerTitle>
           <DrawerDescription>
             {messageText && (
@@ -99,7 +99,7 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
           </DrawerDescription>
         </DrawerHeader>
         <SendMessageForm
-          recepientId={recepient.id}
+          recepientId={recepient?.id}
           userId={userId}
           postTitle={postTitle}
           callBackFunc={() => setOpen(false)}

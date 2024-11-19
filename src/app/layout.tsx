@@ -40,6 +40,20 @@ export default async function RootLayout({
                   Supa Real Estate
                 </h4>
               </Link>
+              <div className="flex grow items-center px-12 gap-12">
+                <Link href="/deals">
+                  <h5 className="scroll-m-20 text-md  font-semibold tracking-tight pb-1 text-gray-600 underline-animation">
+                    Hot Deals!
+                  </h5>
+                </Link>
+                {session?.user && (
+                  <Link href="/favoured">
+                    <h5 className="scroll-m-20 text-md font-semibold tracking-tight pb-1 text-gray-600 underline-animation">
+                      Favoured
+                    </h5>
+                  </Link>
+                )}
+              </div>
               <SignIn user={session?.user} />
             </nav>
             {children}

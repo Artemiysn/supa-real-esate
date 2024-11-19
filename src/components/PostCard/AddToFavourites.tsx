@@ -13,9 +13,10 @@ import { StarIcon, StarFilledIcon } from "@radix-ui/react-icons";
 type AddToFavouritesProps = {
   post: PostWithUsers;
   userId: string | undefined;
+  callBackOnDelete?: any;
 };
 
-const AddToFavourites: React.FC<AddToFavouritesProps> = ({ post, userId }) => {
+const AddToFavourites: React.FC<AddToFavouritesProps> = ({ post, userId, callBackOnDelete }) => {
   const [isFavoured, setIsFavoured] = useState(
     Boolean(post?.FavouredPosts?.length)
   );
@@ -40,7 +41,10 @@ const AddToFavourites: React.FC<AddToFavouritesProps> = ({ post, userId }) => {
           variant={badgeVariant}
           onClick={async () => {
             const result = await manageFav(post, userId);
-            if (result) setIsFavoured((prev) => !prev);
+            if (result) {
+              setIsFavoured((prev) => !prev);
+              callBackOnDelete && callBackOnDelete();
+            } 
           }}
         >
           {icon}

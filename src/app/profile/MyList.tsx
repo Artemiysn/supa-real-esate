@@ -1,8 +1,8 @@
+import { fetchUserPostsWithPages } from "@/actions/actions";
 import NotFound from "@/components/NotFound";
 import PostCard from "@/components/PostCard/PostCard";
 import { Button } from "@/components/ui/button";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
-import { fetchUserPostsWithPages } from "@/lib/data";
 
 import Link from "next/link";
 
@@ -14,6 +14,7 @@ type MyListProps = {
 const defaultPostsPerPageProfile = "5";
 
 const MyList: React.FC<MyListProps> = async ({ userId, searchParams }) => {
+  
   const currentPage = parseInt((searchParams.page as string) || "1");
   const postsPerPage = parseInt(
     (searchParams.pageSize as string) || defaultPostsPerPageProfile

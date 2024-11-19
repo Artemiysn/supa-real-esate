@@ -1,10 +1,10 @@
 import { getServerAuthSession } from "@/modules/auth";
 import Unauthorized from "@/components/Unauthorized/Unauthorized";
 import UpdateProfile from "./UpdateProfile";
-import MyList from "./MyList";
 import MessagesList from "./MessagesList";
 import { Suspense } from "react";
 import CenterRotator from "@/components/CenterRotator";
+import MyList from "./MyList";
 
 type ProfileProps = {
   searchParams: { [key: string]: string | undefined };

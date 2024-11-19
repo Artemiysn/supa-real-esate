@@ -46,8 +46,8 @@ export const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>Update displayed data</DialogDescription>
+            <DialogTitle className="mx-6">Edit profile</DialogTitle>
+            <DialogDescription className="mx-6">Update displayed data</DialogDescription>
           </DialogHeader>
           <ProfileForm user={user} callbackFunc={() => setOpen(false)} />
         </DialogContent>
@@ -62,8 +62,8 @@ export const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>Edit profile</DrawerTitle>
-          <DrawerDescription>Update displayed data</DrawerDescription>
+          <DrawerTitle className="mx-6">Edit profile</DrawerTitle>
+          <DrawerDescription className="mx-6">Update displayed data</DrawerDescription>
         </DrawerHeader>
         <ProfileForm user={user} callbackFunc={() => setOpen(false)} />
         <DrawerFooter className="pt-2">

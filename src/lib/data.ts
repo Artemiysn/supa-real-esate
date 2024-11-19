@@ -53,47 +53,9 @@ export const fetchUserPosts = async (
   }
 };
 
-export const fetchUserPostsWithPages = async (
-  userId: string | undefined,
-  page: number,
-  perPage: number
-): Promise<{ posts: PostWithUsers[]; total: number }> => {
-  if (typeof userId === "undefined") return { posts: [], total: 0 };
 
-  const start = (page - 1) * perPage;
-  try {
-    // prisma orm limitation
-    const [posts, count] = await db.$transaction([
-      db.Posts.findMany({
-        where: { userId: userId },
-        skip: start,
-        take: perPage,
-        orderBy: {
-          updatedAt: "desc",
-        },
-        include: {
-          user: true,
-          FavouredPosts: {
-            where: {
-              userId: userId,
-            },
-          },
-        },
-      }),
-      db.Posts.count({
-        where: { userId: userId },
-      }),
-    ]);
 
-    return {
-      posts: posts,
-      total: count,
-    };
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch user posts.");
-  }
-};
+
 
 export const fetchPostsByParams = async (
   params: paramsForPostSearch,

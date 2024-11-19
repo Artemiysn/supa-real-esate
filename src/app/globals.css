@@ -166,3 +166,27 @@
     background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
   }
 }
+
+.underline-animation {
+  position: relative;
+  display: inline-block;
+}
+
+.underline-animation:hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background-color: black;
+  transition: width 0.4s ease-in-out;
+}
+
+.underline-animation:hover {
+  color: black;
+}
+
+.underline-animation:hover::after {
+  width: 100%;
+}

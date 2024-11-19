@@ -24,9 +24,10 @@ import SendMessageDialog from "../SendMessageDialog/SendMessageDialog";
 type PostCardProps = {
   post: PostWithUsers;
   userId: string | undefined;
+  callBackOnDelete?: any;
 };
 
-const PostCard: React.FC<PostCardProps> = ({ post, userId }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, userId, callBackOnDelete }) => {
   const imgSrc = getImgSrcByPostId(post.id);
 
   return (
@@ -39,12 +40,13 @@ const PostCard: React.FC<PostCardProps> = ({ post, userId }) => {
             className="rounded h-full w-full"
             width={300}
             height={200}
+            priority={false}
           />
         </Link>
         <div className="flex flex-col items-start grow">
           <div className="flex justify-between items-start w-full">
             <Tooltip delayDuration={300}>
-              <TooltipTrigger asChild>
+              <TooltipTrigger >
                 <Link key={post.id} href={`/details/${post.id}`}>
                   <h4 className="scroll-m-20 text-xl font-bold mb-2">
                     {post?.title}
@@ -82,7 +84,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, userId }) => {
                 )}
               </Badge>
               <Tooltip delayDuration={300}>
-                <TooltipTrigger asChild>
+                <TooltipTrigger >
                   <Badge variant="outline">
                     <LandPlot size={16} className="pr-1" /> {post?.area}
                   </Badge>
@@ -90,7 +92,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, userId }) => {
                 <TooltipContent>Total area in &#13217;</TooltipContent>
               </Tooltip>
               <Tooltip delayDuration={300}>
-                <TooltipTrigger asChild>
+                <TooltipTrigger >
                   <Badge variant="outline">
                     <CookingPot size={16} className="pr-1" /> {post?.kitchen}
                   </Badge>
@@ -99,7 +101,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, userId }) => {
               </Tooltip>
             </div>
             <div data-type="post-in-list-buttons" className="flex gap-2">
-              <AddToFavourites post={post} userId={userId} />
+              <AddToFavourites post={post} userId={userId} callBackOnDelete={callBackOnDelete}/>
               {userId ? (
                 <SendMessageDialog
                   buttonEl={

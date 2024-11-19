@@ -29,7 +29,7 @@ const SignIn: React.FC<SignInProps> = ({ user }) => {
   };
 
   return (
-    <div className="flex align-middle items-center ">
+    <div className="flex items-center ">
       {user && (
         <>
           <Avatar className="mx-2">
