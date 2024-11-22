@@ -12,14 +12,12 @@ import { useToast } from "@/hooks/use-toast";
 type MessagesContextType = {
   messages: MessageWithUser[];
   messagesLoading: boolean;
-  refetchMessages: any;
   deleteMessageById: any;
 };
 
 export const MessagesContext = createContext<MessagesContextType>({
   messages: [],
   messagesLoading: false,
-  refetchMessages: undefined,
   deleteMessageById: undefined,
 });
 
@@ -35,12 +33,6 @@ export const MessagesProvider = ({
   const [messages, setMessages] = useState<MessageWithUser[]>([]);
   const [messagesLoading, setMessagesLoading] = useState(false);
   const { toast } = useToast();
-
-  const refetchMessages = useCallback(async () => {
-    if (!userId) return null;
-    const msgs = await fetchAllMessages(userId);
-    setMessages(msgs);
-  }, []);
 
   const deleteMessageById = useCallback((messageId: string) => {
     setMessages((prev) => prev.filter((m) => m.id !== messageId));
@@ -102,7 +94,7 @@ export const MessagesProvider = ({
 
   return (
     <MessagesContext.Provider
-      value={{ messages, messagesLoading, refetchMessages, deleteMessageById }}
+      value={{ messages, messagesLoading, deleteMessageById }}
     >
       {children}
     </MessagesContext.Provider>

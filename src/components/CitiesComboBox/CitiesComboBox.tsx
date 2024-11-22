@@ -18,7 +18,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { TailSpin } from "react-loader-spinner";
-import { fetchUniqueCities } from "@/actions/actions";
+import { catchedUniqueCities, fetchUniqueCities } from "@/actions/actions";
 
 export type ComboBoxValue = { value: string; label: string };
 
@@ -44,7 +44,7 @@ const CitiesComboBox: React.FC<CitiesComboBoxProps> = ({
     const fetchCitiesInitially = async () => {
       setCitiesLoading(true);
       try {
-        const cities = await fetchUniqueCities();
+        const cities = await catchedUniqueCities();
         setUniqueCities(cities);
       } finally {
         setCitiesLoading(false);

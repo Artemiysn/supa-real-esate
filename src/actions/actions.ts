@@ -1,12 +1,13 @@
 "use server";
 
 import { z } from "zod";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "@/modules/auth";
 import { db } from "../modules/db";
 import { Prisma, User } from "@prisma/client";
 import { PostWithUsers } from "@/lib/data";
+import { cache } from "react";
 
 const NewPostSchema = z
   .object({
@@ -251,6 +252,10 @@ export const fetchUniqueCities = async (): Promise<
     throw new Error("Failed to fetch unique cities.");
   }
 };
+
+export const catchedUniqueCities = cache(async () => {
+	return await fetchUniqueCities();
+});
 
 export type MessageWithUser = Prisma.MessagesGetPayload<{
   include: { author: true };

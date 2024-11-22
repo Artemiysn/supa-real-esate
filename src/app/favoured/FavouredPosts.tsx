@@ -17,9 +17,12 @@ const FavouredPosts: React.FC<FavouredPostsProps> = ({ userId }) => {
 
   useEffect(() => {
     (async () => {
-      const posts = await getFavouredPosts();
-      setPostsData(posts);
-      setIsLoading(false);
+      try {
+        const posts = await getFavouredPosts();
+        setPostsData(posts);
+      } finally {
+        setIsLoading(false);
+      }
     })();
   }, []);
 

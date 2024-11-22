@@ -7,6 +7,7 @@ import Link from "next/link";
 import { NextBgStaticCss } from "next-bg-image";
 import { MessagesProvider } from "./contexts/MessagesContext";
 import { Toaster } from "@/components/ui/toaster";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: "Find your apartment with ease!",
@@ -41,10 +42,13 @@ export default async function RootLayout({
                   Supa Real Estate
                 </h4>
               </Link>
-              <div className="flex grow items-center px-12 gap-12">
+              <div className="flex grow items-center px-14 gap-14">
                 <Link href="/deals">
-                  <h5 className="scroll-m-20 text-md  font-semibold tracking-tight pb-1 text-gray-600 underline-animation">
+                  <h5 className="scroll-m-20 text-md  font-semibold tracking-tight pb-1 text-gray-600 underline-animation relative">
                     Hot Deals!
+                    <Badge variant="flag"  className="absolute top-[-10px] right-[-30px]">
+                      New!
+                    </Badge>
                   </h5>
                 </Link>
                 {session?.user && (

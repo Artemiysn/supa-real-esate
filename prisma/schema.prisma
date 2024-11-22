@@ -97,10 +97,25 @@ model Posts {
   FavouredPosts FavouredPosts[]
   lat           Decimal?        @db.Decimal(11, 8)
   lon           Decimal?        @db.Decimal(11, 8)
+  Categories CategoriesOnPosts[]
 
   @@index([city])
   @@index([area])
   @@index([price])
+}
+
+model Category {
+  id    Int                 @id @default(autoincrement())
+  name  String
+  posts CategoriesOnPosts[]
+}
+
+model CategoriesOnPosts {
+  post       Posts     @relation(fields: [postId], references: [id])
+  postId     BigInt 
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int 
+  @@id([postId, categoryId])
 }
 
 model FavouredPosts {
