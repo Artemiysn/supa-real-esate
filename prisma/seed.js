@@ -196,7 +196,7 @@ const CatIds = await prisma.category.findMany({
 console.log(CatIds); //id[0].id
 
 const postIds = await prisma.posts.findMany({
-  take: 3,
+  take: 4,
   select: {id: true}
 })
 
@@ -213,12 +213,8 @@ const createCategoriesOnPosts = await prisma.CategoriesOnPosts.createMany({
       categoryId: CatIds[1].id
     },
     {
-      postId: postIds[0].id,
-      categoryId: CatIds[2].id
-    },
-    {
       postId: postIds[1].id,
-      categoryId: CatIds[0].id
+      categoryId: CatIds[2].id
     },
     {
       postId: postIds[1].id,
@@ -227,6 +223,10 @@ const createCategoriesOnPosts = await prisma.CategoriesOnPosts.createMany({
     {
       postId: postIds[2].id,
       categoryId: CatIds[0].id
+    },
+    {
+      postId: postIds[3].id,
+      categoryId: CatIds[2].id
     },
   ]
 })

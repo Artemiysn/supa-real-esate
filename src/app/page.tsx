@@ -1,6 +1,9 @@
 import bg from "@/../../public/bg.jpg";
 import dynamic from "next/dynamic";
 import NextBgImage from "next-bg-image";
+import Deals from "./Deals";
+import { Suspense } from "react";
+import CenterRotator from "@/components/CenterRotator";
 
 // so that browser api like window can be safely used https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading
 const MainPageForm = dynamic(() => import("@/app/MainPageForm"), {
@@ -32,26 +35,9 @@ export default function Home() {
           Carefully selected SEO-wise commentary. This text is available for robots
         </article>
         <MainPageForm />
-        <div className="flex flex-row w-full mt-8 justify-between">
-          <div>
-            <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-              10+
-            </h3>
-            <p>Years of experience</p>
-          </div>
-          <div>
-            <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-              12+
-            </h3>
-            <p>Awards gained</p>
-          </div>
-          <div>
-            <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-              7000+
-            </h3>
-            <p>Property ready</p>
-          </div>
-        </div>
+        <Suspense fallback={<CenterRotator />}>
+          <Deals />
+        </Suspense>
       </div>
     </NextBgImage>
   );

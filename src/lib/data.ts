@@ -1,10 +1,14 @@
 import { db } from "@/modules/db";
 import type { Prisma } from "@prisma/client";
 import { paramsForPostSearch } from "@/app/searchposts/page";
-import {jsonStringifyFixed} from "./utils";
+import { jsonStringifyFixed } from "./utils";
 
 export type PostWithUsers = Prisma.PostsGetPayload<{
-  include: { user: true; FavouredPosts: true };
+  include: {
+    user: true;
+    FavouredPosts: true;
+    Categories: { include: { category: true } };
+  };
 }>;
 
 export const getPostDetails = async (
@@ -18,6 +22,11 @@ export const getPostDetails = async (
         FavouredPosts: {
           where: {
             userId: userId,
+          },
+        },
+        Categories: {
+          include: {
+            category: true,
           },
         },
       },
@@ -45,6 +54,11 @@ export const fetchUserPosts = async (
             userId: userId,
           },
         },
+        Categories: {
+          include: {
+            category: true,
+          },
+        },
       },
     });
   } catch (error) {
@@ -52,10 +66,6 @@ export const fetchUserPosts = async (
     throw new Error("Failed to fetch user posts.");
   }
 };
-
-
-
-
 
 export const fetchPostsByParams = async (
   params: paramsForPostSearch,
@@ -133,6 +143,11 @@ export const fetchPostsByParams = async (
         include: {
           user: true,
           FavouredPosts: favouredPosts,
+          Categories: {
+            include: {
+              category: true,
+            },
+          },
         },
       }),
       db.Posts.count({

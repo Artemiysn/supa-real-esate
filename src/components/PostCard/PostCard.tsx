@@ -28,13 +28,21 @@ type PostCardProps = {
   callBackOnDelete?: any;
 };
 
-const PostCard: React.FC<PostCardProps> = ({ post, userId, callBackOnDelete }) => {
+const PostCard: React.FC<PostCardProps> = ({
+  post,
+  userId,
+  callBackOnDelete,
+}) => {
   const imgSrc = getImgSrcByPostId(post.id);
 
   return (
     <TooltipProvider>
       <div className="flex h-[200px] w-full mb-4 rounded-xl border bg-card text-card-foreground shadow p-2">
-        <Link key={post.id} href={`/details/${post.id}`} className="mr-2">
+        <Link
+          key={post.id}
+          href={`/details/${post.id}`}
+          className="mr-2 relative"
+        >
           <Image
             src={imgSrc}
             alt="fallback"
@@ -45,11 +53,16 @@ const PostCard: React.FC<PostCardProps> = ({ post, userId, callBackOnDelete }) =
             placeholder="blur"
             blurDataURL={fallback.src}
           />
+          <div className="absolute left-[-20px] top-2 flex flex-col gap-2">
+            {post?.Categories.map((c) => (
+              <Badge variant="flag">{c.category.name}</Badge>
+            ))}
+          </div>
         </Link>
         <div className="flex flex-col items-start grow">
           <div className="flex justify-between items-start w-full">
             <Tooltip delayDuration={300}>
-              <TooltipTrigger >
+              <TooltipTrigger>
                 <Link key={post.id} href={`/details/${post.id}`}>
                   <h4 className="scroll-m-20 text-xl font-bold mb-2">
                     {post?.title}
@@ -87,7 +100,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, userId, callBackOnDelete }) =
                 )}
               </Badge>
               <Tooltip delayDuration={300}>
-                <TooltipTrigger >
+                <TooltipTrigger>
                   <Badge variant="outline">
                     <LandPlot size={16} className="pr-1" /> {post?.area}
                   </Badge>
@@ -95,7 +108,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, userId, callBackOnDelete }) =
                 <TooltipContent>Total area in &#13217;</TooltipContent>
               </Tooltip>
               <Tooltip delayDuration={300}>
-                <TooltipTrigger >
+                <TooltipTrigger>
                   <Badge variant="outline">
                     <CookingPot size={16} className="pr-1" /> {post?.kitchen}
                   </Badge>
@@ -104,7 +117,11 @@ const PostCard: React.FC<PostCardProps> = ({ post, userId, callBackOnDelete }) =
               </Tooltip>
             </div>
             <div data-type="post-in-list-buttons" className="flex gap-2">
-              <AddToFavourites post={post} userId={userId} callBackOnDelete={callBackOnDelete}/>
+              <AddToFavourites
+                post={post}
+                userId={userId}
+                callBackOnDelete={callBackOnDelete}
+              />
               {userId ? (
                 <SendMessageDialog
                   buttonEl={
@@ -119,7 +136,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, userId, callBackOnDelete }) =
               ) : (
                 <Tooltip delayDuration={300}>
                   <TooltipTrigger>
-                    <Badge variant="secondary" >
+                    <Badge variant="secondary">
                       <SendHorizontal size={16} className="pr-1" />
                     </Badge>
                   </TooltipTrigger>

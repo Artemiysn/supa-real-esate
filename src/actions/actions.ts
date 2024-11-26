@@ -254,7 +254,7 @@ export const fetchUniqueCities = async (): Promise<
 };
 
 export const catchedUniqueCities = cache(async () => {
-	return await fetchUniqueCities();
+  return await fetchUniqueCities();
 });
 
 export type MessageWithUser = Prisma.MessagesGetPayload<{
@@ -475,6 +475,11 @@ export const fetchUserPostsWithPages = async (
               userId: userId,
             },
           },
+          Categories: {
+            include: {
+              category: true,
+            },
+          },
         },
       }),
       db.Posts.count({
@@ -503,7 +508,15 @@ export const getFavouredPosts = async (): Promise<PostWithUsers[]> => {
     const favoured = await db.FavouredPosts.findMany({
       where: { userId: userId },
       include: {
-        post: true,
+        post: {
+          include: {
+            Categories: {
+              include: {
+                category: true,
+              },
+            },
+          },
+        },
       },
     });
 
@@ -520,9 +533,33 @@ export const getFavouredPosts = async (): Promise<PostWithUsers[]> => {
         ],
       };
     });
-
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user posts.");
+  }
+};
+
+export const getPostsWithCategoriesOnly = async (
+  take: number,
+): Promise<PostWithUsers[]> => {
+  try {
+    return db.Posts.findMany({
+      take: Number(take),
+      orderBy: {
+        Categories: {
+          _count: 'desc',
+        },
+      },
+      include: {
+        Categories: {
+          include: {
+            category: true,
+          },
+        },
+      },
+    });
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch posts with categories");
   }
 };

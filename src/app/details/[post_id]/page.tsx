@@ -15,6 +15,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
 
 const MapWithIcons = dynamic(
   () => import("@/components/MapWithIcons/MapWithIcons"),
@@ -52,7 +53,7 @@ const DetailsComponent: React.FC<{
     <div className="flex w-full">
       <div id="pics-and-descr" className="grow ml-8 pr-8">
         <DetailsCarousel />
-        <div id="main-post-block" className="flex w-full justify-between my-8">
+        <div id="main-post-block" className="flex w-full justify-between mt-8 mb-4">
           <div id="title-block" className="flex flex-col justify-between">
             <h4 className="scroll-m-20 text-3xl font-bold mb-2">
               {post?.title}
@@ -61,11 +62,16 @@ const DetailsComponent: React.FC<{
               <MapPin size={12} className="inline align-baseline mr-1" />
               <span className="align-baseline">{post?.address}</span>
             </address>
-            <p className="text-lg">
+            <p className="text-lg mb-4">
               <span className="bg-orange-100 rounded p-1 ">
                 $ {post?.price}
               </span>
             </p>
+            <div className="flex gap-2">
+              {post?.Categories.map((c) => (
+                <Badge variant="destructive">{c.category.name}</Badge>
+              ))}
+            </div>
           </div>
           <div className="flex gap-2 items-start pt-1">
             <span>{displayDate(post?.updatedAt)}</span>
