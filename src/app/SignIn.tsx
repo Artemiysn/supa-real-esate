@@ -58,7 +58,7 @@ const SignIn: React.FC<SignInProps> = ({ user }) => {
           "Sign Out"
         ) : (
           <>
-            <span className="pb-[3px]">Sign in with</span>{" "}
+            <span>Sign in with</span>{" "}
             <FcGoogle size={18} className="ml-2" />{" "}
           </>
         )}

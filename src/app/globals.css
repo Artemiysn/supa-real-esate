@@ -134,6 +134,7 @@
 .rainbow-text {
   background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientAnimation 5s infinite;
   animation-timing-function: ease-in-out;

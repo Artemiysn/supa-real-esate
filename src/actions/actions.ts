@@ -540,11 +540,20 @@ export const getFavouredPosts = async (): Promise<PostWithUsers[]> => {
 };
 
 export const getPostsWithCategoriesOnly = async (
-  take: number,
+  take: number | null = null,
 ): Promise<PostWithUsers[]> => {
+
+  const takePosts = take === null ? null : {take: Number(take)};
+
   try {
     return db.Posts.findMany({
-      take: Number(take),
+      ...takePosts,
+      where: {
+        Categories: {
+          // this is how you query for "at least one relationship exists" in prisma orm!
+          some: {}
+        }
+      },
       orderBy: {
         Categories: {
           _count: 'desc',

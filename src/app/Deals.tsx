@@ -2,14 +2,17 @@ import { getPostsWithCategoriesOnly } from "@/actions/actions";
 import PostCardDeal from "@/components/PostCardDeal/PostCardDeal";
 
 const Deals = async () => {
-  const posts = await getPostsWithCategoriesOnly(2);
+  const posts = await getPostsWithCategoriesOnly(3);
   if (!posts.length) return <NoDeals />;
   return (
-    <div className="flex gap-4 mt-4">
-      {posts.map((post) => (
-        <PostCardDeal post={post} />
-      ))}
-    </div>
+    <>
+      <h4 className="scroll-m-20 text-xl font-bold my-4">Recommended:</h4>
+      <div className="flex gap-4">
+        {posts.map((post) => (
+          <PostCardDeal post={post} />
+        ))}
+      </div>
+    </>
   );
 };
 
