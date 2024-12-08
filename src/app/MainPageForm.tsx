@@ -19,7 +19,7 @@ const MainPageForm = () => {
   const [tabValue, setTabValue] = useState<PostType>("sell");
   const [selectedCity, setSelectedCity] = useState<ComboBoxValue | null>(null);
 
-  const onSubmit =  useCallback( (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const searchParams = new URLSearchParams();
@@ -32,7 +32,7 @@ const MainPageForm = () => {
     searchParams.append("city", selectedCity?.value ?? "");
 
     router.push(`/searchposts?${searchParams.toString()}`);
-  }, [])
+  }, []);
 
   // in next 15 this exact functionality is made with next js form component. This is next 14 bloated variant
 
@@ -93,3 +93,16 @@ const MainPageForm = () => {
 };
 
 export default MainPageForm;
+
+export const MainPageFormLoader = () => {
+  return (
+    <div className="mt-4">
+      <div className="w-[400px] h-[40px] overflow-hidden rounded">
+        <div className="moving-bar"> </div>
+      </div>
+      <div className="mt-4 w-[550px] h-[36px] overflow-hidden rounded">
+        <div className="moving-bar"> </div>
+      </div>
+    </div>
+  );
+};
