@@ -1,12 +1,18 @@
 import { getPostsWithCategoriesOnly } from "@/actions/actions";
 import PostCardDeal from "@/components/PostCardDeal/PostCardDeal";
+import PostCardDealLoader from "@/components/PostCardDeal/PostCardDealLoader";
 
-const Deals = async () => {
-  const posts = await getPostsWithCategoriesOnly(3);
+const Deals = async ({
+  delay,
+  take,
+}: {
+  delay: number | null;
+  take: number;
+}) => {
+  const posts = await getPostsWithCategoriesOnly(take, delay);
   if (!posts.length) return <NoDeals />;
   return (
     <>
-      <h4 className="scroll-m-20 text-xl font-bold my-4">Recommended:</h4>
       <div className="flex gap-4">
         {posts.map((post) => (
           <PostCardDeal post={post} />
@@ -41,4 +47,13 @@ const NoDeals = () => {
       </div>
     </div>
   );
+};
+
+export const DealsPreloader = ({ take }: { take: number }) => {
+
+  const els = [];
+  for (let i = 0; i < take; i++) {
+    els.push(<PostCardDealLoader key={i} />);
+  }
+  return <div className="flex gap-4">{els}</div>;
 };

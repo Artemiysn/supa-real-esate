@@ -1,13 +1,15 @@
 import bg from "@/../../public/bg.jpg";
 import dynamic from "next/dynamic";
 import NextBgImage from "next-bg-image";
-import Deals from "./Deals";
-import { Suspense } from "react";
+import Deals, { DealsPreloader } from "./Deals";
+import { lazy, Suspense } from "react";
 import CenterRotator from "@/components/CenterRotator";
 
+// change for better loader
 // so that browser api like window can be safely used https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading
 const MainPageForm = dynamic(() => import("@/app/MainPageForm"), {
   ssr: false,
+  loading: () => <CenterRotator />,
 });
 
 export default function Home() {
@@ -35,8 +37,9 @@ export default function Home() {
           Carefully selected SEO-wise commentary. This text is available for robots
         </article>
         <MainPageForm />
-        <Suspense fallback={<CenterRotator />}>
-          <Deals />
+        <h4 className="scroll-m-20 text-xl font-bold my-4">Recommended:</h4>
+        <Suspense fallback={<DealsPreloader take={3}/>}>
+          <Deals delay={700} take={3}/>
         </Suspense>
       </div>
     </NextBgImage>

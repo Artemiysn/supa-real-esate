@@ -541,7 +541,10 @@ export const getFavouredPosts = async (): Promise<PostWithUsers[]> => {
 
 export const getPostsWithCategoriesOnly = async (
   take: number | null = null,
+  delay: number | null = null
 ): Promise<PostWithUsers[]> => {
+
+  if (delay) await new Promise(r => setTimeout(r, delay));
 
   const takePosts = take === null ? null : {take: Number(take)};
 

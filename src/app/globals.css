@@ -4,7 +4,6 @@
 
 @layer base {
   :root {
-
     --background: 0 0% 100%;
 
     --foreground: 240 10% 3.9%;
@@ -53,10 +52,9 @@
 
     --chart-5: 27 87% 67%;
 
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
   .dark {
-
     --background: 240 10% 3.9%;
 
     --foreground: 0 0% 98%;
@@ -103,7 +101,7 @@
 
     --chart-4: 280 65% 60%;
 
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
 }
 
@@ -132,7 +130,16 @@
 }
 
 .rainbow-text {
-  background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+  background-image: linear-gradient(
+    to right,
+    violet,
+    indigo,
+    blue,
+    green,
+    yellow,
+    orange,
+    red
+  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -141,7 +148,16 @@
 }
 
 .animated-rainbow-text {
-  background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  background-image: linear-gradient(
+    to right,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
   animation: gradientAnimation 0.5s infinite;
   animation-timing-function: ease-in-out;
 }
@@ -149,22 +165,76 @@
 /* thanks-gemini */
 @keyframes gradientAnimation {
   0% {
-    background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    background-image: linear-gradient(
+      to right,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet
+    );
   }
   20% {
-    background-image: linear-gradient(to right, orange, yellow, green, blue, indigo, violet, red);
+    background-image: linear-gradient(
+      to right,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet,
+      red
+    );
   }
   40% {
-    background-image: linear-gradient(to right, yellow, green, blue, indigo, violet, red, orange);
+    background-image: linear-gradient(
+      to right,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet,
+      red,
+      orange
+    );
   }
   60% {
-    background-image: linear-gradient(to right, green, blue, indigo, violet, red, orange, yellow);
+    background-image: linear-gradient(
+      to right,
+      green,
+      blue,
+      indigo,
+      violet,
+      red,
+      orange,
+      yellow
+    );
   }
   80% {
-    background-image: linear-gradient(to right, blue, indigo, violet, red, orange, yellow, green);
+    background-image: linear-gradient(
+      to right,
+      blue,
+      indigo,
+      violet,
+      red,
+      orange,
+      yellow,
+      green
+    );
   }
   100% {
-    background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    background-image: linear-gradient(
+      to right,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet
+    );
   }
 }
 
@@ -190,4 +260,19 @@
 
 .underline-animation:hover::after {
   width: 100%;
+}
+
+.moving-bar {
+  height: 100%;
+  background-color: lightgray;
+  animation: barmove 1s ease-in-out;
+}
+
+@keyframes barmove {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 }
