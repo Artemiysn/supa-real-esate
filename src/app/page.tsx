@@ -28,7 +28,7 @@ export default function Home() {
         base: "center bottom",
       }}
     >
-      <div className="min-h-[calc(100vh-90px)] flex flex-col py-16 px-60">
+      <div className="min-h-[calc(100vh-90px)] flex flex-col py-16 max-w-[1000px] mx-auto">
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Find your apartment with ease
         </h2>
