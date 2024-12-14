@@ -39,7 +39,7 @@ const MainPageForm = () => {
   return (
     <>
       <Tabs
-        className="w-[400px] pt-4"
+        className="md:w-[400px] pt-4"
         value={tabValue}
         onValueChange={(v) => setTabValue(v as PostType)}
       >
@@ -53,7 +53,7 @@ const MainPageForm = () => {
         </TabsList>
       </Tabs>
       <form
-        className="flex flex-row w-full items-center space-x-2 mt-4"
+        className="flex flex-row w-full items-center space-x-2 mt-4 flex-wrap gap-2"
         onSubmit={onSubmit}
       >
         <MemoizedComboBox
@@ -67,6 +67,7 @@ const MainPageForm = () => {
           min="0"
           step={1}
           max={2000}
+          className="w-[220px] !mx-0"
         />
         <Input
           name="minPrice"
@@ -75,6 +76,7 @@ const MainPageForm = () => {
           min="0"
           step={1}
           max={9999999}
+          className="w-[220px] !mx-0 "
         />
         <Input
           name="maxPrice"
@@ -83,8 +85,9 @@ const MainPageForm = () => {
           min="0"
           step={1}
           max={9999999}
+          className="w-[220px] !mx-0"
         />
-        <Button size={"default"} type="submit">
+        <Button size={"default"} type="submit" className="md:w-[auto] !mx-0 w-[220px]">
           <SearchIcon size={16} />
         </Button>
       </form>
@@ -97,10 +100,10 @@ export default MainPageForm;
 export const MainPageFormLoader = () => {
   return (
     <div className="mt-4">
-      <div className="w-[400px] h-[40px] overflow-hidden rounded">
+      <div className="md:w-[400px] h-[40px] overflow-hidden rounded">
         <div className="moving-bar"> </div>
       </div>
-      <div className="mt-4 w-[550px] h-[36px] overflow-hidden rounded">
+      <div className="mt-4 md:w-[550px] h-[36px] overflow-hidden rounded">
         <div className="moving-bar"> </div>
       </div>
     </div>

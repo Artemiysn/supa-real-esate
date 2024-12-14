@@ -68,7 +68,7 @@ const CitiesComboBox: React.FC<CitiesComboBoxProps> = ({
         <PopoverTrigger asChild>
           <Button
             variant="outline"
-            className="w-[200px] min-w-[200px] justify-start bg-transparent"
+            className="w-[220px] justify-start bg-transparent"
             disabled={citiesLoading}
           >
             {citiesLoading ? (
@@ -85,7 +85,7 @@ const CitiesComboBox: React.FC<CitiesComboBoxProps> = ({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0" align="start">
+        <PopoverContent className="w-[220px] p-0" align="start">
           <CititesList
             setOpen={setOpen}
             setSelectedCity={setSelectedCity}
@@ -99,7 +99,7 @@ const CitiesComboBox: React.FC<CitiesComboBoxProps> = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="w-[200px] justify-start">
+        <Button variant="outline" className="w-[220px] justify-start">
           {selectedCity ? (
             <>{<span className="capitalize">{selectedCity.label}</span>}</>
           ) : (

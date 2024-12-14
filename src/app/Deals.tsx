@@ -13,7 +13,7 @@ const Deals = async ({
   if (!posts.length) return <NoDeals />;
   return (
     <>
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-wrap">
         {posts.map((post) => (
           <PostCardDeal post={post} />
         ))}
@@ -26,7 +26,7 @@ export default Deals;
 
 const NoDeals = () => {
   return (
-    <div className="flex flex-row w-full mt-8 justify-between">
+    <div className="flex flex-row w-full mt-8 justify-between flex-wrap">
       <div>
         <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
           10+
