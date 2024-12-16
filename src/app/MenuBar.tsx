@@ -45,13 +45,13 @@ const MenuBar: React.FC<MenuBarProps> = ({ user }) => {
 
   if (isDesktop) {
     return (
-      <nav className="min-h-[90px] flex justify-between py-1 mx-auto lg:w-[1024px] lg:px-0 w-full">
+      <nav className="min-h-[90px] flex justify-between py-1 lg:mx-auto px-4 lg:w-[1024px] lg:px-0 w-full">
         <Link href="/" className="flex items-center">
           <Image
             src="/logo.png"
             height={80}
             width={80}
-            className="transform translate-x-[-20px]"
+            className="transform translate-x-[-10px]"
             alt="Supa Real Esate Agency"
             priority={false}
           />
@@ -142,7 +142,11 @@ const MenuBar: React.FC<MenuBarProps> = ({ user }) => {
                   />
                   <AvatarFallback>{user?.name}</AvatarFallback>
                 </Avatar>
-                <Link href="/profile" className="grid place-content-center" onClick={() => setOpen(false)}>
+                <Link
+                  href="/profile"
+                  className="grid place-content-center"
+                  onClick={() => setOpen(false)}
+                >
                   <LayoutLinkHeadingMobile>Profile</LayoutLinkHeadingMobile>
                 </Link>
               </div>

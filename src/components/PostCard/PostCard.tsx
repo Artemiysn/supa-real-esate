@@ -37,16 +37,16 @@ const PostCard: React.FC<PostCardProps> = ({
 
   return (
     <TooltipProvider>
-      <div className="flex h-[200px] w-full mb-4 rounded-xl border bg-card text-card-foreground shadow p-2">
+      <div className="flex sm:flex-row flex-row-reverse sm:h-[200px] h-[250px] w-full max-w-[750px] mb-4 rounded-xl border bg-card text-card-foreground shadow p-2">
         <Link
           key={post.id}
           href={`/details/${post.id}`}
-          className="mr-2 relative"
+          className="sm:mr-2 ml-1 relative sm:min-w-[160px] min-w-[100px]"
         >
           <Image
             src={imgSrc}
             alt="fallback"
-            className="rounded h-full w-full"
+            className="rounded w-full max-h-[200px] sm:h-full"
             width={300}
             height={200}
             priority={false}
@@ -60,11 +60,14 @@ const PostCard: React.FC<PostCardProps> = ({
           </div>
         </Link>
         <div className="flex flex-col items-start grow">
-          <div className="flex justify-between items-start w-full">
+          <div
+            id={`postcard-title-date-${post.id}`}
+            className="flex sm:flex-row flex-col sm:justify-between justify-start w-full mb-2 sm:mb-0"
+          >
             <Tooltip delayDuration={300}>
               <TooltipTrigger>
                 <Link key={post.id} href={`/details/${post.id}`}>
-                  <h4 className="scroll-m-20 text-xl font-bold mb-2">
+                  <h4 className="scroll-m-20 text-xl font-bold mb-0 sm:mb-2 text-left">
                     {post?.title}
                   </h4>
                 </Link>
@@ -79,12 +82,15 @@ const PostCard: React.FC<PostCardProps> = ({
               </p>
             </div>
           </div>
-          <address className="text-slate-400 text-sm mb-4">
+          <address className="text-slate-400 text-sm mb-4 max-h-[60px] overflow-hidden">
             <MapPin size={12} className="inline align-baseline mr-1" />
             <span className="align-baseline">{post?.address}</span>
           </address>
           <p className="rounded bg-orange-100 p-1 text-lg">$ {post?.price}</p>
-          <div className="flex grow items-end justify-between w-full">
+          <div
+            id={`postcard-badges-${post.id}`}
+            className="flex flex-col sm:flex-row grow sm:items-end items-start sm:justify-between justify-end w-full gap-y-2 sm:gap-y-0"
+          >
             <div data-type="post-in-list-badges" className="flex gap-2">
               <Badge variant="outline">
                 {post?.property === "apartment" ? (

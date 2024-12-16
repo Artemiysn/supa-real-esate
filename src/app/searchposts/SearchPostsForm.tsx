@@ -11,17 +11,14 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
-import {
-  searchPosts,
-  searchPostState,
-} from "@/actions/actions";
+import { searchPosts, searchPostState } from "@/actions/actions";
 import { useFormState } from "react-dom";
 import { memo, useState } from "react";
 import CitiesComboBox, {
   ComboBoxValue,
 } from "@/components/CitiesComboBox/CitiesComboBox";
 
-import styles from './searchPostsForm.module.css';
+import styles from "./searchPostsForm.module.css";
 
 type SearchPostsProps = {
   searchParams: { [key: string]: string | undefined };
@@ -32,7 +29,6 @@ const initialState: searchPostState = { message: null, errors: {} };
 const MemoizedComboBox = memo(CitiesComboBox);
 
 const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
-
   const cityVal = {
     value: searchParams?.city ?? "",
     label: searchParams?.city ?? "",
@@ -48,10 +44,10 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
 
   return (
     <form
-      className="flex flex-row w-auto flex-wrap content-start my-4 items-baseline ml-8 "
+      className="flex flex-wrap my-4 items-baseline lg:ml-0 ml-8 "
       action={formAction}
     >
-      <div id="city-input-block" className={`${styles.searchInputBlock} w-52`}>
+      <div id="city-input-block" className={`${styles.searchInputBlock}`}>
         <Label htmlFor="city">City</Label>
         <MemoizedComboBox
           selectedCity={selectedCity}
@@ -150,7 +146,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
         <Label htmlFor="area">Total area</Label>
         <Input
           type="number"
-          min={0}
+          // min={0}
           id="area"
           name="area"
           step={1}

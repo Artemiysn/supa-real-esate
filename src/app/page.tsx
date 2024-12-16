@@ -28,17 +28,18 @@ export default function Home() {
         base: "center bottom",
       }}
     >
-      <div className="min-h-[calc(100vh-90px)] flex flex-col py-16 max-w-[1000px] mx-auto md:px-0 px-4">
+      <div className="min-h-[calc(100vh-90px)] flex flex-col py-16 max-w-[1000px] mx-auto lg:px-0 px-4">
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Find your apartment with ease
         </h2>
         <article className="leading-7 mt-2 mb-8">
-          Carefully selected SEO-wise commentary. This text is available for robots
+          Carefully selected SEO-wise commentary. This text is available for
+          robots
         </article>
         <MainPageForm />
         <h4 className="scroll-m-20 text-xl font-bold my-4">Recommended:</h4>
-        <Suspense fallback={<DealsPreloader take={3}/>}>
-          <Deals delay={300} take={3}/>
+        <Suspense fallback={<DealsPreloader take={3} />}>
+          <Deals delay={300} take={3} />
         </Suspense>
       </div>
     </NextBgImage>

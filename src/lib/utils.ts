@@ -6,21 +6,25 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function displayDate(date: string | Date): string {
-  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  const dateObj = typeof date === "string" ? new Date(date) : date;
   return dateObj.toISOString().substring(0, 10);
 }
 
+/**
+ * Returns formated date string
+ * @param date js Date obj or date string
+ * @returns date string xxxx.xx.xx HH:MM
+ */
 export function displayDateAndTime(date: string | Date): string {
-  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  const dateObj = typeof date === "string" ? new Date(date) : date;
   const dateString = dateObj.toISOString().substring(0, 10);
-  const hours = dateObj.getHours().toString().padStart(2, '0');
-  const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+  const hours = dateObj.getHours().toString().padStart(2, "0");
+  const minutes = dateObj.getMinutes().toString().padStart(2, "0");
   const formattedTime = `${hours}:${minutes}`;
-  return dateString + ' ' +  formattedTime;
+  return dateString + " " + formattedTime;
 }
 
 export function isGPSCoordinate(lat: any, lon: any) {
-
   if (
     lat === undefined ||
     lon === undefined ||
@@ -43,8 +47,7 @@ export function isGPSCoordinate(lat: any, lon: any) {
 }
 
 export const jsonStringifyFixed = (param: any): any => {
-  return JSON.stringify(
-    param,
-    (key, value) => (typeof value === "bigint" ? value.toString() : value)
+  return JSON.stringify(param, (key, value) =>
+    typeof value === "bigint" ? value.toString() : value
   );
 };

@@ -6,10 +6,13 @@ import NotFound from "@/components/NotFound";
 import dynamic from "next/dynamic";
 import CenterRotator from "@/components/CenterRotator";
 
-const MapWithIcons = dynamic(() => import("@/components/MapWithIcons/MapWithIcons"), {
-  loading: () => <CenterRotator />,
-  ssr: false,
-});
+const MapWithIcons = dynamic(
+  () => import("@/components/MapWithIcons/MapWithIcons"),
+  {
+    loading: () => <CenterRotator />,
+    ssr: false,
+  }
+);
 
 type PostListProps = {
   searchParams: { [key: string]: string | undefined };
@@ -36,9 +39,12 @@ const PostList: React.FC<PostListProps> = async ({ searchParams, userId }) => {
       {!total ? (
         <NotFound text={"Looks like nothing was found..."} />
       ) : (
-        <div className="flex w-full">
-          <div id="post-list" className="grow ml-8 pr-8 mb-4">
-            <div id="post-list" className="min-h-[400px] mb-5">
+        <div className="flex w-full lg:pt-0 pt-12">
+          <div
+            id="post-list"
+            className="grow sm:ml-8 ml:2 lg:ml-0 lg:pr-4 sm:pr-8 pr-2 mb-4"
+          >
+            <div id="post-list" className="min-h-[400px] mb-5 sm:ml-0 ml-1">
               {posts.map((post) => (
                 <PostCard post={post} userId={userId} key={post.id} />
               ))}
@@ -52,12 +58,8 @@ const PostList: React.FC<PostListProps> = async ({ searchParams, userId }) => {
               }}
             />
           </div>
-          <div id="map-block" className="min-w-[400px] mr-8 px-4 pb-4">
-            <h4 className="scroll-m-20 text-xl font-bold pb-4 ">
-              Location
-            </h4>
-            <MapWithIcons posts={posts} />
-          </div>
+
+          <MapWithIcons posts={posts} />
         </div>
       )}
     </>
