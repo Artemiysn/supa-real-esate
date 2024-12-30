@@ -14,20 +14,23 @@ import { createNewPost, NewPostState } from "@/actions/actions";
 import { useFormState } from "react-dom";
 import SubmitButton from "../../components/SubmitButton";
 import { CloudUpload } from "lucide-react";
+import styles from "./newpost.module.css";
 
 const initialState: NewPostState = { message: null, errors: {} };
 
 export default function NewPost() {
-  
   const [state, formAction] = useFormState(createNewPost, initialState);
 
   return (
-    <form className="flex w-full" action={formAction}>
-      <div className="grow flex flex-wrap content-start mx-4">
-        <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 basis-full pl-4">
+    <form
+      className="flex lg:flex-row flex-col w-full max-w-[1024px] lg:w-[1024px] lg:mx-auto "
+      action={formAction}
+    >
+      <div className="grow flex flex-wrap content-start lg:mr-4">
+        <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 basis-full sm:pl-4 pl-2 sm:mt-0 mt-5">
           Add New Post
         </h3>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="title">
             Title <span className="text-red-500">*</span>
           </Label>
@@ -41,7 +44,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="price">
             Price <span className="text-red-500">*</span>
           </Label>
@@ -55,7 +58,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="address">
             Address <span className="text-red-500">*</span>
           </Label>
@@ -69,7 +72,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div id="new-post-inputs" className={"inputBlock" + ` basis-full`}>
+        <div id="new-post-inputs" className={styles.textAreaInputBlock}>
           <Label htmlFor="description">
             Description <span className="text-red-500">*</span>
           </Label>
@@ -90,7 +93,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="type">
             Type <span className="text-red-500">*</span>
           </Label>
@@ -112,7 +115,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="property">
             Property <span className="text-red-500">*</span>
           </Label>
@@ -134,7 +137,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="city">
             City <span className="text-red-500">*</span>
           </Label>
@@ -148,7 +151,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="area">
             Total area <span className="text-red-500">*</span>
           </Label>
@@ -169,7 +172,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="kitchen">
             Kitchen area <span className="text-red-500">*</span>
           </Label>
@@ -190,7 +193,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="floor">
             Floor <span className="text-red-500">*</span>
           </Label>
@@ -211,7 +214,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="year">
             Year of construction <span className="text-red-500">*</span>
           </Label>
@@ -232,7 +235,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="lat">Latitude</Label>
           <Input type="number" step="0.00000001" id="lat" name="lat" />
           <div id="lat-error" aria-live="polite" aria-atomic="true">
@@ -244,7 +247,7 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3`}>
+        <div className={styles.newpostInputBlock}>
           <Label htmlFor="lon">Lontitude</Label>
           <Input type="number" step="0.00000001" id="lon" name="lon" />
           <div id="lon-error" aria-live="polite" aria-atomic="true">
@@ -256,13 +259,13 @@ export default function NewPost() {
               ))}
           </div>
         </div>
-        <div className={"inputBlock" + ` basis-1/3  mt-5`}>
+        <div className={styles.newpostInputBlock + ` mt-5`}>
           <SubmitButton size={"default"} content={"Add"} />
         </div>
       </div>
       <div
         id="new-post-files"
-        className="min-w-[400px] mr-8 min-h-[600px] rounded-xl bg-gray-100 border bg-card text-card-foreground shadow grid p-8"
+        className="lg:min-w-[400px] lg:mx-0 mx-2 min-h-[600px] lg:mt-0 mt-4 rounded-xl bg-gray-100 border bg-card text-card-foreground shadow grid p-8"
       >
         <h3 className="scroll-m-20 text-2xl tracking-tight ">Add Files</h3>
         <div className="place-self-center">
