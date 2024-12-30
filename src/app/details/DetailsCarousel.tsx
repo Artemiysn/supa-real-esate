@@ -36,7 +36,7 @@ const DetailsCarousel = () => {
           opts={{
             align: "center",
           }}
-          className="w-full max-w-sm my-2 mx-auto"
+          className="w-full sm:max-w-sm max-w-[220px] my-2 mx-auto"
         >
           <CarouselContent className="h-12">
             {imgArray.map((img, index) => (

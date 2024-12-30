@@ -12,6 +12,7 @@ import { useEffect } from "react";
 
 type MapWithIconsProps = {
   posts: PostWithUsers[];
+  hideOnSmallScreens: boolean;
 };
 
 type CoordsType = {
@@ -19,7 +20,7 @@ type CoordsType = {
   locationGPS: LatLngExpression;
 }[];
 
-const MapWithIcons: React.FC<MapWithIconsProps> = ({ posts }) => {
+const MapWithIcons: React.FC<MapWithIconsProps> = ({ posts, hideOnSmallScreens }) => {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   let coords: CoordsType = [];
@@ -33,10 +34,10 @@ const MapWithIcons: React.FC<MapWithIconsProps> = ({ posts }) => {
     }
   });
 
-  if (!coords.length || !isDesktop) return null;
+  if (!coords.length || (!isDesktop && hideOnSmallScreens)) return null;
 
   return (
-    <div id="map-block" className="min-w-[400px] lg:mr-0 mr-8 px-4 pb-4">
+    <div id="map-block" className="lg:min-w-[400px] lg:mr-0 sm:mr-8 mr-0 sm:px-4 px-2 pb-4">
       <h4 className="scroll-m-20 text-xl font-bold pb-4 ">Location</h4>
       <MapContainer
         center={coords[0].locationGPS}

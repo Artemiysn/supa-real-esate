@@ -13,6 +13,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useMediaQuery } from "usehooks-ts";
 
 export interface PaginationWithLinksProps {
   pageSizeSelectOptions?: {
@@ -36,6 +37,8 @@ export function PaginationWithLinks({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   const totalPageCount = Math.ceil(totalCount / pageSize);
 
@@ -127,7 +130,7 @@ export function PaginationWithLinks({
 
   return (
     <div className="flex flex-col md:flex-row items-center gap-3 w-full">
-      {pageSizeSelectOptions && (
+      {pageSizeSelectOptions && isDesktop && (
         <div className="flex flex-col gap-4 flex-1">
           <SelectRowsPerPage
             options={pageSizeSelectOptions.pageSizeOptions}

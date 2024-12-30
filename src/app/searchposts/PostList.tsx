@@ -58,8 +58,7 @@ const PostList: React.FC<PostListProps> = async ({ searchParams, userId }) => {
               }}
             />
           </div>
-
-          <MapWithIcons posts={posts} />
+          <MapWithIcons posts={posts} hideOnSmallScreens={true}/>
         </div>
       )}
     </>

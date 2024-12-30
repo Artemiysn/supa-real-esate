@@ -23,13 +23,13 @@ const SearchPosts: React.FC<SearchPostsProps> = async ({ searchParams }) => {
 
   return (
     <div className="max-w-[1024px] lg:w-[1024px] mx-auto">
-      <h3 className="scroll-m-20 text-2xl tracking-tight my-5 text-gray-700 ml-8 lg:ml-0">
+      <h3 className="scroll-m-20 text-2xl tracking-tight my-5 text-gray-700 sm:ml-8 ml-1 lg:ml-0">
         Search result for{" "}
         <b>{!Boolean(searchParams?.city) ? "all" : searchParams?.city}</b>
       </h3>
       <SearchPostsForm searchParams={searchParams} />
       <Suspense fallback={<CenterRotator />} key={searchParams.page}>
-        <PostList searchParams={searchParams} userId={session?.user?.id} />
+        <PostList searchParams={searchParams} userId={session?.user?.id}/>
       </Suspense>
     </div>
   );

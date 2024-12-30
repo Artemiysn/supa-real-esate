@@ -44,7 +44,7 @@ const SearchPostsForm: React.FC<SearchPostsProps> = ({ searchParams }) => {
 
   return (
     <form
-      className="flex flex-wrap my-4 items-baseline lg:ml-0 ml-8 "
+      className="flex flex-wrap my-4 items-baseline lg:ml-0 sm:ml-8 ml-1 "
       action={formAction}
     >
       <div id="city-input-block" className={`${styles.searchInputBlock}`}>

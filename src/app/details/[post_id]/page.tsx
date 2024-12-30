@@ -50,10 +50,13 @@ const DetailsComponent: React.FC<{
   const post: PostWithUsers = await getPostDetails(post_id, userId);
 
   return (
-    <div className="flex w-full">
-      <div id="pics-and-descr" className="grow ml-8 pr-8">
+    <div className="flex lg:flex-row flex-col lg:mx-auto px-4 lg:w-[1024px] lg:px-0 w-full mt-4">
+      <div id="pics-and-descr" className="lg:grow lg:pr-8">
         <DetailsCarousel />
-        <div id="main-post-block" className="flex w-full justify-between mt-8 mb-4">
+        <div
+          id="main-post-block"
+          className="flex sm:flex-row flex-col gap-2 w-full justify-between mt-8 mb-4"
+        >
           <div id="title-block" className="flex flex-col justify-between">
             <h4 className="scroll-m-20 text-3xl font-bold mb-2">
               {post?.title}
@@ -81,7 +84,7 @@ const DetailsComponent: React.FC<{
           </div>
         </div>
         <p className="mb-8">{post?.description}</p>
-        <div className="flex w-full justify-between items-center">
+        <div className="flex w-full justify-between items-center lg:mb-0 mb-4">
           <span className="text-slate-500 italic ">
             Posted by: &nbsp; {post.user.name}
           </span>
@@ -112,16 +115,9 @@ const DetailsComponent: React.FC<{
           )}
         </div>
       </div>
-      <div id="general-and-map" className="min-w-[400px] mr-8 px-4 pb-4">
+      <div id="general-and-map" className="lg:min-w-[400px] lg:px-4 pb-4 lg:translate-x-0 translate-x-[-0.5rem]">
         <DetailsBlock post={post} />
-        {isGPSCoordinate(post.lat, post.lon) && (
-          <>
-            <h4 className="scroll-m-20 text-xl font-bold py-2 mb-4">
-              Location
-            </h4>
-            <MapWithIcons posts={[post]} />
-          </>
-        )}
+        {isGPSCoordinate(post.lat, post.lon) && <MapWithIcons posts={[post]} hideOnSmallScreens={false} />}
       </div>
     </div>
   );
