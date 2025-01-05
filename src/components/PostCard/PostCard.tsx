@@ -67,7 +67,7 @@ const PostCard: React.FC<PostCardProps> = ({
             <Tooltip delayDuration={300}>
               <TooltipTrigger>
                 <Link key={post.id} href={`/details/${post.id}`}>
-                  <h4 className="scroll-m-20 text-xl font-bold mb-0 sm:mb-2 text-left">
+                  <h4 className="scroll-m-20 text-xl font-bold mb-0 sm:mb-2 text-left md:max-w-[350px] max-w-[200px] max-h-[60px] overflow-hidden">
                     {post?.title}
                   </h4>
                 </Link>

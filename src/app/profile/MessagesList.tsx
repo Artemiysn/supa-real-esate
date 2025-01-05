@@ -7,11 +7,10 @@ import MessageCard from "./MessageCard";
 import SendMessageDialog from "@/components/SendMessageDialog/SendMessageDialog";
 
 const MessagesList = ({ userId }: { userId: string | undefined }) => {
-
   const { messages, messagesLoading } = useContext(MessagesContext);
 
   return (
-    <div className="min-h-[600px] w-[400px]">
+    <div className="lg:min-h-[600px] lg:w-[400px] w-full">
       <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 pt-5">
         Messages
       </h3>

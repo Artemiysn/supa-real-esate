@@ -14,7 +14,6 @@ type MyListProps = {
 const defaultPostsPerPageProfile = "5";
 
 const MyList: React.FC<MyListProps> = async ({ userId, searchParams }) => {
-  
   const currentPage = parseInt((searchParams.page as string) || "1");
   const postsPerPage = parseInt(
     (searchParams.pageSize as string) || defaultPostsPerPageProfile
@@ -27,35 +26,33 @@ const MyList: React.FC<MyListProps> = async ({ userId, searchParams }) => {
   );
 
   return (
-    <>
-      <div className="p-5 mb-4">
-        <div className="flex justify-between mb-2">
-          <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 ">My List</h3>
-          <Link href="/newpost" rel="preload">
-            <Button>Create New Post</Button>
-          </Link>
-        </div>
-        {!total ? (
-          <NotFound text={"Looks like you don't have posts yet..."} />
-        ) : (
-          <>
-            <div id="post-list" className="min-h-[200px] mb-5">
-              {posts.map((post) => (
-                <PostCard post={post} userId={userId} key={post.id} />
-              ))}
-            </div>
-            <PaginationWithLinks
-              page={currentPage}
-              pageSize={postsPerPage}
-              totalCount={total}
-              pageSizeSelectOptions={{
-                pageSizeOptions: [5, 10, 25, 50],
-              }}
-            />
-          </>
-        )}
+    <div className="py-5 px-0 lg:pr-5 mb-4 lg:mt-0 mt-2">
+      <div className="flex justify-between mb-2">
+        <h3 className="scroll-m-20 text-2xl tracking-tight mb-5 ">My List</h3>
+        <Link href="/newpost" rel="preload">
+          <Button>Create New Post</Button>
+        </Link>
       </div>
-    </>
+      {!total ? (
+        <NotFound text={"Looks like you don't have posts yet..."} />
+      ) : (
+        <>
+          <div id="post-list" className="min-h-[200px] mb-5">
+            {posts.map((post) => (
+              <PostCard post={post} userId={userId} key={post.id} />
+            ))}
+          </div>
+          <PaginationWithLinks
+            page={currentPage}
+            pageSize={postsPerPage}
+            totalCount={total}
+            pageSizeSelectOptions={{
+              pageSizeOptions: [5, 10, 25, 50],
+            }}
+          />
+        </>
+      )}
+    </div>
   );
 };
 

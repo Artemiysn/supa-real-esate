@@ -47,7 +47,9 @@ export const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="mx-6">Edit profile</DialogTitle>
-            <DialogDescription className="mx-6">Update displayed data</DialogDescription>
+            <DialogDescription className="mx-6">
+              Update displayed data
+            </DialogDescription>
           </DialogHeader>
           <ProfileForm user={user} callbackFunc={() => setOpen(false)} />
         </DialogContent>
@@ -62,8 +64,8 @@ export const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle className="mx-6">Edit profile</DrawerTitle>
-          <DrawerDescription className="mx-6">Update displayed data</DrawerDescription>
+          <DrawerTitle>Edit profile</DrawerTitle>
+          <DrawerDescription>Update displayed data</DrawerDescription>
         </DrawerHeader>
         <ProfileForm user={user} callbackFunc={() => setOpen(false)} />
         <DrawerFooter className="pt-2">
@@ -85,7 +87,6 @@ const ProfileForm = ({
   user: User;
   callbackFunc: any;
 }) => {
-    
   const [state, formAction] = useFormState(
     updateUser.bind(null, user.id),
     initialState
@@ -128,7 +129,7 @@ const ProfileForm = ({
             ))}
         </div>
       </div>
-      <div className={"inputBlock" + ` basis-full`}>
+      <div className={"inputBlock" + ` basis-full lg:mt-0 mt-4`}>
         <SubmitButton size={"default"} content={"Update"} />
       </div>
     </form>

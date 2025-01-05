@@ -53,15 +53,15 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger>{buttonEl}</DialogTrigger>
+        <DialogTrigger className="w-full">{buttonEl}</DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle className="mx-6 mb-2">
+            <DialogTitle className="md:mx-6 mb-2">
               Send Message to {recepient?.name}
             </DialogTitle>
             <DialogDescription>
               {messageText && (
-                <span className=" block rounded-xl border bg-card text-card-foreground shadow bg-slate-100 text-gray-600 relative my-2 mx-6 p-6">
+                <span className=" block rounded-xl border bg-card text-card-foreground shadow bg-slate-100 text-gray-600 relative my-2 md:mx-6 p-6">
                   <span className="absolute top-1 left-2 text-2xl">❞</span>
                   {messageText}
                 </span>
@@ -83,15 +83,15 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger>{buttonEl}</DrawerTrigger>
+      <DrawerTrigger className="w-full">{buttonEl}</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle className="mx-6">
+          <DrawerTitle className="md:mx-6">
             Send Message to {recepient?.name}
           </DrawerTitle>
           <DrawerDescription>
             {messageText && (
-              <span className=" block rounded-xl border bg-card text-card-foreground shadow bg-slate-100 text-gray-600 relative my-2 mx-6 p-6">
+              <span className=" block rounded-xl border bg-card text-card-foreground shadow bg-slate-100 text-gray-600 relative my-2 md:mx-6 p-6">
                 <span className="absolute top-1 left-2 text-2xl">❞</span>
                 {messageText}
               </span>
@@ -108,7 +108,9 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
         />
         <DrawerFooter className="pt-2">
           <DrawerClose>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline" className="w-full">
+              Cancel
+            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
@@ -147,7 +149,7 @@ const SendMessageForm: React.FC<SendMessageFormProps> = ({
   const [messageDeleting, setMessageDeleting] = useState(false);
 
   useEffect(() => {
-        // close modal only when eveything is ok
+    // close modal only when eveything is ok
     if (state?.id) callBackFunc && callBackFunc();
   }, [state]);
 

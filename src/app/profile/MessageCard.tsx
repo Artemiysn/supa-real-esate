@@ -8,7 +8,7 @@ type MessageCardProps = {
 
 const MessageCard: React.FC<MessageCardProps> = ({ message }) => {
   return (
-    <div className="w-full min-w-[400px] flex items-stretch rounded-xl border bg-card text-card-foreground shadow relative mb-4 cursor-pointer hover:bg-gray-100">
+    <div className="w-full flex items-stretch rounded-xl border bg-card text-card-foreground shadow relative mb-4 cursor-pointer hover:bg-gray-100">
       <div className="min-w-[110px] grid">
         <div className="place-self-center flex flex-col items-center">
           <Avatar className="mb-2">
