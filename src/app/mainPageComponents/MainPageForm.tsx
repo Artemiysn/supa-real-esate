@@ -2,11 +2,11 @@
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, FormEvent, memo, useCallback } from "react";
-import { Input } from "../components/ui/input";
+import { Input } from "../../components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PostType } from "@prisma/client";
-import { Button } from "../components/ui/button";
+import { Button } from "../../components/ui/button";
 import CitiesComboBox, {
   ComboBoxValue,
 } from "@/components/CitiesComboBox/CitiesComboBox";

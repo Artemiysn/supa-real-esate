@@ -1,5 +1,5 @@
 import { getServerAuthSession } from "@/modules/auth";
-import { getPostDetails, PostWithUsers } from "@/lib/data";
+import { getPostDetails } from "@/actions/fetchPostsActions";
 import DetailsCarousel from "../DetailsCarousel";
 import { MapPin, SendHorizontal } from "lucide-react";
 import { displayDate, isGPSCoordinate } from "@/lib/utils";
@@ -16,6 +16,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
+import { PostWithUsers } from "@/lib/dbTypes";
 
 const MapWithIcons = dynamic(
   () => import("@/components/MapWithIcons/MapWithIcons"),

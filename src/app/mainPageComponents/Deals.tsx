@@ -1,4 +1,4 @@
-import { getPostsWithCategoriesOnly } from "@/actions/actions";
+import { getPostsWithCategoriesOnly } from "@/actions/fetchPostsActions";
 import PostCardDeal from "@/components/PostCardDeal/PostCardDeal";
 import PostCardDealLoader from "@/components/PostCardDeal/PostCardDealLoader";
 

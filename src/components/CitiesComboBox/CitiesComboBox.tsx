@@ -18,7 +18,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { TailSpin } from "react-loader-spinner";
-import { catchedUniqueCities, fetchUniqueCities } from "@/actions/actions";
+import { catchedUniqueCities, fetchUniqueCities } from "@/actions/searchPostsActions";
 
 export type ComboBoxValue = { value: string; label: string };
 

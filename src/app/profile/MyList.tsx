@@ -1,4 +1,4 @@
-import { fetchUserPostsWithPages } from "@/actions/actions";
+import { fetchUserPostsWithPages } from "@/actions/fetchPostsActions";
 import NotFound from "@/components/NotFound";
 import PostCard from "@/components/PostCard/PostCard";
 import { Button } from "@/components/ui/button";

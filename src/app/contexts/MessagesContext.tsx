@@ -1,13 +1,14 @@
 "use client";
 
-import { addMessage,  getFirstUser } from "@/actions/actions";
+import { getFirstUser } from "@/actions/userActions";
 import {
   fetchAllMessages,
   fetchNewerMessages,
-  MessageWithUser,
-} from "@/actions/actions";
+  addMessage
+} from "@/actions/messagesActions";
 import { createContext, useState, useEffect, useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { MessageWithUser } from "@/lib/dbTypes";
 
 type MessagesContextType = {
   messages: MessageWithUser[];

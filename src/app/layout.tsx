@@ -5,13 +5,13 @@ import { NextBgStaticCss } from "next-bg-image";
 import { MessagesProvider } from "./contexts/MessagesContext";
 import { Toaster } from "@/components/ui/toaster";
 import dynamic from "next/dynamic";
-import { MenuBarLoader } from "@/app/MenuBar";
+import { MenuBarLoader } from "@/app/mainPageComponents/MenuBar";
 import { Open_Sans } from 'next/font/google';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 
 // because we need to get window width in menu bar
-const MenuBar = dynamic(() => import("@/app/MenuBar"), {
+const MenuBar = dynamic(() => import("@/app/mainPageComponents/MenuBar"), {
   ssr: false,
   loading: () => <MenuBarLoader />,
 });

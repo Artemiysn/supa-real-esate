@@ -1,5 +1,5 @@
-import { MessageWithUser } from "@/actions/actions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { MessageWithUser } from "@/lib/dbTypes";
 import { displayDateAndTime } from "@/lib/utils";
 
 type MessageCardProps = {

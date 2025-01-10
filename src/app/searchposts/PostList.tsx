@@ -1,5 +1,5 @@
 import PostCard from "@/components/PostCard/PostCard";
-import { fetchPostsByParams } from "@/lib/data";
+import { fetchPostsByParams } from "@/actions/fetchPostsActions";
 import { paramsForPostSearch } from "./page";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
 import NotFound from "@/components/NotFound";

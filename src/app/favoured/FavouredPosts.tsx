@@ -1,10 +1,10 @@
 "use client";
 
-import { getFavouredPosts } from "@/actions/actions";
+import { getFavouredPosts } from "@/actions/fetchPostsActions";
 import CenterRotator from "@/components/CenterRotator";
 import NotFound from "@/components/NotFound";
 import PostCard from "@/components/PostCard/PostCard";
-import { PostWithUsers } from "@/lib/data";
+import { PostWithUsers } from "@/lib/dbTypes";
 import { useEffect, useState } from "react";
 
 type FavouredPostsProps = {

@@ -6,9 +6,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { manageFav, PostWithUsers } from "@/lib/data";
 import React, { useState } from "react";
 import { StarIcon, StarFilledIcon } from "@radix-ui/react-icons";
+import { PostWithUsers } from "@/lib/dbTypes";
+import { manageFav } from "@/actions/favActions";
 
 type AddToFavouritesProps = {
   post: PostWithUsers;

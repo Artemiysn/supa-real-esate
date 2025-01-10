@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
-import { searchPosts, searchPostState } from "@/actions/actions";
+import { searchPosts, searchPostState } from "@/actions/searchPostsActions";
 import { useFormState } from "react-dom";
 import { memo, useState } from "react";
 import CitiesComboBox, {

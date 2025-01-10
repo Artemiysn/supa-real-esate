@@ -24,7 +24,7 @@ import { Label } from "@/components/ui/label";
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { useFormState } from "react-dom";
-import { updateUser, userState } from "@/actions/actions";
+import { updateUser, userState } from "@/actions/userActions";
 import SubmitButton from "@/components/SubmitButton";
 import { User } from "@auth/core/types";
 

@@ -9,8 +9,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Link from "next/link";
-import { PostWithUsers } from "@/lib/data";
 import fallback from "@/../public/fallback.png";
+import { PostWithUsers } from "@/lib/dbTypes";
 
 type PostCardDealProps = {
   post: PostWithUsers;

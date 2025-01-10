@@ -24,7 +24,7 @@ import { Label } from "@/components/ui/label";
 import { ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { User } from "@prisma/client";
 import { useFormState } from "react-dom";
-import { addMessage, addMessageState, deleteMessage } from "@/actions/actions";
+import { addMessage, addMessageState, deleteMessage } from "@/actions/messagesActions";
 import { Textarea } from "../ui/textarea";
 import SubmitButton from "../SubmitButton";
 import { MessagesContext } from "@/app/contexts/MessagesContext";

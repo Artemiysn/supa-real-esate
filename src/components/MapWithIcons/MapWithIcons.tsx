@@ -1,6 +1,5 @@
 "use client";
 
-import { PostWithUsers } from "@/lib/data";
 import { LatLngExpression, latLngBounds } from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -9,6 +8,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import { isGPSCoordinate } from "@/lib/utils";
 import { useMediaQuery } from "usehooks-ts";
 import { useEffect } from "react";
+import { PostWithUsers } from "@/lib/dbTypes";
 
 type MapWithIconsProps = {
   posts: PostWithUsers[];

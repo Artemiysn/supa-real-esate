@@ -16,11 +16,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Link from "next/link";
-import { PostWithUsers } from "@/lib/data";
 import AddToFavourites from "./AddToFavourites";
 import { displayDate } from "@/lib/utils";
 import SendMessageDialog from "../SendMessageDialog/SendMessageDialog";
 import fallback from "@/../public/fallback.png";
+import { PostWithUsers } from "@/lib/dbTypes";
 
 type PostCardProps = {
   post: PostWithUsers;

@@ -1,12 +1,12 @@
 import bg from "@/../../public/bg.jpg";
 import dynamic from "next/dynamic";
 import NextBgImage from "next-bg-image";
-import Deals, { DealsPreloader } from "./Deals";
+import Deals, { DealsPreloader } from "./mainPageComponents/Deals";
 import { Suspense } from "react";
-import { MainPageFormLoader } from "@/app/MainPageForm";
+import { MainPageFormLoader } from "@/app/mainPageComponents/MainPageForm";
 
 // so that browser api like window can be safely used https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading
-const MainPageForm = dynamic(() => import("@/app/MainPageForm"), {
+const MainPageForm = dynamic(() => import("@/app/mainPageComponents/MainPageForm"), {
   ssr: false,
   loading: () => <MainPageFormLoader />,
 });
