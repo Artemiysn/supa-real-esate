@@ -96,17 +96,20 @@ export const fetchUniqueCities = async (): Promise<
   { value: string; label: string }[]
 > => {
   try {
-    const uniqueCities: { city: string }[] = await db.posts.findMany({
+
+    const allCities: { city: string }[] = await db.posts.findMany({
       select: {
         city: true,
       },
       distinct: ["city"],
     });
 
-    const returnArr = uniqueCities.map((obj) => {
+    const uniqueCities = [...new Set(allCities.map(obj => obj.city.toLowerCase()))];
+
+    const returnArr = uniqueCities.map((c) => {
       return {
-        value: obj.city,
-        label: obj.city,
+        value: c,
+        label: c,
       };
     });
 

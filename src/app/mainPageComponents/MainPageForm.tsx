@@ -16,10 +16,11 @@ const MemoizedComboBox = memo(CitiesComboBox);
 const MainPageForm = () => {
   const router = useRouter();
   router.prefetch("/searchposts");
+  // can be changed to hidden inputs..
   const [tabValue, setTabValue] = useState<PostType>("sell");
   const [selectedCity, setSelectedCity] = useState<ComboBoxValue | null>(null);
 
-  const onSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const searchParams = new URLSearchParams();
@@ -32,7 +33,7 @@ const MainPageForm = () => {
     searchParams.append("city", selectedCity?.value ?? "");
 
     router.push(`/searchposts?${searchParams.toString()}`);
-  }, []);
+  };
 
   // in next 15 this exact functionality is made with next js form component. This is next 14 bloated variant
 

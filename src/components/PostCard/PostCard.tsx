@@ -55,7 +55,7 @@ const PostCard: React.FC<PostCardProps> = ({
           />
           <div className="absolute left-[-20px] top-2 flex flex-col gap-2">
             {post?.Categories.map((c) => (
-              <Badge variant="flag">{c.category.name}</Badge>
+              <Badge variant="flag" key={c.categoryId}>{c.category.name}</Badge>
             ))}
           </div>
         </Link>

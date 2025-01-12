@@ -92,7 +92,7 @@ const DetailsComponent: React.FC<{
           {userId ? (
             <SendMessageDialog
               buttonEl={
-                <div className="p-2 rounded-md border cursor:pointer">
+                <div className="p-2 rounded-md border max-w-[200px] cursor:pointer">
                   <SendHorizontal className="mr-2 inline-block stroke-orange-300" />
                   Send a message
                 </div>

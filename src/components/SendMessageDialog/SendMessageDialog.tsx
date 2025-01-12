@@ -53,7 +53,7 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger className="w-full">{buttonEl}</DialogTrigger>
+        <DialogTrigger className="w-full flex justify-end">{buttonEl}</DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="md:mx-6 mb-2">
@@ -108,9 +108,7 @@ const SendMessageDialog: React.FC<SendMessageDialogProps> = ({
         />
         <DrawerFooter className="pt-2">
           <DrawerClose>
-            <Button variant="outline" className="w-full">
               Cancel
-            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

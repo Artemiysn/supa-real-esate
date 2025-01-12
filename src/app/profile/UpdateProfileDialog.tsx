@@ -69,8 +69,8 @@ export const UpdateProfileDialog: React.FC<UpdateProfileDialogProps> = ({
         </DrawerHeader>
         <ProfileForm user={user} callbackFunc={() => setOpen(false)} />
         <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+          <DrawerClose>
+            Cancel
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
