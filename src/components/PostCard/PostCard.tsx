@@ -91,8 +91,8 @@ const PostCard: React.FC<PostCardProps> = ({
             id={`postcard-badges-${post.id}`}
             className="flex flex-col sm:flex-row grow sm:items-end items-start sm:justify-between justify-end w-full gap-y-2 sm:gap-y-0"
           >
-            <div data-type="post-in-list-badges" className="flex gap-2">
-              <Badge variant="outline">
+            <div data-type="post-in-list-badges" className="flex gap-2 items-stretch h-6">
+              <Badge variant="outline" className="h-full">
                 {post?.property === "apartment" ? (
                   <>
                     <Building size={16} className="pr-1" />
@@ -107,7 +107,7 @@ const PostCard: React.FC<PostCardProps> = ({
               </Badge>
               <Tooltip delayDuration={300}>
                 <TooltipTrigger>
-                  <Badge variant="outline">
+                  <Badge variant="outline" className="h-full">
                     <LandPlot size={16} className="pr-1" /> {post?.area}
                   </Badge>
                 </TooltipTrigger>
@@ -115,14 +115,14 @@ const PostCard: React.FC<PostCardProps> = ({
               </Tooltip>
               <Tooltip delayDuration={300}>
                 <TooltipTrigger>
-                  <Badge variant="outline">
+                  <Badge variant="outline" className="h-full">
                     <CookingPot size={16} className="pr-1" /> {post?.kitchen}
                   </Badge>
                 </TooltipTrigger>
                 <TooltipContent>Kitchen area in &#13217;</TooltipContent>
               </Tooltip>
             </div>
-            <div data-type="post-in-list-buttons" className="flex gap-2">
+            <div data-type="post-in-list-buttons" className="flex gap-2 items-stretch h-6">
               <AddToFavourites
                 post={post}
                 userId={userId}
@@ -131,8 +131,8 @@ const PostCard: React.FC<PostCardProps> = ({
               {userId ? (
                 <SendMessageDialog
                   buttonEl={
-                    <Badge variant="outline">
-                      <SendHorizontal size={16} className="pr-1" />
+                    <Badge variant="outline" className="h-full">
+                      <SendHorizontal size={16} />
                     </Badge>
                   }
                   recepient={post.user}
@@ -142,7 +142,7 @@ const PostCard: React.FC<PostCardProps> = ({
               ) : (
                 <Tooltip delayDuration={300}>
                   <TooltipTrigger>
-                    <Badge variant="secondary">
+                    <Badge variant="secondary" className="h-full">
                       <SendHorizontal size={16} className="pr-1" />
                     </Badge>
                   </TooltipTrigger>

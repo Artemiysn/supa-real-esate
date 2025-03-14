@@ -5,7 +5,6 @@ import { useState, FormEvent, memo, useCallback } from "react";
 import { Input } from "../../components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { PostType } from "@prisma/client";
 import { Button } from "../../components/ui/button";
 import CitiesComboBox, {
   ComboBoxValue,
@@ -17,7 +16,7 @@ const MainPageForm = () => {
   const router = useRouter();
   router.prefetch("/searchposts");
   // can be changed to hidden inputs..
-  const [tabValue, setTabValue] = useState<PostType>("sell");
+  const [tabValue, setTabValue] = useState<string>("sell");
   const [selectedCity, setSelectedCity] = useState<ComboBoxValue | null>(null);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -42,7 +41,7 @@ const MainPageForm = () => {
       <Tabs
         className="md:w-[400px] pt-4"
         value={tabValue}
-        onValueChange={(v) => setTabValue(v as PostType)}
+        onValueChange={(v) => setTabValue(v as string)}
       >
         <TabsList>
           <TabsTrigger className="h-10 rounded-md px-8" value="sell">

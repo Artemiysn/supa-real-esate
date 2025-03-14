@@ -22,7 +22,7 @@ const imgArray = [
   { src: img9.src, alt: "Image 9" },
 ];
 
-export const getImgSrcByPostId = (postId: BigInt ) => {
+export const getImgSrcByPostId = (postId: BigInt | number ) => {
     return imgArray[Number(String(postId).slice(-1))].src;
 } 
 

@@ -1,17 +1,16 @@
 import CenterRotator from "@/components/CenterRotator";
-import { PostType, PropertyType } from "@prisma/client";
 import { Suspense } from "react";
 import PostList from "./PostList";
 import SearchPostsForm from "./SearchPostsForm";
 import { getServerAuthSession } from "@/modules/auth";
 
 export type paramsForPostSearch = {
-  type?: PostType | undefined;
+  type?: string | undefined;
   city?: string | undefined;
   area?: number | undefined;
   minPrice?: number | undefined;
   maxPrice?: number | undefined;
-  property?: PropertyType | undefined;
+  property?: string | undefined;
 };
 
 type SearchPostsProps = {

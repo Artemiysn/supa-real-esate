@@ -14,7 +14,7 @@ export const manageFav = async (
       return await db.FavouredPosts.create({
         data: {
           userId: String(userId).substring(0, 60),
-          postId: String(post.id).substring(0, 60),
+          postId: Number(post.id)
         },
       });
     } else {

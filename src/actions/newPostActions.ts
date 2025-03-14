@@ -38,7 +38,7 @@ const NewPostSchema = z
       .int("Kitchen Area size must be an integer"),
     floor: z.coerce
       .number()
-      .gt(1, "Please provide floor number, number must be positive")
+      .gt(0, "Please provide floor number, number must be positive")
       .max(3000, "Please select lower floor")
       .int("floor must be an integer"),
     year: z.coerce
@@ -46,28 +46,24 @@ const NewPostSchema = z
       .gt(1, "Please provide year, number must be positive")
       .max(3000, "Please select real year")
       .int("year must be an integer"),
-    lat: z
-      .union([
-        z
-          .number()
-          .min(-90, "Please select correct lontitude")
-          .max(90, "Please select correct lontitude"),
-        z.string().length(0),
-      ])
-      .optional()
-      .transform((e) => (e === "" ? null : e)),
-    lon: z
-      .union([
-        z
-          .number()
-          .min(-180, "Please select correct lontitude")
-          .max(180, "Please select correct lontitude"),
-        z.string().length(0),
-      ])
-      .optional()
-      .transform((e) => (e === "" ? null : e)),
+    lat: z.coerce
+      .number()
+      .min(-90, "Please select correct lontitude")
+      .max(90, "Please select correct lontitude")
+      .optional(),
+    lon: z.coerce
+      .number()
+      .min(-180, "Please select correct lontitude")
+      .max(180, "Please select correct lontitude")
+      .optional(),
   })
-  .required();
+  .required()
+  .transform((data) => {
+    if (data.lat === 0 && data.lon === 0) {
+      return { ...data, lat: null, lon: null };
+    }
+    return data;
+  });
 
 export type NewPostState = {
   errors?: {

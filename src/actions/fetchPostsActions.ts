@@ -85,7 +85,7 @@ export const getFavouredPosts = async (): Promise<PostWithUsers[]> => {
           {
             id: f.id,
             userId: f.userId,
-            postId: f.postId,
+            postId: Number(f.postId),
           },
         ],
       };
@@ -151,7 +151,7 @@ export const getPostDetails = async (
           },
         },
       },
-      where: { id: postId },
+      where: { id: Number(postId) },
     });
     const returnData = JSON.parse(jsonStringifyFixed(post));
     return returnData;
@@ -231,7 +231,7 @@ export const fetchPostsByParams = async (
     where = {
       ...where,
       city: {
-        search: params.city,
+        contains: params.city,
       },
     };
   }

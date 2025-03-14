@@ -1,16 +1,12 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -20,12 +16,12 @@ model Account {
   type               String
   provider           String
   providerAccountId  String
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
+  refresh_token      String?
+  access_token       String?
   expires_at         Int?
   token_type         String?
   scope              String?
-  id_token           String? @db.Text
+  id_token           String?
   session_state      String?
   oauth_token_secret String?
   oauth_token        String?
@@ -67,37 +63,39 @@ model User {
   @@index([name])
 }
 
-enum PostType {
-  rent
-  sell
-}
+// enum PostType {
+//   rent
+//   sell
+// }
 
-enum PropertyType {
-  apartment
-  house
-}
+// enum PropertyType {
+//   apartment
+//   house
+// }
+
+//sqlite prisma limitation - should be enums for other DBs. Also id should be Big Int for Dbs other then sqlite
 
 model Posts {
-  id            BigInt          @id @default(autoincrement())
+  id            Int                 @id @default(autoincrement())
   userId        String
-  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  title         String          @db.VarChar(255)
+  user          User                @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  title         String
   price         Int
-  address       String          @db.VarChar(255)
-  description   String          @db.VarChar(1000)
-  type          PostType
-  property      PropertyType
-  city          String          @db.VarChar(255)
+  address       String
+  description   String
+  type          String
+  property      String
+  city          String
   area          Int
   kitchen       Int
   floor         Int
   year          Int
   FavouredPosts FavouredPosts[]
-  lat           Decimal?        @db.Decimal(11, 8)
-  lon           Decimal?        @db.Decimal(11, 8)
-  Categories CategoriesOnPosts[]
+  lat           Decimal?
+  lon           Decimal?
+  Categories    CategoriesOnPosts[]
 
   @@index([city])
   @@index([area])
@@ -111,17 +109,18 @@ model Category {
 }
 
 model CategoriesOnPosts {
-  post       Posts     @relation(fields: [postId], references: [id])
-  postId     BigInt 
+  post       Posts    @relation(fields: [postId], references: [id])
+  postId     Int
   category   Category @relation(fields: [categoryId], references: [id])
-  categoryId Int 
+  categoryId Int
+
   @@id([postId, categoryId])
 }
 
 model FavouredPosts {
   id     String @id @default(cuid())
   userId String
-  postId BigInt
+  postId Int
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   post   Posts  @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
@@ -136,7 +135,7 @@ model Messages {
   author     User     @relation("SentMessages", fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   receiverId String
   receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  content    String   @db.Text
+  content    String
   watched    Boolean  @default(false)
   hidden     Boolean  @default(false)
 

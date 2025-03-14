@@ -30,15 +30,16 @@ const AddToFavourites: React.FC<AddToFavouritesProps> = ({ post, userId, callBac
   })();
 
   const icon = isFavoured ? (
-    <StarFilledIcon fontSize={"2rem"} />
+    <StarFilledIcon fontSize={"2.2rem"} />
   ) : (
-    <StarIcon fontSize={"2rem"} />
+    <StarIcon fontSize={"2.2rem"} />
   );
 
   return (
     <Tooltip delayDuration={300}>
       <TooltipTrigger>
         <Badge
+          className="h-full"
           variant={badgeVariant}
           onClick={async () => {
             const result = await manageFav(post, userId);
