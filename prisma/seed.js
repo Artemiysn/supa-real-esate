@@ -1,21 +1,24 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 async function main() {
-  await prisma.category.deleteMany({});
 
-  const addedCategories = await prisma.category.createMany({
-    data: [
-      {
-        name: "newly built 2024",
-      },
-      {
-        name: "newly renovated",
-      },
-      {
-        name: "cheapest price",
-      },
-    ],
-  });
+  const categoryCheck = await prisma.category.findFirst({});
+
+  if (!categoryCheck) {
+    const addedCategories = await prisma.category.createMany({
+      data: [
+        {
+          name: "newly built 2024",
+        },
+        {
+          name: "newly renovated",
+        },
+        {
+          name: "cheapest price",
+        },
+      ],
+    });
+  }
 
   // user is created when logged in with Google
   const firstUser = await prisma.user.findFirst({});

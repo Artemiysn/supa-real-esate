@@ -2,14 +2,14 @@ For local development
 ===========
 
 1. pnpm i
-2. docker compose up (for db currently)
 3. create .env with following content (generate google credentials in google studio website)
 
 ```
 NODE_ENV="development"
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/time_demo_dev"
+DATABASE_URL="file:./data/dev.db"
 GOOGLE_CLIENT_ID=""
 GOOGLE_CLIENT_SECRET=""
+NEXTAUTH_SECRET="generate secret here"
 ```
 
 4. pnpx prisma generate && pnpx prisma migrate dev

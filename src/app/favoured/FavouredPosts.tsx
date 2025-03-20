@@ -26,7 +26,7 @@ const FavouredPosts: React.FC<FavouredPostsProps> = ({ userId }) => {
     })();
   }, []);
 
-  const callBackOnDelete = (postId: string | bigint) => {
+  const callBackOnDelete = (postId: string | number) => {
     setPostsData((prev) => prev.filter((p) => p.id !== postId));
   };
 

@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl"]
 }
 
 datasource db {
@@ -105,13 +106,13 @@ model Posts {
 model Category {
   id    Int                 @id @default(autoincrement())
   name  String
-  posts CategoriesOnPosts[]
+  posts CategoriesOnPosts[]  
 }
 
 model CategoriesOnPosts {
-  post       Posts    @relation(fields: [postId], references: [id])
+  post       Posts    @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId     Int
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId Int
 
   @@id([postId, categoryId])
