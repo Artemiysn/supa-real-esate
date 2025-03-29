@@ -3,6 +3,10 @@ Demo
 
 http://srv768196.hstgr.cloud:3000/
 
+or
+
+https://srv768196.hstgr.cloud:3000/
+
 For local development (you don't need docker)
 ===========
 
