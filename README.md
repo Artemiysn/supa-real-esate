@@ -25,3 +25,21 @@ pnpx prisma db push - to update db from updated schema (withoutn migration)
 pnpx prisma db seed - run seed.js
 
 pnpx prisma studio - run web client for db management
+
+=====
+
+for running Docker local
+
+docker build -t supa-estate-i .
+
+docker run -d -p 3000:3000 -v D:\Portfolio\supa-real-estate\prisma\data:/app/data -e DATABASE_URL="file:./data/dev.db" --name supa-estate-c --restart always supa-estate-i 
+
+put your address to db  file HERE: D:\Portfolio\supa-real-estate\prisma\data
+
+Then: 
+
+docker start supa-estate-c
+
+Check logs: docker logs --follow supa-estate-c
+
+open terminal inside container docker exec -it supa-estate-c sh
