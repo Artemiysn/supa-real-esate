@@ -3,7 +3,7 @@ For local development (you don't need docker)
 
 ``` pnpm i ```
 
-create .env with following content (generate google credentials in google cloud website!)
+create .env with following content (generate google credentials with google cloud studio website!)
 
 ```
 NODE_ENV="development"
@@ -17,7 +17,7 @@ NEXTAUTH_SECRET="generate secret here - any string works"
 
 ``` pnpm run dev ``` - you are good to go
 
-login using google (thsi will create first user), then u can use seed script if you want to
+login using google (this will create first user), then u can use seed script if you want to
 
 Prisma commands
 ===============
