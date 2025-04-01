@@ -5,7 +5,7 @@ http://srv768196.hstgr.cloud:3000/
 
 or
 
-https://srv768196.hstgr.cloud:3000/
+https:/69.62.112.30/
 
 For local development (you don't need docker)
 ===========
